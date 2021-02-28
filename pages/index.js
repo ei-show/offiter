@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import React from "react"
+import Link from 'next/link'
 
-export default function Home() {
+export default function Home(props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -17,6 +19,25 @@ export default function Home() {
 
         {/* test fontAwesome */}
         <FontAwesomeIcon icon="headset" />
+
+        {props.blogs.map(blog => (
+          <React.Fragment key={blog.id}>
+
+            <Link href="/blogs/[id]" as={`blogs/${blog.id}`}>
+              <a>
+                <h2>{blog.title}</h2>
+              </a>
+            </Link>
+
+            {blog.tags.map(tag => (
+              <React.Fragment key={tag.id}>
+                <span>{tag.name}</span>
+              </React.Fragment>
+            ))}
+
+          </React.Fragment>
+        ))}
+
 
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -71,3 +92,17 @@ export default function Home() {
     </div>
   )
 }
+
+export const getStaticProps = async () => {
+  const key = {
+    headers: {'X-API-KEY': process.env.API_KEY}
+  };
+  const res = await fetch(`https://offiter.microcms.io/api/v1/blogs`, key);
+  const data = await res.json();
+
+  return {
+    props: {
+      blogs: data.contents,
+    }
+  }
+};
