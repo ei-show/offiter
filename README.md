@@ -32,3 +32,14 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## microCMSのAPI_keyを環境変数に登録
+
+#### local
+`.env.development.local`ファイルを追加
+```
+API_KEY=8fae269a-fb4a-480d-83de-598e8fac61d1
+```
+
+#### deploy
+上のKEYの内容をdeploy先に登録
