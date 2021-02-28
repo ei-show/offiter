@@ -36,7 +36,7 @@ export const getStaticProps = async context => {
 
     return {
         props: {
-            blog: blog
+            blog: blog,
         }
     }
 }
