@@ -1,20 +1,5 @@
 import React from 'react'
-
-export default function Blog(props) {
-  return (
-    <>
-      <h2>{props.blog.title}</h2>
-      <div>
-        {props.blog.tags.map(tag => (
-          <React.Fragment key={tag.id}>
-            <span>{tag.name}</span>
-          </React.Fragment>
-        ))}
-      </div>
-      <div dangerouslySetInnerHTML={{ __html: `${props.blog.body}` }}></div>
-    </>
-  )
-}
+import Layout from '../../components/Layout';
 
 export const getStaticPaths = async () => {
   const key: any = {
@@ -41,4 +26,20 @@ export const getStaticProps = async context => {
       blog: blog,
     }
   }
+}
+
+export default function Blog(props) {
+  return (
+    <Layout pageTitle={props.blog.title}>
+      <h2>{props.blog.title}</h2>
+      <div>
+        {props.blog.tags.map(tag => (
+          <React.Fragment key={tag.id}>
+            <span>{tag.name}</span>
+          </React.Fragment>
+        ))}
+      </div>
+      <div dangerouslySetInnerHTML={{ __html: `${props.blog.body}` }}></div>
+    </Layout>
+  )
 }
