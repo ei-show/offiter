@@ -9,7 +9,7 @@ export default function Layout({ pageTitle, children }) {
       {/* Head Start */}
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <title>{pageTitle ? '${pageTitle} | ${site_name}' : site_name}</title>
+        <title>{pageTitle ? `${pageTitle} | ${site_name}` : site_name}</title>
         <meta name="description" content="" />
         <meta name="og:title" content={site_name} />
         <meta name="og:description" content="" />
