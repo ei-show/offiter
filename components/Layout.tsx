@@ -1,86 +1,43 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Header from './Header'
 
-const site_name: string = 'Offiter'
+const siteName: string = 'Offiter'
 
-export default function Layout({ pageTitle, children }) {
+export default function Layout({ data, children }) {
+  const title = data.title ? `${data.title} - ${siteName}` : siteName
+  const description = data.description ? data.description : siteName
   return (
     <>
       {/* Head Start */}
       <Head>
+        <html lang="jp" />
         <link rel="icon" href="/favicon.ico" />
-        <title>{pageTitle ? `${pageTitle} | ${site_name}` : site_name}</title>
-        <meta name="description" content="" />
-        <meta name="og:title" content={site_name} />
-        <meta name="og:description" content="" />
+        <title>{title}</title>
+        <meta name="og:title" content={title} />
+        <meta name="description" content={description} />
+        <meta name="og:description" content={description} />
         <meta name="og:image" content="" />
         <meta name="twitter:card" content="" />
         <meta charSet="UTF-8" />
       </Head>
       {/* Head End */}
       <div className="bg-gray-100 overflow-x-hidden">
-        {/* Header Start */}
-        <nav className="bg-white px-6 py-4 shadow">
-          <div className="flex flex-col container mx-auto md:flex-row md:items-center md:justify-between">
-            <div className="flex justify-between items-center">
-              <div>
-                <a href="#" className="text-gray-800 text-xl font-bold md:text-2xl">Brand</a>
-              </div>
-              <div>
-                <button type="button" className="block text-gray-800 hover:text-gray-600 focus:text-gray-600 focus:outline-none md:hidden">
-                  <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
-                    <path d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z">
-                    </path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div className="md:flex flex-col md:flex-row md:-mx-4 hidden">
-              <a href="#" className="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Home</a>
-              <a href="#" className="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Blog</a>
-              <a href="#" className="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">About us</a>
-            </div>
-          </div>
-        </nav>
-        {/* Header End */}
+        <Header siteName={siteName}/>
         <div className="px-6 py-8">
           <div className="flex justify-between container mx-auto">
+            {/* Main Start */}
             <div className="w-full lg:w-8/12">
               <div className="flex items-center justify-between">
-                <h1 className="text-xl font-bold text-gray-700 md:text-2xl">Post</h1>
-                <div>
-                  <select className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <option>Latest</option>
-                    <option>Last Week</option>
-                  </select>
-                </div>
+                <h2 className="text-xl font-bold text-gray-700 md:text-2xl">新着記事</h2>
               </div>
-              {/* card start*/}
-              <main>{children}</main>
-              {/* card end*/}
-              <div className="mt-8">
-                <div className="flex">
-                  <a href="#" className="mx-1 px-3 py-2 bg-white text-gray-500 font-medium rounded-md cursor-not-allowed">
-                    previous
-                  </a>
-                  <a href="#" className="mx-1 px-3 py-2 bg-white text-gray-700 font-medium hover:bg-blue-500 hover:text-white rounded-md">
-                    1
-                  </a>
-                  <a href="#" className="mx-1 px-3 py-2 bg-white text-gray-700 font-medium hover:bg-blue-500 hover:text-white rounded-md">
-                    2
-                  </a>
-                  <a href="#" className="mx-1 px-3 py-2 bg-white text-gray-700 font-medium hover:bg-blue-500 hover:text-white rounded-md">
-                    3
-                  </a>
-                  <a href="#" className="mx-1 px-3 py-2 bg-white text-gray-700 font-medium hover:bg-blue-500 hover:text-white rounded-md">
-                    Next
-                  </a>
-                </div>
-              </div>
+              {children}
             </div>
+            {/* Main End */}
+            {/* Saido Start */}
             <div className="-mx-8 w-4/12 hidden lg:block">
               <div className="px-8">
-                <h1 className="mb-4 text-xl font-bold text-gray-700">Authors</h1>
+                <h1 className="mb-4 text-xl font-bold text-gray-700">最近の人気記事</h1>
                 <div className="flex flex-col bg-white max-w-sm px-6 py-4 mx-auto rounded-lg shadow-md">
                   <ul className="-mx-4">
                     <li className="flex items-center">
@@ -121,7 +78,7 @@ export default function Layout({ pageTitle, children }) {
                 </div>
               </div>
               <div className="mt-10 px-8">
-                <h1 className="mb-4 text-xl font-bold text-gray-700">Categories</h1>
+                <h1 className="mb-4 text-xl font-bold text-gray-700">よく検索されるワード</h1>
                 <div className="flex flex-col bg-white px-4 py-6 max-w-sm mx-auto rounded-lg shadow-md">
                   <ul>
                     <li><a href="#" className="text-gray-700 font-bold mx-1 hover:text-gray-600 hover:underline">-
@@ -144,30 +101,14 @@ export default function Layout({ pageTitle, children }) {
                   </ul>
                 </div>
               </div>
-              <div className="mt-10 px-8">
-                <h1 className="mb-4 text-xl font-bold text-gray-700">Recent Post</h1>
-                <div className="flex flex-col bg-white px-8 py-6 max-w-sm mx-auto rounded-lg shadow-md">
-                  <div className="flex justify-center items-center"><a href="#"
-                    className="px-2 py-1 bg-gray-600 text-sm text-green-100 rounded hover:bg-gray-500">Laravel</a>
-                  </div>
-                  <div className="mt-4"><a href="#" className="text-lg text-gray-700 font-medium hover:underline">Build
-                                      Your New Idea with Laravel Freamwork.</a></div>
-                  <div className="flex justify-between items-center mt-4">
-                    <div className="flex items-center"><img
-                      src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
-                      alt="avatar" className="w-8 h-8 object-cover rounded-full" /><a href="#"
-                        className="text-gray-700 text-sm mx-3 hover:underline">Alex John</a></div><span
-                          className="font-light text-sm text-gray-600">Jun 1, 2020</span>
-                  </div>
-                </div>
-              </div>
             </div>
+            {/* Saido End */}
           </div>
         </div>
         <footer className="px-6 py-2 bg-gray-800 text-gray-100">
           <div className="flex flex-col justify-between items-center container mx-auto md:flex-row"><a href="#"
-            className="text-2xl font-bold">Brand</a>
-            <p className="mt-2 md:mt-0">All rights reserved 2020.</p>
+            className="text-2xl font-bold">{siteName}</a>
+            <p className="mt-2 md:mt-0">All rights reserved 2021.</p>
             <div className="flex -mx-2 mt-4 mb-2 md:mt-0 md:mb-0"><a href="#"
               className="mx-2 text-gray-100 hover:text-gray-400"><svg viewBox="0 0 512 512"
                 className="h-4 w-4 fill-current">
