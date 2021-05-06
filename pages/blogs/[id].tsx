@@ -30,7 +30,7 @@ export const getStaticProps = async context => {
 
 export default function Blog(props) {
   return (
-    <Layout pageTitle={props.blog.title}>
+    <Layout pageTitle={props.blog.title} data={props.blog}>
       <h2>{props.blog.title}</h2>
       <div>
         {props.blog.tags.map(tag => (

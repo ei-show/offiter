@@ -20,7 +20,7 @@ export const getStaticProps = async () => {
 
 export default function Home(props) {
   return (
-    <Layout pageTitle="">
+    <Layout data="">
 
       {props.blogs.map(blog => (
         <React.Fragment key={blog.id}>
