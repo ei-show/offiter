@@ -4,16 +4,19 @@ import Header from './Header'
 
 const siteName: string = 'Offiter'
 
-export default function Layout({ pageTitle, children }) {
+export default function Layout({ data, children }) {
+  const title = data.title ? `${data.title} - ${siteName}` : siteName
+  const description = data.description ? data.description : siteName
   return (
     <>
       {/* Head Start */}
       <Head>
+        <html lang="jp" />
         <link rel="icon" href="/favicon.ico" />
-        <title>{pageTitle ? `${pageTitle} | ${siteName}` : siteName}</title>
-        <meta name="description" content="" />
-        <meta name="og:title" content={siteName} />
-        <meta name="og:description" content="" />
+        <title>{title}</title>
+        <meta name="og:title" content={title} />
+        <meta name="description" content={description} />
+        <meta name="og:description" content={description} />
         <meta name="og:image" content="" />
         <meta name="twitter:card" content="" />
         <meta charSet="UTF-8" />
@@ -98,31 +101,14 @@ export default function Layout({ pageTitle, children }) {
                   </ul>
                 </div>
               </div>
-              <div className="mt-10 px-8">
-                <h1 className="mb-4 text-xl font-bold text-gray-700">Recent Post</h1>
-                <div className="flex flex-col bg-white px-8 py-6 max-w-sm mx-auto rounded-lg shadow-md">
-                  <div className="flex justify-center items-center"><a href="#"
-                    className="px-2 py-1 bg-gray-600 text-sm text-green-100 rounded hover:bg-gray-500">Laravel</a>
-                  </div>
-                  <div className="mt-4"><a href="#" className="text-lg text-gray-700 font-medium hover:underline">Build
-                                      Your New Idea with Laravel Freamwork.</a></div>
-                  <div className="flex justify-between items-center mt-4">
-                    <div className="flex items-center"><img
-                      src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
-                      alt="avatar" className="w-8 h-8 object-cover rounded-full" /><a href="#"
-                        className="text-gray-700 text-sm mx-3 hover:underline">Alex John</a></div><span
-                          className="font-light text-sm text-gray-600">Jun 1, 2020</span>
-                  </div>
-                </div>
-              </div>
             </div>
             {/* Saido End */}
           </div>
         </div>
         <footer className="px-6 py-2 bg-gray-800 text-gray-100">
           <div className="flex flex-col justify-between items-center container mx-auto md:flex-row"><a href="#"
-            className="text-2xl font-bold">Brand</a>
-            <p className="mt-2 md:mt-0">All rights reserved 2020.</p>
+            className="text-2xl font-bold">{siteName}</a>
+            <p className="mt-2 md:mt-0">All rights reserved 2021.</p>
             <div className="flex -mx-2 mt-4 mb-2 md:mt-0 md:mb-0"><a href="#"
               className="mx-2 text-gray-100 hover:text-gray-400"><svg viewBox="0 0 512 512"
                 className="h-4 w-4 fill-current">
