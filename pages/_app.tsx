@@ -1,4 +1,6 @@
 import "tailwindcss/tailwind.css"
+
+// fontawesome
 import { config, library } from '@fortawesome/fontawesome-svg-core'
 import {
     faHeadset,
@@ -14,7 +16,6 @@ import {
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
-// fontAwesome
 config.autoAddCss = false;
 library.add(
     faHeadset,
@@ -29,8 +30,22 @@ library.add(
     faYoutube,
 )
 
-function MyApp({ Component, pageProps }) {
+// gtag
+import { useEffect } from 'react'
+import { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
+import * as gtag from '../lib/Gtag'
+
+export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+  const router = useRouter()
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      gtag.pageview(url)
+    }
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [router.events])
   return <Component {...pageProps} />
 }
-
-export default MyApp
