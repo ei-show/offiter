@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import Layout from '../../components/Layout'
 import Style from '../../styles/blog.module.scss'
 
@@ -40,7 +41,11 @@ export default function Blog(props) {
       <div className="flex items-center justify-end">
         {props.blog.tags.map(tag => (
           <React.Fragment key={tag.id}>
-            <span>{tag.name}</span>
+            <Link href="/">
+              <a className="bg-white p-2 rounded-lg shadow-md">
+                <span>{tag.name}</span>
+              </a>
+            </Link>
           </React.Fragment>
         ))}
       </div>
