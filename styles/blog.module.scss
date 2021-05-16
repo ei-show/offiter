@@ -1,0 +1,38 @@
+@layer components {
+  .blog {
+    h3 {
+      @apply
+      bg-white
+        text-xl
+        mt-6
+        border-l-4 border-gray-200
+        p-2
+    }
+    h4 {
+      @apply
+      bg-white
+        text-lg
+        mt-6
+        border-l-4 border-gray-300
+        p-2
+    }
+    p {
+      @apply
+      ml-6
+    }
+    a {
+      @apply
+      mt-6
+      ml-6
+      text-blue-400
+      hover:text-blue-600
+      hover:underline
+    }
+    ul {
+      @apply
+      list-disc
+      mt-6
+      ml-12
+    }
+  }
+}
