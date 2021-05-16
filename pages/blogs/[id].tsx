@@ -1,5 +1,7 @@
 import React from 'react'
-import Layout from '../../components/Layout';
+import Link from 'next/link'
+import Layout from '../../components/Layout'
+import Style from '../../styles/blog.module.scss'
 
 export const getStaticPaths = async () => {
   const key: any = {
@@ -31,15 +33,27 @@ export const getStaticProps = async context => {
 export default function Blog(props) {
   return (
     <Layout data={props.blog}>
-      <h2>{props.blog.title}</h2>
-      <div>
+
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-gray-700 md:text-2xl">{props.blog.title}</h2>
+      </div>
+
+      <div className="flex items-center justify-end">
         {props.blog.tags.map(tag => (
           <React.Fragment key={tag.id}>
-            <span>{tag.name}</span>
+            <Link href="/">
+              <a className="bg-white p-2 rounded-lg shadow-md">
+                <span>{tag.name}</span>
+              </a>
+            </Link>
           </React.Fragment>
         ))}
       </div>
-      <div dangerouslySetInnerHTML={{ __html: `${props.blog.body}` }}></div>
+
+      <div
+        className={Style.blog}
+        dangerouslySetInnerHTML={{ __html: `${props.blog.body}` }}
+      />
     </Layout>
   )
 }
