@@ -23,15 +23,12 @@ export default function Layout({ data, children }) {
       </Head>
       {/* Head End */}
       <div className="bg-gray-100 overflow-x-hidden">
-        <Header siteName={siteName}/>
+        <Header siteName={siteName} />
         <div className="px-6 py-8">
           <div className="flex justify-between container mx-auto">
             {/* Main Start */}
             <div className="w-full lg:w-8/12">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold text-gray-700 md:text-2xl">新着記事</h2>
-              </div>
-              {children}
+            {children}
             </div>
             {/* Main End */}
             {/* Saido Start */}
