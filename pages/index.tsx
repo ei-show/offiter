@@ -4,7 +4,7 @@ import Card from '../components/Card'
 
 export const getStaticProps = async () => {
   const key: any = {
-    headers: { 
+    headers: {
       'X-API-KEY': process.env.API_KEY
     }
   }
@@ -22,16 +22,14 @@ export default function Home(props) {
   return (
     <Layout data="">
 
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-gray-700 md:text-2xl">新着記事</h2>
+      </div>
+
       {props.blogs.map(blog => (
         <React.Fragment key={blog.id}>
 
           <Card data={blog} />
-
-          {blog.tags.map(tag => (
-            <React.Fragment key={tag.id}>
-              <span>{tag.name}</span>
-            </React.Fragment>
-          ))}
 
         </React.Fragment>
       ))}
