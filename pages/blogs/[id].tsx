@@ -4,15 +4,9 @@ import Layout from '../../components/Layout'
 import Style from '../../styles/blog.module.scss'
 
 export const getStaticPaths = async () => {
-  const key: any = {
-    headers: {
-      'X-API-KEY': process.env.API_KEY
-    }
-  }
-
+  const key: any = { headers: { 'X-API-KEY': process.env.API_KEY } }
   const res = await fetch(`https://offiter.microcms.io/api/v1/blogs`, key);
   const repos = await res.json();
-
   const paths = repos.contents.map(repo => `/blogs/${repo.id}`);
   return { paths, fallback: false };
 }
@@ -20,19 +14,22 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async context => {
   const id = context.params.id;
   const key: any = { headers: { 'X-API-KEY': process.env.API_KEY } }
-  const res = await fetch(`https://offiter.microcms.io/api/v1/blogs/${id}`, key)
-  const blog = await res.json()
+  const blogRes = await fetch(`https://offiter.microcms.io/api/v1/blogs/${id}`, key)
+  const blog = await blogRes.json()
+  const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags`, key)
+  const tagsData = await tagsRes.json()
 
   return {
     props: {
       blog: blog,
+      tags: tagsData.contents,
     }
   }
 }
 
 export default function Blog(props) {
   return (
-    <Layout data={props.blog}>
+    <Layout data={props.blog} tags={props.tags}>
 
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-gray-700 md:text-2xl">{props.blog.title}</h2>
