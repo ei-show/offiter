@@ -4,7 +4,7 @@ import Date from './Date'
 export default function Card(props: any) {
   return (
     <Link href="/blogs/[id]" as={`blogs/${props.data.id}`}>
-      <div className="mt-6">
+      <a className="mt-6 block">
         <div className="max-w-4xl px-1 py-1 bg-white rounded-lg shadow-md">
           <div className="flex flex-col lg:flex-row">
             <div className="relative h-64 sm:h-80 w-full lg:h-auto lg:w-1/3 xl:w-2/5 flex-none">
@@ -23,7 +23,7 @@ export default function Card(props: any) {
             </div>
           </div>
         </div>
-      </div>
+      </a>
     </Link>
   )
 }
