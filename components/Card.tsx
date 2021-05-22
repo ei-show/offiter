@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 import Date from './Date'
 
@@ -18,7 +19,14 @@ export default function Card(props: any) {
               </div>
               <div className="mt-2 flex justify-between items-center">
                 <span className="text-xs font-light text-gray-600">{Date(props.data.updatedAt)}</span>
-                <p className="text-xs px-1 py-0 bg-gray-600 text-gray-100 rounded">Laravel</p>
+
+                {props.data.tags.map(tag => (
+                  <React.Fragment key={tag.id}>
+
+                    <p className="text-xs px-1 py-0 bg-gray-600 text-gray-100 rounded">{tag.name}</p>
+
+                  </React.Fragment>
+                ))}
               </div>
             </div>
           </div>
