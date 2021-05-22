@@ -19,7 +19,7 @@ export const getStaticProps = async () => {
 
 export default function Home(props: any) {
   return (
-    <Layout data="" tags={props.tags}>
+    <Layout blog="" blogs={props.blogs} tags={props.tags}>
 
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-gray-700 md:text-2xl">新着記事</h2>
