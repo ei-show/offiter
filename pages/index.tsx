@@ -17,7 +17,7 @@ export const getStaticProps = async () => {
   }
 }
 
-export default function Home(props) {
+export default function Home(props: any) {
   return (
     <Layout data="" tags={props.tags}>
 
