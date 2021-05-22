@@ -13,7 +13,13 @@ import {
     faWindowMaximize,
     faWifi,
 } from '@fortawesome/free-solid-svg-icons'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
+import {
+  faYoutube,
+  faTwitterSquare,
+  faInstagramSquare,
+  faFacebookSquare,
+  faTiktok,
+} from '@fortawesome/free-brands-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 config.autoAddCss = false;
@@ -28,6 +34,10 @@ library.add(
     faWindowMaximize,
     faWifi,
     faYoutube,
+    faTwitterSquare,
+    faInstagramSquare,
+    faFacebookSquare,
+    faTiktok,
 )
 
 // gtag
