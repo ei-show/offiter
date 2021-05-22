@@ -2,7 +2,23 @@ import React from 'react'
 import Link from 'next/link'
 import Date from './Date'
 
+const DateTags = (props) => {
+  if (props.small) { return null }
+  return (
+    <div className="mt-2 flex justify-between items-center">
+      <span className="text-xs font-light text-gray-600">{Date(props.data.updatedAt)}</span>
+      {props.data.tags.map(tag => (
+        <React.Fragment key={tag.id}>
+          <p className="text-xs px-1 py-0 bg-gray-600 text-gray-100 rounded">{tag.name}</p>
+        </React.Fragment>
+      ))}
+    </div>
+  )
+}
+
 export default function Card(props: any) {
+  const desc = !props.small ? <p className="mt-2 text-gray-600 hidden lg:block" dangerouslySetInnerHTML={{ __html: `${props.data.description}` }} /> : ''
+  const titleClass = props.small ? 'text-base text-gray-700 font-bold' : 'text-2xl text-gray-700 font-bold'
   return (
     <Link href="/blogs/[id]" as={`blogs/${props.data.id}`}>
       <a className="mt-6 block">
@@ -14,20 +30,10 @@ export default function Card(props: any) {
             </div>
             <div className="w-full">
               <div className="mt-2">
-                <h3 className="text-2xl text-gray-700 font-bold">{props.data.title}</h3>
-                <p className="mt-2 text-gray-600 hidden lg:block" dangerouslySetInnerHTML={{ __html: `${props.data.description}` }}></p>
+                <h3 className={titleClass}>{props.data.title}</h3>
+                {desc}
               </div>
-              <div className="mt-2 flex justify-between items-center">
-                <span className="text-xs font-light text-gray-600">{Date(props.data.updatedAt)}</span>
-
-                {props.data.tags.map(tag => (
-                  <React.Fragment key={tag.id}>
-
-                    <p className="text-xs px-1 py-0 bg-gray-600 text-gray-100 rounded">{tag.name}</p>
-
-                  </React.Fragment>
-                ))}
-              </div>
+              <DateTags data={props.data} small={props.small} />
             </div>
           </div>
         </div>
