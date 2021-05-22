@@ -16,12 +16,15 @@ export const getStaticProps = async context => {
   const key: any = { headers: { 'X-API-KEY': process.env.API_KEY } }
   const blogRes = await fetch(`https://offiter.microcms.io/api/v1/blogs/${id}`, key)
   const blog = await blogRes.json()
+  const blogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs`, key)
+  const blogs = await blogsRes.json()
   const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags`, key)
   const tagsData = await tagsRes.json()
 
   return {
     props: {
       blog: blog,
+      blogs: blogs.contents,
       tags: tagsData.contents,
     }
   }
@@ -29,7 +32,7 @@ export const getStaticProps = async context => {
 
 export default function Blog(props) {
   return (
-    <Layout data={props.blog} tags={props.tags}>
+    <Layout blog={props.blog} blogs={props.blogs} tags={props.tags}>
 
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-gray-700 md:text-2xl">{props.blog.title}</h2>

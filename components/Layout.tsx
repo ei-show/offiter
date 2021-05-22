@@ -6,12 +6,11 @@ import Footer from './Footer'
 
 const siteName: string = 'Offiter'
 
-export default function Layout({ data, tags, children }) {
-  const title = data.title ? `${data.title} - ${siteName}` : siteName
-  const description = data.description ? data.description : siteName
+export default function Layout({ blog, blogs, tags, children }) {
+  const title = blog.title ? `${blog.title} - ${siteName}` : siteName
+  const description = blog.description ? blog.description : siteName
   return (
     <>
-      {/* Head Start */}
       <Head>
         <html lang="jp" />
         <link rel="icon" href="/favicon.ico" />
@@ -23,7 +22,6 @@ export default function Layout({ data, tags, children }) {
         <meta name="twitter:card" content="" />
         <meta charSet="UTF-8" />
       </Head>
-      {/* Head End */}
       <div className="bg-gray-100 overflow-x-hidden">
         <Header siteName={siteName} />
         <div className="px-6 py-8">
@@ -33,7 +31,7 @@ export default function Layout({ data, tags, children }) {
               {children}
             </div>
             {/* Main End */}
-            <Aside tags={tags} />
+            <Aside blogs={blogs} tags={tags} />
           </div>
         </div>
         <Footer siteName={siteName} />
