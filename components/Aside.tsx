@@ -23,7 +23,7 @@ export default function Aside(props) {
             {props.tags.map(tag => (
               <React.Fragment key={tag.id}>
                 <li>
-                  <Link href="/">
+                  <Link href="/[tag]" as={`/${tag.id}`}>
                     <a className="block text-gray-700 font-bold m-1 transition duration-300 ease-in-out transform hover:translate-x-1">
                       {tag.name} <FontAwesomeIcon icon={['fa', 'arrow-right' ]} className="" />
                     </a>
