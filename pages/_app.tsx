@@ -12,6 +12,7 @@ import {
     faEnvelope,
     faWindowMaximize,
     faWifi,
+    faArrowRight,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faYoutube,
@@ -33,6 +34,7 @@ library.add(
     faEnvelope,
     faWindowMaximize,
     faWifi,
+    faArrowRight,
     faYoutube,
     faTwitterSquare,
     faInstagramSquare,
