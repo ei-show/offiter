@@ -41,8 +41,8 @@ export default function Blog(props) {
       <div className="flex items-center justify-end">
         {props.blog.tags.map(tag => (
           <React.Fragment key={tag.id}>
-            <Link href="/">
-              <a className="bg-white p-2 rounded-lg shadow-md">
+            <Link href="/[tag]" as={`/${tag.id}`}>
+              <a className="bg-white p-2 rounded-lg shadow-md lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:transform lg:hover:-translate-y-1 lg:hover:shadow-md">
                 <span>{tag.name}</span>
               </a>
             </Link>
