@@ -1,8 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Layout from '../../components/Layout'
-import Date from '../../components/Date'
 import Style from '../../styles/blog.module.scss'
 
 export const getStaticPaths = async () => {
@@ -40,29 +38,16 @@ export default function Blog(props) {
         <h2 className="text-xl font-bold text-gray-700 md:text-2xl">{props.blog.title}</h2>
       </div>
 
-      <div className="my-4 flex items-center justify-between">
-        <div className="flex flex-col">
-          <span className="text-xs font-light text-gray-600">
-            <FontAwesomeIcon icon="calendar-plus" fixedWidth />
-            {Date(props.blog.createdAt)}
-          </span>
-          <span className="text-xs font-light text-gray-600">
-            <FontAwesomeIcon icon="edit" fixedWidth />
-            {Date(props.blog.updatedAt)}
-          </span>
-        </div>
-
-        <div className="flex items-center justify-end">
-          {props.blog.tags.map(tag => (
-            <React.Fragment key={tag.id}>
-              <Link href="/[tag]" as={`/${tag.id}`}>
-                <a className="bg-white p-2 rounded-lg shadow-md lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:transform lg:hover:-translate-y-1 lg:hover:shadow-md">
-                  <span>{tag.name}</span>
-                </a>
-              </Link>
-            </React.Fragment>
-          ))}
-        </div>
+      <div className="flex items-center justify-end">
+        {props.blog.tags.map(tag => (
+          <React.Fragment key={tag.id}>
+            <Link href="/">
+              <a className="bg-white p-2 rounded-lg shadow-md">
+                <span>{tag.name}</span>
+              </a>
+            </Link>
+          </React.Fragment>
+        ))}
       </div>
 
       <div
