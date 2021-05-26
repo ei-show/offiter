@@ -13,7 +13,6 @@ import {
     faWindowMaximize,
     faWifi,
     faArrowRight,
-    faCalendarPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faYoutube,
@@ -41,7 +40,6 @@ library.add(
     faInstagramSquare,
     faFacebookSquare,
     faTiktok,
-    faCalendarPlus
 )
 
 // gtag
