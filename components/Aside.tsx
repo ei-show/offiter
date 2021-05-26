@@ -18,7 +18,7 @@ export default function Aside(props) {
       </div>
       <div className="mt-10 px-8">
         <h2 className="mb-4 text-xl font-bold text-gray-700">よく検索されるワード</h2>
-        <div className="flex flex-col bg-white p-4 max-w-sm mx-auto rounded-lg border shadow-md lg:shadow-none">
+        <div className="flex flex-col bg-white p-4 max-w-sm mx-auto rounded-lg border shadow-md lg:shadow-none hover:shadow-md">
           <ul>
             {props.tags.map(tag => (
               <React.Fragment key={tag.id}>
