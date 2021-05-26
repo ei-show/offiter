@@ -27,7 +27,6 @@ export const getStaticProps = async context => {
 }
 
 export default function Home(props: any) {
-  console.log(props)
   return (
     <Layout blog="" blogs={props.blogs} tags={props.tags}>
 
