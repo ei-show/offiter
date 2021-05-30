@@ -14,13 +14,16 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@types/gtag.js": "^0.0.4",
+    "cheerio": "*",
     "date-fns": "^2.21.1",
+    "highlight.js": "^10.7.2",
     "next": "10.0.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "sass": "^1.32.13"
   },
   "devDependencies": {
+    "@types/highlight.js": "^10.1.0",
     "@types/node": "^14.14.31",
     "@types/react": "^17.0.2",
     "autoprefixer": "^10.2.5",

@@ -1,6 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import cheerio from 'cheerio';
+import hljs from 'highlight.js'
+import 'highlight.js/styles/night-owl.css'
 import Layout from '../../components/Layout'
 import Date from '../../components/Date'
 import Style from '../../styles/blog.module.scss'
@@ -23,9 +26,17 @@ export const getStaticProps = async context => {
   const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags`, key)
   const tagsData = await tagsRes.json()
 
+  const $ = cheerio.load(blog.body)
+  $('pre code').each((_, elm) => {
+    const result = hljs.highlightAuto($(elm).text())
+    $(elm).html(result.value)
+    $(elm).addClass('hljs')
+  })
+
   return {
     props: {
       blog: blog,
+      highlightedBody: $.html(),
       blogs: blogs.contents,
       tags: tagsData.contents,
     }
@@ -67,7 +78,7 @@ export default function Blog(props) {
 
       <div
         className={Style.blog}
-        dangerouslySetInnerHTML={{ __html: `${props.blog.body}` }}
+        dangerouslySetInnerHTML={{ __html: `${props.highlightedBody}` }}
       />
     </Layout>
   )
