@@ -7,9 +7,15 @@ export default function Header(props) {
       <div className="flex flex-col container mx-auto md:flex-row md:items-center md:justify-between">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <img className="object-scale-down" src="/logo.png" alt="" width="30" height="30"/>
             <Link href="/">
-              <a className="text-gray-800 text-2xl font-bold md:text-2xl ml-4"><h1>{props.siteName}</h1></a>
+              <a>
+                <img className="object-scale-down" src="/logo.png" alt="" width="30" height="30" />
+              </a>
+            </Link>
+            <Link href="/">
+              <a className="text-gray-800 text-2xl font-bold md:text-2xl ml-4">
+                <h1>{props.siteName}</h1>
+              </a>
             </Link>
           </div>
         </div>
