@@ -9,7 +9,7 @@ export default function Header(props) {
           <div className="flex items-center">
             <Link href="/">
               <a>
-                <img className="object-scale-down" src="/logo.png" alt="" width="30" height="30" />
+                <img className="object-scale-down" src="/logo.svg" alt="" width="30" height="30" />
               </a>
             </Link>
             <Link href="/">
