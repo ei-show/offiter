@@ -10,7 +10,7 @@ const DateTags = (props) => {
       <div className="flex justify-end">
         {props.data.tags.map(tag => (
           <React.Fragment key={tag.id}>
-            <p className="text-xs ml-1 px-1 py-0 bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 text-gray-100 rounded">{tag.name}</p>
+            <p className="text-xs ml-1 px-1 py-0 bg-gradient-to-r from-blue-800  to-blue-900 text-gray-100 rounded">{tag.name}</p>
           </React.Fragment>
         ))}
       </div>
