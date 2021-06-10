@@ -7,13 +7,15 @@ export default function Aside(props) {
   return (
     <div className="-mx-8 w-4/12 hidden lg:block">
       <div className="px-8">
-        <h2 className="mb-4 text-xl font-bold text-gray-700">最近の人気記事</h2>
+        <h2 className="text-xl font-bold text-gray-700">最近の人気記事</h2>
         {/* <div className="flex flex-col bg-white max-w-sm px-6 py-4 mx-auto rounded-lg shadow-md"> */}
-          {props.blogs.map(blog => (
-            <React.Fragment key={blog.id}>
-              <Card data={blog} small="true"/>
-            </React.Fragment>
-          ))}
+        {props.blogs.map(blog => (
+          <React.Fragment key={blog.id}>
+            <div className="pt-2">
+              <Card data={blog} small="true" />
+            </div>
+          </React.Fragment>
+        ))}
         {/* </div> */}
       </div>
       <div className="mt-10 px-8">
@@ -25,7 +27,7 @@ export default function Aside(props) {
                 <li>
                   <Link href="/[tag]" as={`/${tag.id}`}>
                     <a className="block text-gray-700 font-bold m-1 transition duration-300 ease-in-out transform hover:translate-x-1">
-                      {tag.name} <FontAwesomeIcon icon={['fas', 'arrow-right' ]} className="" />
+                      {tag.name} <FontAwesomeIcon icon={['fas', 'arrow-right']} className="" />
                     </a>
                   </Link>
                 </li>
