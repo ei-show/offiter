@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import Header from './Header'
 import Aside from './Aside'
 import Footer from './Footer'
+import Nav from './Nav'
 
 const siteName: string = 'Offiter'
 
@@ -35,6 +35,7 @@ export default function Layout({ blog, blogs, tags, children }) {
           </div>
         </div>
         <Footer siteName={siteName} />
+        <Nav />
       </div>
     </>
   )
