@@ -6,13 +6,16 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    fontFamily: {
+      title: '"Hachi Maru Pop"', // Title
+      head: '"Kosugi Maru"',     // 見出し
+      body: '"Noto Sans JP"',    // 文章
+    },
     extend: {},
   },
   variants: {
     extend: {
-      translate: [
-        'group-hover'
-      ],
+      translate: ['group-hover'],
     },
   },
   plugins: [],

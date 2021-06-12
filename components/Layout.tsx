@@ -22,7 +22,7 @@ export default function Layout({ blog, blogs, tags, children }) {
         <meta name="twitter:card" content="" />
         <meta charSet="UTF-8" />
       </Head>
-      <div className="bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 overflow-x-hidden">
+      <div className="bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 overflow-x-hidden font-body">
         <Header siteName={siteName} />
         <div className="px-6 py-8">
           <div className="flex justify-between container mx-auto">

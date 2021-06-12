@@ -13,7 +13,7 @@ export default function Header(props) {
               </a>
             </Link>
             <Link href="/">
-              <a className="text-2xl font-bold md:text-2xl ml-4">
+              <a className="text-2xl font-bold md:text-2xl ml-4 font-title">
                 <h1>{props.siteName}</h1>
               </a>
             </Link>

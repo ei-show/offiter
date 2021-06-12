@@ -6,6 +6,9 @@ export default class MyDocument extends Document {
     return (
       <Html lang="ja">
         <Head>
+          {/* Google Fonts */}
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Kosugi+Maru&family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet" />
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           {GA_TRACKING_ID && (
             <>
