@@ -48,7 +48,7 @@ export default function Blog(props) {
     <Layout blog={props.blog} blogs={props.blogs} tags={props.tags}>
 
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-gray-700 md:text-2xl">{props.blog.title}</h2>
+        <h2 className="font-head text-xl text-gray-700 md:text-2xl">{props.blog.title}</h2>
       </div>
 
       <div className="my-4 flex items-center justify-between">
