@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Header(props) {
   return (
-    <footer className="px-6 py-2 bg-gray-800 text-gray-100">
+    <footer className="px-6 py-2 bg-gradient-to-r from-blue-700 via-blue-900 to-blue-500 text-gray-100">
       <div className="flex flex-col justify-between items-center container mx-auto md:flex-row">
         <Link href="/">
           <a className="text-2xl font-bold">{props.siteName}</a>

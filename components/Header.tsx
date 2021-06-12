@@ -3,7 +3,7 @@ import NavItem from './NavItem'
 
 export default function Header(props) {
   return (
-    <nav className="bg-white px-6 py-4 shadow" >
+    <nav className="bg-gradient-to-r from-blue-100 via-blue-200 to-blue-100 px-6 py-4" >
       <div className="flex flex-col container mx-auto md:flex-row md:items-center md:justify-between">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
