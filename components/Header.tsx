@@ -20,9 +20,9 @@ export default function Header(props) {
           </div>
         </div>
         <div className="md:flex flex-col md:flex-row md:-mx-4 hidden">
-          <NavItem NavItemName="Offiterとは"></NavItem>
-          <NavItem NavItemName="運営者について"></NavItem>
-          <NavItem NavItemName="お問い合わせ"></NavItem>
+          <NavItem NavItemName="Offiterとは" blogId="whatisoffiter" />
+          <NavItem NavItemName="運営者について" />
+          <NavItem NavItemName="お問い合わせ" />
         </div>
       </div>
     </nav >
