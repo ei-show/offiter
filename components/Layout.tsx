@@ -36,6 +36,7 @@ export default function Layout({ blog, blogs, tags, children }) {
         </div>
         <Footer siteName={siteName} />
         <Nav />
+        <div className="h-16 md:hidden" />
       </div>
     </>
   )
