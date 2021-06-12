@@ -3,17 +3,13 @@ import "tailwindcss/tailwind.css"
 // fontawesome
 import { config, library } from '@fortawesome/fontawesome-svg-core'
 import {
-    faHeadset,
-    faEdit,
-    faCode,
-    faBriefcase,
-    faUser,
-    faBlog,
-    faEnvelope,
-    faWindowMaximize,
-    faWifi,
-    faArrowRight,
-    faCalendarPlus,
+  faHome,
+  faEdit,
+  faUser,
+  faEnvelope,
+  faWindowMaximize,
+  faArrowRight,
+  faCalendarPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faYoutube,
@@ -26,22 +22,18 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 
 config.autoAddCss = false;
 library.add(
-    faHeadset,
-    faEdit,
-    faCode,
-    faBriefcase,
-    faUser,
-    faBlog,
-    faEnvelope,
-    faWindowMaximize,
-    faWifi,
-    faArrowRight,
-    faYoutube,
-    faTwitterSquare,
-    faInstagramSquare,
-    faFacebookSquare,
-    faTiktok,
-    faCalendarPlus
+  faHome,
+  faEdit,
+  faUser,
+  faEnvelope,
+  faWindowMaximize,
+  faArrowRight,
+  faYoutube,
+  faTwitterSquare,
+  faInstagramSquare,
+  faFacebookSquare,
+  faTiktok,
+  faCalendarPlus
 )
 
 // gtag

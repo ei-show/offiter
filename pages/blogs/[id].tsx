@@ -48,7 +48,7 @@ export default function Blog(props) {
     <Layout blog={props.blog} blogs={props.blogs} tags={props.tags}>
 
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-gray-700 md:text-2xl">{props.blog.title}</h2>
+        <h2 className="font-head text-xl text-gray-700 md:text-2xl">{props.blog.title}</h2>
       </div>
 
       <div className="my-4 flex items-center justify-between">
@@ -67,7 +67,7 @@ export default function Blog(props) {
           {props.blog.tags.map(tag => (
             <React.Fragment key={tag.id}>
               <Link href="/[tag]" as={`/${tag.id}`}>
-                <a className="bg-gradient-to-r from-gray-50 via-white to-gray-50 text-blue-900  p-2 rounded-lg shadow-md lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:transform lg:hover:-translate-y-1 lg:hover:shadow-md">
+                <a className=" bg-gradient-to-r from-gray-50 via-white to-gray-50 text-blue-900 ml-2 p-2 rounded-lg shadow-md lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:transform lg:hover:-translate-y-1 lg:hover:shadow-md">
                   <span>{tag.name}</span>
                 </a>
               </Link>
