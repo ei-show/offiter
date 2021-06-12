@@ -27,9 +27,9 @@ export default function Home(props: any) {
 
       {props.blogs.map(blog => (
         <React.Fragment key={blog.id}>
-
-          <Card data={blog} />
-
+          <div className="mt-2">
+            <Card className="" data={blog} />
+          </div>
         </React.Fragment>
       ))}
 
