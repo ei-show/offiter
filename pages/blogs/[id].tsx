@@ -67,7 +67,7 @@ export default function Blog(props) {
           {props.blog.tags.map(tag => (
             <React.Fragment key={tag.id}>
               <Link href="/[tag]" as={`/${tag.id}`}>
-                <a className="bg-gradient-to-r from-gray-50 via-white to-gray-50 text-blue-900  p-2 rounded-lg shadow-md lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:transform lg:hover:-translate-y-1 lg:hover:shadow-md">
+                <a className=" bg-gradient-to-r from-gray-50 via-white to-gray-50 text-blue-900 ml-2 p-2 rounded-lg shadow-md lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:transform lg:hover:-translate-y-1 lg:hover:shadow-md">
                   <span>{tag.name}</span>
                 </a>
               </Link>
