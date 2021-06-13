@@ -22,7 +22,7 @@ const Description = (props) => {
   if (props.small) { return null }
   return (
     <p
-      className="text-sm md:flex-grow mt-2 text-gray-600 hidden md:block overflow-hidden"
+      className="text-sm font-bold md:flex-grow mt-2 text-gray-600 hidden md:block overflow-hidden"
       dangerouslySetInnerHTML={{ __html: `${props.data.description}` }}
     />
   )
@@ -31,7 +31,7 @@ const Description = (props) => {
 export default function Card(props: any) {
   const cardHeight = !props.small ? 'md:h-40' : 'md:h-20'
   const cardMargin = !props.small ? 'p-2' : 'p-1'
-  const titleClass = !props.small ? 'font-head text-2xl' : 'font-body text-sm'
+  const cardTitle  = !props.small ? 'font-head text-2xl' : 'font-body text-sm font-bold'
   return (
     <Link href="/blogs/[id]" as={`blogs/${props.data.id}`}>
       <a className="block">
@@ -41,7 +41,7 @@ export default function Card(props: any) {
               <img className="absolute inset-0 h-full w-full object-cover rounded-lg" src={props.data.image.url} alt="" />
             </div>
             <div className="w-full md:flex md:flex-col md:h-full md:ml-2">
-              <h3 className={`${titleClass} text-gray-700 md:flex-none`}>{props.data.title}</h3>
+              <h3 className={`${cardTitle} text-gray-700 md:flex-none`}>{props.data.title}</h3>
               <Description data={props.data} small={props.small} />
               <DateTags data={props.data} small={props.small} />
             </div>
