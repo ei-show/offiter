@@ -51,7 +51,7 @@ export default function Blog(props) {
         <h2 className="font-head text-xl text-gray-700 md:text-2xl">{props.blog.title}</h2>
       </div>
 
-      <div className="my-4 flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-between">
         <div className="flex flex-col">
           <span className="text-xs font-light text-gray-600">
             <FontAwesomeIcon icon="calendar-plus" fixedWidth />
@@ -76,8 +76,12 @@ export default function Blog(props) {
         </div>
       </div>
 
+      <div className="flex items-center justify-center mt-4 border-8 border-gray-50 ">
+        <img src={props.blog.image.url} alt="" />
+      </div>
+
       <div
-        className={Style.blog}
+        className={`${Style.blog} mt-4`}
         dangerouslySetInnerHTML={{ __html: `${props.highlightedBody}` }}
       />
     </Layout>
