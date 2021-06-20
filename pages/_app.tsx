@@ -40,7 +40,7 @@ library.add(
 import { useEffect } from 'react'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import * as gtag from '../lib/gtag'
+import * as gtag from '@/lib/gtag'
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter()
