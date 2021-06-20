@@ -1,8 +1,9 @@
 import React from 'react'
-import Layout from '../components/Layout'
-import Card from '../components/Card'
+import { GetStaticProps } from 'next'
+import Layout from '@/components/Layout'
+import Card from '@/components/Card'
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const key: any = { headers: { 'X-API-KEY': process.env.API_KEY } }
   const blogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs`, key)
   const blogsData = await blogsRes.json()
