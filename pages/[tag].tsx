@@ -1,6 +1,6 @@
 import React from 'react'
-import Layout from '../components/Layout'
-import Card from '../components/Card'
+import Layout from '@/components/Layout'
+import Card from '@/components/Card'
 
 export const getStaticPaths = async () => {
   const key: any = { headers: { 'X-API-KEY': process.env.API_KEY } }

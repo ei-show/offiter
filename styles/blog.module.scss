@@ -6,7 +6,7 @@
         font-head
         text-xl
         text-blue-900
-        mt-6
+        mb-6
         border-l-4 border-blue-200
         p-2
     }
@@ -16,7 +16,7 @@
         font-head
         text-lg
         text-blue-900
-        mt-6
+        mb-6
         border-l-4 border-blue-100
         p-2
     }
@@ -38,6 +38,12 @@
       list-disc
       mt-6
       ml-12
+    }
+    pre {
+      code {
+        @apply
+        mt-6
+      }
     }
   }
 }

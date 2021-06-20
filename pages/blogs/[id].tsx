@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import cheerio from 'cheerio';
 import hljs from 'highlight.js'
 import 'highlight.js/styles/night-owl.css'
-import Layout from '../../components/Layout'
-import Date from '../../components/Date'
-import Style from '../../styles/blog.module.scss'
+import Layout from '@/components/Layout'
+import Date from '@/components/Date'
+import Style from '@/styles/blog.module.scss'
 
 export const getStaticPaths = async () => {
   const key: any = { headers: { 'X-API-KEY': process.env.API_KEY } }
@@ -51,7 +51,7 @@ export default function Blog(props) {
         <h2 className="font-head text-xl text-gray-700 md:text-2xl">{props.blog.title}</h2>
       </div>
 
-      <div className="my-4 flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-between">
         <div className="flex flex-col">
           <span className="text-xs font-light text-gray-600">
             <FontAwesomeIcon icon="calendar-plus" fixedWidth />
@@ -76,8 +76,12 @@ export default function Blog(props) {
         </div>
       </div>
 
+      <div className="flex items-center justify-center mt-4 border-8 border-gray-50 ">
+        <img src={props.blog.image.url} alt="" />
+      </div>
+
       <div
-        className={Style.blog}
+        className={`${Style.blog} mt-4`}
         dangerouslySetInnerHTML={{ __html: `${props.highlightedBody}` }}
       />
     </Layout>
