@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import cheerio from 'cheerio';
 import hljs from 'highlight.js'
@@ -77,7 +78,7 @@ export default function Blog(props) {
       </div>
 
       <div className="flex items-center justify-center mt-4 border-8 border-gray-50 ">
-        <img src={props.blog.image.url} alt="" />
+        <Image alt="" src={props.blog.image.url} width={props.blog.image.width} height={props.blog.image.height} />
       </div>
 
       <div
