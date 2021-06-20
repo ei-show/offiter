@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import cheerio from 'cheerio';
 import hljs from 'highlight.js'
 import 'highlight.js/styles/night-owl.css'
-import Layout from '../../components/Layout'
-import Date from '../../components/Date'
-import Style from '../../styles/blog.module.scss'
+import Layout from '@/components/Layout'
+import Date from '@/components/Date'
+import Style from '@/styles/blog.module.scss'
 
 export const getStaticPaths = async () => {
   const key: any = { headers: { 'X-API-KEY': process.env.API_KEY } }
