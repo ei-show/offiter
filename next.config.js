@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ['offiter.microcms.io'],
+    domains: ['images.microcms-assets.io'],
   },
 }
