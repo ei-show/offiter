@@ -42,6 +42,9 @@ import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import * as gtag from '@/lib/gtag'
 
+import { DefaultSeo } from 'next-seo'
+import SEO from '@/lib/next-seo.config'
+
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter()
   useEffect(() => {
@@ -53,5 +56,10 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events])
-  return <Component {...pageProps} />
+  return (
+    <>
+      <DefaultSeo {...SEO} />
+      <Component {...pageProps} />
+    </>
+  )
 }
