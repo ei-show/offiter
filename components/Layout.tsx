@@ -11,17 +11,6 @@ export default function Layout({ blog, blogs, tags, children }) {
   const description = blog.description ? blog.description : siteName
   return (
     <>
-      <Head>
-        <html lang="jp" />
-        <link rel="icon" href="/favicon.ico" />
-        <title>{title}</title>
-        <meta name="og:title" content={title} />
-        <meta name="description" content={description} />
-        <meta name="og:description" content={description} />
-        <meta name="og:image" content="" />
-        <meta name="twitter:card" content="" />
-        <meta charSet="UTF-8" />
-      </Head>
       <div className="bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 overflow-x-hidden font-body">
         <Header siteName={siteName} />
         <div className="px-6 py-8">
