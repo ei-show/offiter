@@ -3,10 +3,10 @@ export default {
   description: 'IT情報提供ブログ。Next.js + microCMSで作っている完全オリジナルブログ。',
   canonical: 'offiter.net',
   additionalLinkTags: [
-    { rel: 'icon', href: 'https://offiter.net/favicon.ico', }
+    { rel: 'icon', href: '/icons/logo.svg', type: 'image/svg+xml', },
   ],
   twitter: {
-    cardType: 'summary_large_image',
+    cardType: 'summary',
     site: '@offiter',
     handle: '@offiter',
   },
@@ -18,7 +18,7 @@ export default {
     locale: 'ja_JP',
     images: [
       {
-        url: 'https://offiter.net/icon.png',
+        url: '/twitter_cards/icon_144x144.png',
         width: 400,
         height: 400,
         alt: 'Og Image Alt',
