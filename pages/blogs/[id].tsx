@@ -63,8 +63,9 @@ export default function Blog(props) {
               url: props.blog.image.url,
               height: props.blog.image.height,
               width: props.blog.image.width,
-            },
-          ],
+              alt: 'Og Image Alt'
+            }
+          ]
         }}
       />
       <Layout blog={props.blog} blogs={props.blogs} tags={props.tags}>

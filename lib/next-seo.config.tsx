@@ -16,6 +16,14 @@ export default {
     title: 'Offiter',
     description: 'IT情報提供ブログ。Next.js + microCMSで作っている完全オリジナルブログ。',
     locale: 'ja_JP',
+    images: [
+      {
+        url: 'https://offiter.net/icon.png',
+        width: 400,
+        height: 400,
+        alt: 'Og Image Alt',
+      },
+    ],
     site_name: 'Offiter',
   },
 }
