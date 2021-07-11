@@ -18,9 +18,9 @@ export default {
     locale: 'ja_JP',
     images: [
       {
-        url: '/twitter_cards/icon_144x144.png',
-        width: 400,
-        height: 400,
+        url: 'https://offiter.net/twitter_cards/icon_144x144.png',
+        width: 144,
+        height: 144,
         alt: 'Og Image Alt',
       },
     ],
