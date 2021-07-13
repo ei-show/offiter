@@ -52,9 +52,10 @@ export default function Blog(props) {
       <NextSeo
         {...SEO}
         title={props.blog.title}
-        titleTemplate="%s | Offiter"
+        titleTemplate="%s - Offiter"
         description={props.blog.description}
         openGraph={{
+          type: 'article',
           url: `https://offiter.net/blogs/${props.blog.id}`,
           title: props.blog.title,
           description: props.blog.description,
