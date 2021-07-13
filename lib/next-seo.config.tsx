@@ -13,8 +13,8 @@ export default {
   openGraph: {
     url: 'https://offiter.net/',
     type: 'website',
-    title: 'Offiter',
-    description: 'IT情報提供ブログ。Next.js + microCMSで作っている完全オリジナルブログ。',
+    title: 'Offiter - IT情報共有ブログ',
+    description: '情シスやクラウドのエンジニア経験を活かした情報共有ブログ。Next.js + microCMSブログを誠心誠意で作成中。',
     locale: 'ja_JP',
     images: [
       {
