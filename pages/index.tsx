@@ -23,11 +23,7 @@ export const getStaticProps: GetStaticProps = async () => {
 export default function Home(props: any) {
   return (
     <>
-      <NextSeo
-        {...SEO}
-        twitter={{ cardType: 'summary', }}
-        openGraph={{ type: 'website', }}
-      />
+      <NextSeo {...SEO} />
       <Layout blog="" blogs={props.blogs} tags={props.tags}>
 
         <div className="flex items-center justify-between">
