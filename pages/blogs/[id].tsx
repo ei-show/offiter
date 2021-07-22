@@ -46,6 +46,11 @@ export const getStaticProps = async context => {
   }
 }
 
+const baseURL = {
+  production: 'https://offiter.net',
+  development: 'http://localhost:3000',
+}[process.env.NODE_ENV]
+
 export default function Blog(props) {
   return (
     <>
@@ -56,7 +61,7 @@ export default function Blog(props) {
         description={props.blog.description}
         openGraph={{
           type: 'article',
-          url: `https://offiter.net/blogs/${props.blog.id}`,
+          url: `${baseURL}/api/ogp/${props.blog.id}`,
           title: props.blog.title,
           description: props.blog.description,
           images: [
