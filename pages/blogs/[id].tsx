@@ -61,14 +61,14 @@ export default function Blog(props) {
         description={props.blog.description}
         openGraph={{
           type: 'article',
-          url: `${baseURL}/api/ogp/${props.blog.id}`,
+          url: `${baseURL}/blogs/${props.blog.id}`,
           title: props.blog.title,
           description: props.blog.description,
           images: [
             {
-              url: props.blog.image.url,
-              height: props.blog.image.height,
-              width: props.blog.image.width,
+              url: `${baseURL}/api/ogp/${props.blog.id}`,
+              height: 630,
+              width: 1200,
               alt: 'Og Image Alt'
             }
           ]
