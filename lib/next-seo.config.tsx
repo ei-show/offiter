@@ -1,3 +1,8 @@
+const baseURL = {
+  production: 'https://offiter.net',
+  development: 'http://localhost:3000',
+}[process.env.NODE_ENV]
+
 export default {
   defaultTitle: 'Offiter',
   description: 'IT情報提供ブログ。Next.js + microCMSで作っている完全オリジナルブログ。',
@@ -18,7 +23,7 @@ export default {
     locale: 'ja_JP',
     images: [
       {
-        url: 'https://offiter.net/twitter_cards/large_image_1200x630.png',
+        url: `${baseURL}/twitter_cards/large_image_1200x630.png`,
         width: 1200,
         height: 630,
         alt: 'Og Image Alt',
