@@ -34,7 +34,7 @@ export default function Card(props: any) {
   const cardMargin = !props.small ? 'md:p-2' : ''
   const cardTitle = !props.small ? 'md:text-2xl' : 'md:font-body md:text-sm md:font-bold'
   return (
-    <Link href="/blogs/[id]" as={`blogs/${props.data.id}`}>
+    <Link href="/blogs/[id]" as={`/blogs/${props.data.id}`}>
       <a className="block">
         <div className={`${cardHeight} ${cardMargin} p-1 h-28 max-w-4xl bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-lg border shadow-md md:shadow-none md:transition md:duration-300 md:ease-in-out md:transform md:hover:-translate-y-1 md:hover:shadow-md`}>
           <div className="flex h-full">
