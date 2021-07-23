@@ -10,6 +10,7 @@ import Layout from '@/components/Layout'
 import Date from '@/components/Date'
 import Style from '@/styles/blog.module.scss'
 import SEO from '@/lib/next-seo.config'
+import createOgp from '@/lib/createOgp'
 
 export const getStaticPaths = async () => {
   const key: any = { headers: { 'X-API-KEY': process.env.API_KEY } }
@@ -29,12 +30,15 @@ export const getStaticProps = async context => {
   const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags`, key)
   const tagsData = await tagsRes.json()
 
+  // codeタグを装飾
   const $ = cheerio.load(blog.body)
   $('pre code').each((_, elm) => {
     const result = hljs.highlightAuto($(elm).text())
     $(elm).html(result.value)
     $(elm).addClass('hljs')
   })
+
+  void createOgp(blog.id, blog.title)
 
   return {
     props: {
@@ -46,10 +50,7 @@ export const getStaticProps = async context => {
   }
 }
 
-const baseURL = {
-  production: 'https://offiter.net',
-  development: 'http://localhost:3000',
-}[process.env.NODE_ENV]
+const baseURL: string = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 
 export default function Blog(props) {
   return (
@@ -61,14 +62,14 @@ export default function Blog(props) {
         description={props.blog.description}
         openGraph={{
           type: 'article',
-          url: `${baseURL}/api/ogp/${props.blog.id}`,
+          url: `${baseURL}/blogs/${props.blog.id}`,
           title: props.blog.title,
           description: props.blog.description,
           images: [
             {
-              url: props.blog.image.url,
-              height: props.blog.image.height,
-              width: props.blog.image.width,
+              url: `${baseURL}/ogp/${props.blog.id}.png`,
+              height: 630,
+              width: 1200,
               alt: 'Og Image Alt'
             }
           ]
