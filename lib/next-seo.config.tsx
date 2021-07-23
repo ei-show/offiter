@@ -1,7 +1,4 @@
-const baseURL = {
-  production: 'https://offiter.net',
-  development: 'http://localhost:3000',
-}[process.env.NODE_ENV]
+const baseURL: string = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 
 export default {
   defaultTitle: 'Offiter',
