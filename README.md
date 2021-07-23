@@ -35,11 +35,18 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## microCMSのAPI_keyを環境変数に登録
 
-#### local
+#### local envファイルの作成
 `.env.development.local`ファイルを追加
 ```
 API_KEY=8fae269a-fb4a-480d-83de-598e8fac61d1
+GA_TRACKING_ID=G-A123456789
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
 
-#### deploy
-上のKEYの内容をdeploy先に登録
+#### deploy env
+localの内容をdeploy先に環境変数として登録
+```
+API_KEY=8fae269a-fb4a-480d-83de-598e8fac61d1
+GA_TRACKING_ID=G-AXXXXXXXXX
+NEXT_PUBLIC_BASE_URL=https://offiter.net
+```
