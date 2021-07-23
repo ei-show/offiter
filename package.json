@@ -17,6 +17,7 @@
     "canvas": "^2.8.0",
     "cheerio": "*",
     "date-fns": "^2.21.1",
+    "fs": "*",
     "highlight.js": "^10.7.2",
     "next": "^10.2.3",
     "next-seo": "^4.26.0",
