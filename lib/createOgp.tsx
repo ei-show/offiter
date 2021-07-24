@@ -1,4 +1,4 @@
-import { createCanvas, loadImage, Canvas } from 'canvas'
+import { createCanvas, loadImage, registerFont, Canvas } from 'canvas'
 import fs from 'fs'
 
 interface SeparatedText {
@@ -33,6 +33,7 @@ export default async function createOgp(id: string, title: string) {
   const ctx = canvas.getContext("2d")
   const backgroundImage = await loadImage('public/twitter_cards/article_1200x630.png')
   ctx.drawImage(backgroundImage, DX, DY, WIDTH, HEIGHT)
+  registerFont('./KosugiMaru-Regular.ttf', {family: 'Kosugi Maru'})
   ctx.font = "60px 'Kosugi Maru'"
   ctx.fillStyle = "#1F2937"
   ctx.textAlign = "left"
