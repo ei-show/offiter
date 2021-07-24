@@ -42,7 +42,7 @@ export default async function createOgp(id: string, title: string) {
   // いい感じに改行する
   const lines = createTextLines(canvas, title);
   lines.forEach((line, index) => {
-    const y = 100 + 80 * (index - (lines.length - 1) / 2);
+    const y = 150 + 80 * (index - (lines.length - 1) / 2);
     ctx.fillText(line, 100, y);
   });
 
@@ -50,9 +50,3 @@ export default async function createOgp(id: string, title: string) {
   const buffer = canvas.toBuffer()
   fs.writeFileSync(`public/ogp/${id}.png`,buffer)
 }
-
-// titleを取得
-// titleとwidthを比較
-// titleが大きかったら半分に割る
-// titleを1行づつ配列に追加する
-// titleを
