@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import SNSlink from './SNSlink'
 
 type props = {
   siteName: string
@@ -14,31 +14,11 @@ export default function Header({siteName}: props): JSX.Element {
         </Link>
         <p className="mt-2 md:mt-0">All rights reserved 2021.</p>
         <div className="flex -mx-2 mt-4 mb-2 md:mt-0 md:mb-0">
-          <Link href="https://twitter.com">
-            <a className="mx-2 hover:text-gray-400">
-              <FontAwesomeIcon icon={['fab', 'twitter-square']} />
-            </a>
-          </Link>
-          <Link href="https://twitter.com">
-            <a className="mx-2 hover:text-gray-400">
-              <FontAwesomeIcon icon={['fab', 'youtube']} />
-            </a>
-          </Link>
-          <Link href="https://twitter.com">
-            <a className="mx-2 hover:text-gray-400">
-              <FontAwesomeIcon icon={['fab', 'instagram-square']} />
-            </a>
-          </Link>
-          <Link href="https://twitter.com">
-            <a className="mx-2 hover:text-gray-400">
-              <FontAwesomeIcon icon={['fab', 'facebook-square']} />
-            </a>
-          </Link>
-          <Link href="https://twitter.com">
-            <a className="mx-2 hover:text-gray-400">
-              <FontAwesomeIcon icon={['fab', 'tiktok']} />
-            </a>
-          </Link>
+          <SNSlink link="/" iconName="twitter-square" />
+          <SNSlink link="/" iconName="youtube" />
+          <SNSlink link="/" iconName="instagram-square" />
+          <SNSlink link="/" iconName="facebook-square" />
+          <SNSlink link="/" iconName="tiktok" />
         </div>
       </div>
     </footer>
