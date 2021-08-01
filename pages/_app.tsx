@@ -20,7 +20,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
-config.autoAddCss = false;
+config.autoAddCss = false
 library.add(
   faHome,
   faEdit,

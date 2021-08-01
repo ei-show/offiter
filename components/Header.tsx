@@ -2,7 +2,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import NavItem from './NavItem'
 
-export default function Header(props) {
+type props = {
+  siteName: string
+}
+
+export default function Header({siteName}: props): JSX.Element {
   return (
     <nav className="px-6 py-4 text-gray-800" >
       <div className="flex flex-col container mx-auto md:flex-row md:items-center md:justify-between">
@@ -10,7 +14,7 @@ export default function Header(props) {
           <Link href="/">
             <a className="flex items-center text-2xl font-bold md:text-2xl ml-4 font-title">
               <Image src="/logo.svg" alt="logo" width="30" height="30" />
-              <h1 className="ml-4">{props.siteName}</h1>
+              <h1 className="ml-4">{siteName}</h1>
             </a>
           </Link>
         </div>
