@@ -20,7 +20,7 @@ export default function Layout({ blogs, tags, children }: props):JSX.Element {
         <div className="px-6 py-8">
           <div className="flex justify-between container mx-auto">
             {/* Main Start */}
-            <div className="w-full min-h-screen lg:w-8/12">
+            <div className="w-full lg:w-8/12">
               {children}
             </div>
             {/* Main End */}
