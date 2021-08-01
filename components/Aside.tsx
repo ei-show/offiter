@@ -2,17 +2,22 @@ import React from 'react'
 import Link from 'next/link'
 import Card from './Card'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { blog, tag } from '@/lib/types'
 
-export default function Aside(props) {
+type props = {
+  blogs: blog[],
+  tags: tag[]
+}
+export default function Aside({blogs, tags}: props): JSX.Element {
   return (
     <div className="-mx-8 w-4/12 hidden lg:block">
       <div className="px-8">
         <h2 className="text-xl font-bold text-gray-700">最近の人気記事</h2>
         {/* <div className="flex flex-col bg-white max-w-sm px-6 py-4 mx-auto rounded-lg shadow-md"> */}
-        {props.blogs.map(blog => (
+        {blogs.map(blog => (
           <React.Fragment key={blog.id}>
             <div className="pt-2">
-              <Card data={blog} small="true" />
+              <Card data={blog} small={true}/>
             </div>
           </React.Fragment>
         ))}
@@ -22,7 +27,7 @@ export default function Aside(props) {
         <h2 className="mb-4 text-xl font-bold text-gray-700">よく検索されるワード</h2>
         <div className="flex flex-col bg-gradient-to-r from-gray-50 via-white to-gray-50 p-4 max-w-sm mx-auto rounded-lg border shadow-md lg:shadow-none">
           <ul>
-            {props.tags.map(tag => (
+            {tags.map(tag => (
               <React.Fragment key={tag.id}>
                 <li>
                   <Link href="/[tag]" as={`/${tag.id}`}>
