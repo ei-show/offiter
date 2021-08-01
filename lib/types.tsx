@@ -1,4 +1,3 @@
-import { Url } from 'url'
 
 type cmsKey = {
   headers: {
@@ -20,7 +19,7 @@ type blog = {
   title: string,
   description: string,
   image: {
-    url: Url,
+    url: string,
     height: number,
     width: number,
   },
