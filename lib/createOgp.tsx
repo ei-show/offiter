@@ -1,11 +1,6 @@
 import { createCanvas, loadImage, registerFont, Canvas } from 'canvas'
 import fs from 'fs'
 
-interface SeparatedText {
-  line: string
-  remaining: string
-}
-
 // だいたい半分で改行する関数
 const createTextLines = (canvas: Canvas, text: string): string[] => {
   const lines: string[] = []
