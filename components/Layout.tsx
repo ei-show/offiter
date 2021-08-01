@@ -1,14 +1,18 @@
-import Head from 'next/head'
+import { ReactNode } from 'react'
 import Header from './Header'
 import Aside from './Aside'
 import Footer from './Footer'
 import Nav from './Nav'
+import type { tag, blog } from '@/lib/types'
 
-const siteName: string = 'Offiter'
+type props = {
+  blogs: blog[],
+  tags: tag[],
+  children: ReactNode
+}
 
-export default function Layout({ blog, blogs, tags, children }) {
-  const title = blog.title ? `${blog.title} - ${siteName}` : siteName
-  const description = blog.description ? blog.description : siteName
+export default function Layout({ blogs, tags, children }: props):JSX.Element {
+  const siteName = 'Offiter'
   return (
     <>
       <div className="bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 overflow-x-hidden font-body">

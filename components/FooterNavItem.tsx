@@ -1,13 +1,18 @@
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function NavItem(props) {
+type props = {
+  link: string,
+  iconName: any,
+  itemName: string,
+}
+export default function NavItem({ link, iconName, itemName }: props): JSX.Element {
   return (
     <li className="flex-1 text-center">
-      <Link href="/">
+      <Link href={link}>
         <a className="block py-3 w-full leading-normal">
-          <FontAwesomeIcon icon={props.iconName} size="lg" fixedWidth />
-          <p>{props.itemName}</p>
+          <FontAwesomeIcon icon={iconName} size="lg" fixedWidth />
+          <p>{itemName}</p>
         </a>
       </Link>
     </li>
