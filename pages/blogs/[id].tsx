@@ -13,6 +13,7 @@ import Style from '@/styles/blog.module.scss'
 import SEO from '@/lib/next-seo.config'
 import createOgp from '@/lib/createOgp'
 import type { cmsKey, tag, tagsData, blog, blogsData } from '@/lib/types'
+import { isDraft } from '@/lib/isDraft'
 
 type repos = {
   contents: [
@@ -27,7 +28,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id`, key);
   const repos: repos = await res.json();
   const paths = repos.contents.map(repo => `/blogs/${repo.id}`);
-  return { paths, fallback: false };
+  return { paths, fallback: true }
 }
 
 type blogData = {
@@ -36,9 +37,12 @@ type blogData = {
 } & blog
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context.params?.id;
+  const id = context.params?.id
+  const draftKey = isDraft(context.previewData) ? { draftKey: context.previewData.draftKey } : {}
   const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
-  const blogRes = await fetch(`https://offiter.microcms.io/api/v1/blogs/${id}?fields=id%2Ctitle%2Cimage%2CcreatedAt%2CupdatedAt%2Cbody%2Ctags.id%2Ctags.name`, key)
+  const blogRes = await fetch(
+    `https://offiter.microcms.io/api/v1/blogs/${id}?fields=id%2Ctitle%2Cimage%2CcreatedAt%2CupdatedAt%2Cbody%2Ctags.id%2Ctags.name${draftKey !== undefined ? `%2CdraftKey=${draftKey}` : ''}`,
+    key)
   const blog: blogData = await blogRes.json()
   const blogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
   const blogsData: blogsData = await blogsRes.json()
