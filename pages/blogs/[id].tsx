@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const draftKey = isDraft(context.previewData) ? { draftKey: context.previewData.draftKey } : {}
   const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
   const blogRes = await fetch(
-    `https://offiter.microcms.io/api/v1/blogs/${id}?fields=id%2Ctitle%2Cimage%2CcreatedAt%2CupdatedAt%2Cbody%2Ctags.id%2Ctags.name${draftKey !== undefined ? `%2CdraftKey=${draftKey}` : ''}`,
+    `https://offiter.microcms.io/api/v1/blogs/${id}?fields=id%2Ctitle%2Cimage%2CcreatedAt%2CupdatedAt%2Cbody%2Ctags.id%2Ctags.name${draftKey !== undefined ? `&draftKey=${draftKey}` : ''}`,
     key)
   const blog: blogData = await blogRes.json()
   const blogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
