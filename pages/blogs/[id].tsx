@@ -2,7 +2,6 @@ import React from 'react'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import cheerio from 'cheerio';
@@ -14,7 +13,6 @@ import Style from '@/styles/blog.module.scss'
 import SEO from '@/lib/next-seo.config'
 import createOgp from '@/lib/createOgp'
 import type { cmsKey, tag, tagsData, blog, blogsData } from '@/lib/types'
-import { isDraft } from '@/lib/isDraft'
 
 type repos = {
   contents: [
@@ -29,7 +27,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id`, key);
   const repos: repos = await res.json();
   const paths = repos.contents.map(repo => `/blogs/${repo.id}`);
-  return { paths, fallback: 'blocking' }
+  return { paths, fallback: false };
 }
 
 type blogData = {
@@ -38,27 +36,13 @@ type blogData = {
 } & blog
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context.params?.id
-  const draftKey = isDraft(context.previewData) ? context.previewData.draftKey : {}
+  const id = context.params?.id;
   const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
-
-  if (!id) {
-    throw new Error("Error: ID not found");
-  }
-
-  const blogRes = await fetch(
-    `https://offiter.microcms.io/api/v1/blogs/${id}?fields=id%2Ctitle%2Cimage%2CcreatedAt%2CupdatedAt%2Cbody%2Ctags.id%2Ctags.name${draftKey !== undefined ? `&draftKey=${draftKey}` : ''}`,
-    key)
+  const blogRes = await fetch(`https://offiter.microcms.io/api/v1/blogs/${id}?fields=id%2Ctitle%2Cimage%2CcreatedAt%2CupdatedAt%2Cbody%2Ctags.id%2Ctags.name`, key)
   const blog: blogData = await blogRes.json()
-  const blogsRes = await fetch(
-    `https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`,
-    key
-  )
+  const blogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
   const blogsData: blogsData = await blogsRes.json()
-  const tagsRes = await fetch(
-    `https://offiter.microcms.io/api/v1/tags?fields=id%2Cname`,
-    key
-  )
+  const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags?fields=id%2Cname`, key)
   const tagsData: tagsData = await tagsRes.json()
 
   // codeタグを装飾
@@ -74,7 +58,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       blog: blog,
-      draftKey: draftKey,
       highlightedBody: $.html(),
       blogs: blogsData.contents,
       tags: tagsData.contents,
@@ -86,30 +69,14 @@ const baseURL: string = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 
 type props = {
   blog: blogData,
-  draftKey: string,
   highlightedBody: string,
   blogs: blog[],
   tags: tag[]
 }
 
-export default function Blog({blog, draftKey, highlightedBody, blogs, tags}: props): JSX.Element {
-  const router = useRouter();
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
+export default function Blog({blog, highlightedBody, blogs, tags}: props): JSX.Element {
   return (
     <>
-      {draftKey && (
-        <div>
-          現在プレビューモードで閲覧中です。
-          <Link href={`/api/exit-preview?slug=${blog.id}&draftKey=${draftKey}`}>
-            <a>プレビューを解除</a>
-          </Link>
-        </div>
-      )}
-
       <NextSeo
         {...SEO}
         title={blog.title}
@@ -130,7 +97,6 @@ export default function Blog({blog, draftKey, highlightedBody, blogs, tags}: pro
           ]
         }}
       />
-
       <Layout blogs={blogs} tags={tags}>
 
         <div className="flex items-center justify-between">
