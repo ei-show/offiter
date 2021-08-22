@@ -50,6 +50,3 @@ API_KEY=8fae269a-fb4a-480d-83de-598e8fac61d1
 GA_TRACKING_ID=G-AXXXXXXXXX
 NEXT_PUBLIC_BASE_URL=https://offiter.net
 ```
-
-## previewの設定
-`http://localhost:3000/api/preview?slug={CONTENT_ID}&draftKey={DRAFT_KEY}`
