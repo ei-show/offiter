@@ -98,7 +98,7 @@ export default function Blog({blog, highlightedBody, latestBlogs, tags}: props):
           <h2 className="font-head text-xl text-gray-700 md:text-2xl">{blog.title}</h2>
         </div>
 
-        <div className="mt-4 flex items-center justify-between">
+        <div className="lg:hidden mt-4 flex items-center justify-between">
           <div className="flex flex-col">
             <span className="text-xs font-light text-gray-600">
               <FontAwesomeIcon icon="calendar-plus" fixedWidth />
