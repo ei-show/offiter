@@ -12,7 +12,7 @@ import Date from '@/components/Date'
 import Style from '@/styles/blog.module.scss'
 import SEO from '@/lib/next-seo.config'
 import createOgp from '@/lib/createOgp'
-import type { cmsKey, tag, tagsData, blog, blogsData } from '@/lib/types'
+import type { cmsKey, tag, tagsData, blog, blogData, blogsData } from '@/lib/types'
 
 type repos = {
   contents: [
@@ -29,11 +29,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = repos.contents.map(repo => `/blogs/${repo.id}`);
   return { paths, fallback: false };
 }
-
-type blogData = {
-  createdAt: string,
-  body: string,
-} & blog
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id;
@@ -97,7 +92,7 @@ export default function Blog({blog, highlightedBody, latestBlogs, tags}: props):
           ]
         }}
       />
-      <Layout latestBlogs={latestBlogs} tags={tags}>
+      <Layout blogDetails={blog} latestBlogs={latestBlogs} tags={tags}>
 
         <div className="flex items-center justify-between">
           <h2 className="font-head text-xl text-gray-700 md:text-2xl">{blog.title}</h2>
