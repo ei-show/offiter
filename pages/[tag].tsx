@@ -39,7 +39,7 @@ type props = {
 
 export default function Home({blogs, latestBlogs, tags}: props): JSX.Element {
   return (
-    <Layout blogs={latestBlogs} tags={tags}>
+    <Layout latestBlogs={latestBlogs} tags={tags}>
 
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-gray-700 md:text-2xl">新着記事</h2>

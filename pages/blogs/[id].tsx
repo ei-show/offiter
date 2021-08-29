@@ -97,7 +97,7 @@ export default function Blog({blog, highlightedBody, latestBlogs, tags}: props):
           ]
         }}
       />
-      <Layout blogs={latestBlogs} tags={tags}>
+      <Layout latestBlogs={latestBlogs} tags={tags}>
 
         <div className="flex items-center justify-between">
           <h2 className="font-head text-xl text-gray-700 md:text-2xl">{blog.title}</h2>
