@@ -27,8 +27,13 @@ type blog = {
   tags: tag[]
 }
 
+type blogData = {
+  createdAt: string,
+  body: string,
+} & blog
+
 type blogsData = {
   contents: blog[]
 }
 
-export type { cmsKey, tag, tagsData, blog, blogsData }
+export type { cmsKey, tag, tagsData, blog, blogData, blogsData }
