@@ -98,7 +98,7 @@ export default function Blog({blog, highlightedBody, latestBlogs, tags}: props):
           <h2 className="font-head text-xl text-gray-700 md:text-2xl">{blog.title}</h2>
         </div>
 
-        <div className="lg:hidden mt-4 flex items-center justify-between">
+        <div className="mt-4 flex items-center justify-between lg:hidden">
           <div className="flex flex-col">
             <span className="text-xs font-light text-gray-600">
               <FontAwesomeIcon icon="calendar-plus" fixedWidth />
@@ -114,7 +114,7 @@ export default function Blog({blog, highlightedBody, latestBlogs, tags}: props):
             {blog.tags.map(tag => (
               <React.Fragment key={tag.id}>
                 <Link href="/[tag]" as={`/${tag.id}`}>
-                  <a className="font-bold bg-gradient-to-r from-gray-50 via-white to-gray-50 text-blue-900 ml-2 p-2 rounded-lg shadow-md lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:transform lg:hover:-translate-y-1 lg:hover:shadow-md">
+                  <a className="text-xs font-bold bg-gradient-to-r from-gray-50 via-white to-gray-50 text-blue-900 ml-2 p-2 rounded-lg shadow-md md:text-base lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:transform lg:hover:-translate-y-1 lg:hover:shadow-md">
                     <span>{tag.name}</span>
                   </a>
                 </Link>
