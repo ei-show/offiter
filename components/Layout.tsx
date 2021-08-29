@@ -6,12 +6,12 @@ import Nav from './Nav'
 import type { tag, blog } from '@/lib/types'
 
 type props = {
-  blogs: blog[],
+  latestBlogs: blog[],
   tags: tag[],
   children: ReactNode
 }
 
-export default function Layout({ blogs, tags, children }: props):JSX.Element {
+export default function Layout({ latestBlogs, tags, children }: props):JSX.Element {
   const siteName = 'Offiter'
   return (
     <>
@@ -24,7 +24,7 @@ export default function Layout({ blogs, tags, children }: props):JSX.Element {
               {children}
             </div>
             {/* Main End */}
-            <Aside blogs={blogs} tags={tags} />
+            <Aside latestBlogs={latestBlogs} tags={tags} />
           </div>
         </div>
         <Footer siteName={siteName} />

@@ -30,7 +30,7 @@ export default function Home({blogs, tags}: props): JSX.Element {
   return (
     <>
       <NextSeo {...SEO} />
-      <Layout blogs={blogs} tags={tags}>
+      <Layout latestBlogs={blogs} tags={tags}>
 
         <div className="flex items-center justify-between">
           <h2 className="text-xl text-gray-700 md:text-2xl font-bold">新着記事</h2>

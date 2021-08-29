@@ -5,15 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { blog, tag } from '@/lib/types'
 
 type props = {
-  blogs: blog[],
+  latestBlogs: blog[],
   tags: tag[]
 }
-export default function Aside({blogs, tags}: props): JSX.Element {
+export default function Aside({latestBlogs, tags}: props): JSX.Element {
   return (
     <div className="-mx-8 w-4/12 hidden lg:block">
       <div className="px-8">
         <h2 className="text-xl font-bold text-gray-700">最近の人気記事</h2>
-        {blogs.map(blog => (
+        {latestBlogs.map(blog => (
           <React.Fragment key={blog.id}>
             <div className="pt-2">
               <Card data={blog} small={true}/>
