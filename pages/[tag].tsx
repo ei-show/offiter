@@ -17,12 +17,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
   const blogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name&filters=tags%5Bcontains%5D${tag}`, key)
   const blogsData: blogsData = await blogsRes.json()
+  const latestBlogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
+  const latestBlogsData: blogsData = await latestBlogsRes.json()
   const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags?fields=id%2Cname`, key)
   const tagsData: tagsData = await tagsRes.json()
 
   return {
     props: {
       blogs: blogsData.contents,
+      latestBlogs: latestBlogsData.contents,
       tags: tagsData.contents,
     }
   }
@@ -30,12 +33,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 type props = {
   blogs: blog[],
+  latestBlogs: blog[],
   tags: tag[],
 }
 
-export default function Home({blogs, tags}: props): JSX.Element {
+export default function Home({blogs, latestBlogs, tags}: props): JSX.Element {
   return (
-    <Layout blogs={blogs} tags={tags}>
+    <Layout blogs={latestBlogs} tags={tags}>
 
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-gray-700 md:text-2xl">新着記事</h2>
