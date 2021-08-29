@@ -12,7 +12,7 @@ import Date from '@/components/Date'
 import Style from '@/styles/blog.module.scss'
 import SEO from '@/lib/next-seo.config'
 import createOgp from '@/lib/createOgp'
-import type { cmsKey, tag, tagsData, blog, blogsData } from '@/lib/types'
+import type { cmsKey, tag, tagsData, blog, blogData, blogsData } from '@/lib/types'
 
 type repos = {
   contents: [
@@ -30,18 +30,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 }
 
-type blogData = {
-  createdAt: string,
-  body: string,
-} & blog
-
 export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id;
   const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
   const blogRes = await fetch(`https://offiter.microcms.io/api/v1/blogs/${id}?fields=id%2Ctitle%2Cimage%2CcreatedAt%2CupdatedAt%2Cbody%2Ctags.id%2Ctags.name`, key)
   const blog: blogData = await blogRes.json()
-  const blogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
-  const blogsData: blogsData = await blogsRes.json()
+  const latestBlogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
+  const latestBlogsData: blogsData = await latestBlogsRes.json()
   const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags?fields=id%2Cname`, key)
   const tagsData: tagsData = await tagsRes.json()
 
@@ -59,7 +54,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       blog: blog,
       highlightedBody: $.html(),
-      blogs: blogsData.contents,
+      latestBlogs: latestBlogsData.contents,
       tags: tagsData.contents,
     }
   }
@@ -70,11 +65,11 @@ const baseURL: string = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 type props = {
   blog: blogData,
   highlightedBody: string,
-  blogs: blog[],
+  latestBlogs: blog[],
   tags: tag[]
 }
 
-export default function Blog({blog, highlightedBody, blogs, tags}: props): JSX.Element {
+export default function Blog({blog, highlightedBody, latestBlogs, tags}: props): JSX.Element {
   return (
     <>
       <NextSeo
@@ -97,13 +92,13 @@ export default function Blog({blog, highlightedBody, blogs, tags}: props): JSX.E
           ]
         }}
       />
-      <Layout blogs={blogs} tags={tags}>
+      <Layout blogDetails={blog} latestBlogs={latestBlogs} tags={tags}>
 
         <div className="flex items-center justify-between">
           <h2 className="font-head text-xl text-gray-700 md:text-2xl">{blog.title}</h2>
         </div>
 
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-4 flex items-center justify-between lg:hidden">
           <div className="flex flex-col">
             <span className="text-xs font-light text-gray-600">
               <FontAwesomeIcon icon="calendar-plus" fixedWidth />
@@ -119,7 +114,7 @@ export default function Blog({blog, highlightedBody, blogs, tags}: props): JSX.E
             {blog.tags.map(tag => (
               <React.Fragment key={tag.id}>
                 <Link href="/[tag]" as={`/${tag.id}`}>
-                  <a className="font-bold bg-gradient-to-r from-gray-50 via-white to-gray-50 text-blue-900 ml-2 p-2 rounded-lg shadow-md lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:transform lg:hover:-translate-y-1 lg:hover:shadow-md">
+                  <a className="text-xs font-bold bg-gradient-to-r from-gray-50 via-white to-gray-50 text-blue-900 ml-2 p-2 rounded-lg shadow-md md:text-base lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:transform lg:hover:-translate-y-1 lg:hover:shadow-md">
                     <span>{tag.name}</span>
                   </a>
                 </Link>

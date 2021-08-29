@@ -30,15 +30,15 @@ export default function Home({blogs, tags}: props): JSX.Element {
   return (
     <>
       <NextSeo {...SEO} />
-      <Layout blogs={blogs} tags={tags}>
+      <Layout latestBlogs={blogs} tags={tags}>
 
-        <div className="flex items-center justify-between">
+        <div className="mb-2 flex items-center justify-between">
           <h2 className="text-xl text-gray-700 md:text-2xl font-bold">新着記事</h2>
         </div>
 
         {blogs.map(blog => (
           <React.Fragment key={blog.id}>
-            <div className="mt-2">
+            <div className="mb-2">
               <Card data={blog} />
             </div>
           </React.Fragment>

@@ -18,7 +18,7 @@ const DateTags = ({ tags, updatedAt, small }: dateTags) => {
       <div className="flex justify-end">
         {tags.map(tag => (
           <React.Fragment key={tag.id}>
-            <p className="hidden sm:block overflow-hidden text-xs ml-1 px-1 py-0 bg-gradient-to-r from-blue-800  to-blue-900 text-gray-100 rounded">{tag.name}</p>
+            <p className="hidden sm:block overflow-hidden text-xs ml-1 px-1 py-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 text-gray-700 rounded">{tag.name}</p>
           </React.Fragment>
         ))}
       </div>
@@ -48,7 +48,7 @@ type props = {
   small?: boolean,
 }
 export default function Card({data, small}: props): JSX.Element {
-  const cardHeight = !small ? 'md:h-40' : 'md:h-20'
+  const cardHeight = !small ? 'md:h-44' : 'md:h-20'
   const cardMargin = !small ? 'md:p-2' : ''
   const cardTitle = !small ? 'md:text-2xl' : 'md:font-body md:text-sm md:font-bold'
   return (
