@@ -13,7 +13,6 @@ export default function Aside({blogs, tags}: props): JSX.Element {
     <div className="-mx-8 w-4/12 hidden lg:block">
       <div className="px-8">
         <h2 className="text-xl font-bold text-gray-700">最近の人気記事</h2>
-        {/* <div className="flex flex-col bg-white max-w-sm px-6 py-4 mx-auto rounded-lg shadow-md"> */}
         {blogs.map(blog => (
           <React.Fragment key={blog.id}>
             <div className="pt-2">
@@ -21,7 +20,6 @@ export default function Aside({blogs, tags}: props): JSX.Element {
             </div>
           </React.Fragment>
         ))}
-        {/* </div> */}
       </div>
       <div className="mt-10 px-8">
         <h2 className="mb-4 text-xl font-bold text-gray-700">よく検索されるワード</h2>
