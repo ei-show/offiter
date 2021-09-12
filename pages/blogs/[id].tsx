@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { NextSeo } from 'next-seo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import cheerio from 'cheerio';
 import hljs from 'highlight.js'
 import 'highlight.js/styles/night-owl.css'
 import Layout from '@/components/Layout'
@@ -13,6 +12,7 @@ import Style from '@/styles/blog.module.scss'
 import SEO from '@/lib/next-seo.config'
 import createOgp from '@/lib/createOgp'
 import type { cmsKey, tag, tagsData, blog, blogData, blogsData } from '@/lib/types'
+import { JSDOM } from 'jsdom'
 
 type repos = {
   contents: [
@@ -41,11 +41,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const tagsData: tagsData = await tagsRes.json()
 
   // codeタグを装飾
-  const $ = cheerio.load(blog.body)
-  $('pre code').each((_, elm) => {
-    const result = hljs.highlightAuto($(elm).text())
-    $(elm).html(result.value)
-    $(elm).addClass('hljs')
+  const dom = new JSDOM(blog.body)
+  dom.window.document.querySelectorAll('pre code').forEach((element) => {
+      const result = hljs.highlightAuto(element.textContent ?? '')
+      element.innerHTML = result.value
+      element.classList.add('hljs')
   })
 
   void createOgp(blog.id, blog.title)
@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       blog: blog,
-      highlightedBody: $.html(),
+      highlightedBody: dom.window.document.body.outerHTML,
       latestBlogs: latestBlogsData.contents,
       tags: tagsData.contents,
     }
