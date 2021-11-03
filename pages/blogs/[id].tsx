@@ -13,6 +13,7 @@ import SEO from '@/lib/next-seo.config'
 import createOgp from '@/lib/createOgp'
 import type { cmsKey, tag, tagsData, blog, blogData, blogsData } from '@/lib/types'
 import { JSDOM } from 'jsdom'
+import ReactDOMServer from 'react-dom/server'
 
 type repos = {
   contents: [
@@ -20,6 +21,24 @@ type repos = {
       id: string
     }
   ]
+}
+
+const twitterCard = () => {
+  return (
+    <div>
+    <a>
+      <img src="https://vscode.github.com/assets/img/github-vscode-icon.svg" />
+      <div className="">
+        <h6>a</h6>
+        <p>a</p>
+      </div>
+    </a>
+    </div>
+  )
+}
+
+const jsxToHtml = (jsx) => {
+  return ReactDOMServer.renderToStaticMarkup(jsx)
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -46,6 +65,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
       const result = hljs.highlightAuto(element.textContent ?? '')
       element.innerHTML = result.value
       element.classList.add('hljs')
+  })
+
+  // aタグからtwitterカードを生成
+  dom.window.document.querySelectorAll<HTMLElement>('a').forEach((element) => {
+    element.appendChild(jsxToHtml(twitterCard))
   })
 
   void createOgp(blog.id, blog.title)
