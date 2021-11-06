@@ -13,7 +13,7 @@ import SEO from '@/lib/next-seo.config'
 import createOgp from '@/lib/createOgp'
 import type { cmsKey, tag, tagsData, blog, blogData, blogsData } from '@/lib/types'
 import { JSDOM } from 'jsdom'
-import ReactDOMServer from 'react-dom/server'
+import ogp from 'ogp-parser'
 
 type repos = {
   contents: [
@@ -21,24 +21,6 @@ type repos = {
       id: string
     }
   ]
-}
-
-const twitterCard = () => {
-  return (
-    <div>
-    <a>
-      <img src="https://vscode.github.com/assets/img/github-vscode-icon.svg" />
-      <div className="">
-        <h6>a</h6>
-        <p>a</p>
-      </div>
-    </a>
-    </div>
-  )
-}
-
-const jsxToHtml = (jsx) => {
-  return ReactDOMServer.renderToStaticMarkup(jsx)
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -61,15 +43,63 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   // codeタグを装飾
   const dom = new JSDOM(blog.body)
+  // console.log(dom.window.document);
+  
+  // シンタックスハイライト
   dom.window.document.querySelectorAll('pre code').forEach((element) => {
       const result = hljs.highlightAuto(element.textContent ?? '')
       element.innerHTML = result.value
       element.classList.add('hljs')
   })
 
-  // aタグからtwitterカードを生成
-  dom.window.document.querySelectorAll<HTMLElement>('a').forEach((element) => {
-    element.appendChild(jsxToHtml(twitterCard))
+  // a tag >> create twitter card
+  dom.window.document.querySelectorAll<HTMLElement>('a').forEach( async (element) => {
+    // create node
+    const card = dom.window.document.createElement('a')
+    const cardMeta = dom.window.document.createElement('div')
+    const cardTitle = dom.window.document.createElement('h1')
+    const cardDescription = dom.window.document.createElement('p')
+    const cardImg = dom.window.document.createElement('img')
+
+    // form node tree
+    card.insertAdjacentElement('beforeend', cardMeta)
+    cardMeta.insertAdjacentElement('beforeend', cardTitle)
+    cardMeta.insertAdjacentElement('beforeend', cardDescription)
+    card.insertAdjacentElement('beforeend', cardImg)
+
+    // insert twitter card
+    const parent = element.parentNode
+    parent.insertAdjacentElement('afterend', card)
+    
+    // <a href="https://foo.foo"> >> get ogp data
+    const href = element.href
+    // const ogpData = await ogp(href, { skipOembed: true }) // うまく動かない
+
+    // give ogp data to node
+    // cardTitle.textContent = ogpData.ogp['og:title'][0]
+    // cardTitle.textContent = 'foo'
+    // cardDescription.textContent = ogpData.ogp['og:description'][0]
+    // cardImg.src = ogpData.ogp['og:image'][0]
+
+    // コレもうまく動かない
+    ogp(href, { skipOembed: true }).then((ogpData) => {
+      
+      // debug
+      console.log(ogpData)
+      console.log(ogpData.ogp['og:title'][0])
+      console.log(ogpData.ogp['og:description'][0])
+      console.log(ogpData.ogp['og:image'][0])
+
+      // give ogp data to node
+      cardTitle.textContent = ogpData.ogp['og:title'][0]
+      cardDescription.textContent = ogpData.ogp['og:description'][0]
+      cardImg.setAttribute('src', ogpData.ogp['og:image'][0])
+
+    }).catch((e) => {
+      console.error(e)
+    })
+    
+    element.remove()
   })
 
   void createOgp(blog.id, blog.title)
