@@ -69,7 +69,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     // insert twitter card
     const parent = element.parentNode
-    parent.insertAdjacentElement('afterend', card)
+    if (parent !== null) { parent.insertAdjacentElement('afterend', card) }
     
     // <a href="https://foo.foo"> >> get ogp data
     const href = element.href
