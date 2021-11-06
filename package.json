@@ -36,13 +36,13 @@
     "date-fns": "^2.21.1",
     "fs": "*",
     "highlight.js": "^10.7.2",
-    "jsdom": "^16.6.0",
+    "jsdom": "^16.7.0",
     "microcms-js-sdk": "^1.2.0",
     "next": "^12.0.3",
     "next-seo": "^4.26.0",
+    "ogp-parser": "^0.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "ogp-parser": "^0.6.0",
     "sass": "^1.32.13"
   },
   "devDependencies": {
