@@ -21,14 +21,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       - name: Install npm packages
-        run:
-          - npm install
-          # - npm ci
-        cache:
-          directories:
-            - "$HOME/.npm"
+        run: |
+          npm install
+          npm ci
 
       - name: Lint
         run: npm lint
