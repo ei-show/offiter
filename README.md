@@ -1,5 +1,5 @@
-# `Next.jsでつくるジャムスタックなブログ`
-これは [Next.js](https://nextjs.org/) で作る [offiter](https://offiter.net) になります。
+# Offiter's Homepage
+[https://offiter.net](https://offiter.net)
 
 ## 動作環境
 ```sh
