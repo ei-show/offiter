@@ -78,9 +78,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     // give ogp data to node
     if (ogpData !== undefined) {
-      cardTitle.innerHTML = ogpData.ogp['og:title'][0]
-      cardDescription.innerHTML = ogpData.ogp['og:description'][0]
-      cardImg.setAttribute('src', ogpData.ogp['og:image'][0])
+      cardTitle.innerHTML = ogpData.ogp['og:title']
+      cardDescription.innerHTML = ogpData.ogp['og:description']
+      cardImg.setAttribute('src', ogpData.ogp['og:image'])
     }
 
     // コレもうまく動かない
