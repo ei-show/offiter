@@ -11,7 +11,8 @@ v14.18.1
 このリポジトリをクローンします。
 ```sh
 git clone https://github.com/ei-show/offiter.git
-npm install
+npm ci
+npx husky install
 ```
 
 ### 環境変数の作成
