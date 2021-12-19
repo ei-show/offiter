@@ -1,6 +1,6 @@
 @layer components {
   .blog {
-    h1 {
+    h3 {
       @apply bg-gradient-to-r;
       @apply from-gray-50;
       @apply via-white;
@@ -19,15 +19,15 @@
       @apply md:w-4/6;
       @apply md:max-w-full;
     }
-    h2 {
-      @extend h1;
+    h4 {
+      @extend h3;
       @apply border-blue-200;
       @apply pl-4;
       @apply md:text-xl;
       @apply md:w-5/6;
     }
-    h3 {
-      @extend h1;
+    h5 {
+      @extend h3;
       @apply border-blue-100;
       @apply pl-6;
       @apply md:text-lg;
