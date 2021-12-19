@@ -13,7 +13,6 @@ import SEO from '@/lib/next-seo.config'
 import createOgp from '@/lib/createOgp'
 import type { cmsKey, tag, tagsData, blog, blogData, blogsData } from '@/lib/types'
 import { JSDOM } from 'jsdom'
-import ogp from 'ogp-parser'
 
 type repos = {
   contents: [
@@ -49,59 +48,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       const result: AutoHighlightResult = hljs.highlightAuto(element.textContent ?? '')
       element.innerHTML = result.value
       element.classList.add('hljs')
-  })
-
-  // a tag >> create twitter card
-  dom.window.document.querySelectorAll<HTMLElement>('a').forEach( async (element) => {
-    // create element
-    const card = dom.window.document.createElement('a')
-    const cardMeta = dom.window.document.createElement('div')
-    const cardTitle = dom.window.document.createElement('h1')
-    const cardDescription = dom.window.document.createElement('p')
-    const cardImg = dom.window.document.createElement('img')
-
-    // form node tree
-    card.insertAdjacentElement('beforeend', cardMeta)
-    cardMeta.insertAdjacentElement('beforeend', cardTitle)
-    cardMeta.insertAdjacentElement('beforeend', cardDescription)
-    card.insertAdjacentElement('beforeend', cardImg)
-
-    // insert twitter card
-    const parent: HTMLElement | null = element.parentElement
-    // if (parent !== null) { parent.insertAdjacentElement('afterend', card) }
-    if (parent !== null) { parent.insertAdjacentElement('afterend', card) }
-    
-    // <a href="https://foo.foo"> >> get ogp data
-    const href: string | null = element.getAttribute('href')
-    if (href == null) { return null }
-    const ogpData: any = await ogp(href, { skipOembed: true }) // うまく動かない
-
-    // give ogp data to node
-    if (ogpData !== undefined) {
-      cardTitle.innerHTML = ogpData.ogp['og:title']
-      cardDescription.innerHTML = ogpData.ogp['og:description']
-      cardImg.setAttribute('src', ogpData.ogp['og:image'])
-    }
-
-    // コレもうまく動かない
-    // ogp(href, { skipOembed: true }).then((ogpData) => {
-      
-    //   // debug
-    //   console.log(ogpData)
-    //   console.log(ogpData.ogp['og:title'][0])
-    //   console.log(ogpData.ogp['og:description'][0])
-    //   console.log(ogpData.ogp['og:image'][0])
-
-    //   // give ogp data to node
-    //   cardTitle.textContent = ogpData.ogp['og:title'][0]
-    //   cardDescription.textContent = ogpData.ogp['og:description'][0]
-    //   cardImg.setAttribute('src', ogpData.ogp['og:image'][0])
-
-    // }).catch((e) => {
-    //   console.error(e)
-    // })
-    
-    element.remove()
   })
 
   void createOgp(blog.id, blog.title)
