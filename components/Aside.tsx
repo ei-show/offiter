@@ -17,7 +17,7 @@ const BlogDetails = ({ createdAt, updatedAt, tags }: blogDetails): JSX.Element |
   if (tags === undefined) { return null }
   return (
     <div className="mb-10 px-8">
-    <h2 className="mb-4 text-xl font-bold text-gray-700">記事の情報</h2>
+    <h2 className="mb-4 text-xl font-head text-gray-700">記事の情報</h2>
     <div className="text-sm flex flex-col bg-gradient-to-r from-gray-50 via-white to-gray-50 p-4 max-w-sm mx-auto rounded-lg border shadow-md lg:shadow-none">
       <div className="flex mb-4">
         <span className="flex-1 font-head font-light text-gray-600">
@@ -58,7 +58,7 @@ export default function Aside({blogDetails, latestBlogs, tags}: props): JSX.Elem
       <BlogDetails createdAt={blogDetails?.createdAt} updatedAt={blogDetails?.updatedAt} tags={blogDetails?.tags} />
       
       <div className="mb-10 px-8">
-        <h2 className="mb-2 text-xl font-bold text-gray-700">最新の記事</h2>
+        <h2 className="mb-2 text-xl font-head text-gray-700">最新の記事</h2>
         {latestBlogs.map(blog => (
           <React.Fragment key={blog.id}>
             <div className="pt-2">
@@ -69,14 +69,14 @@ export default function Aside({blogDetails, latestBlogs, tags}: props): JSX.Elem
       </div>
 
       <div className="px-8">
-        <h2 className="mb-4 text-xl font-bold text-gray-700">タグ</h2>
+        <h2 className="mb-4 text-xl font-head text-gray-700">タグ</h2>
         <div className="flex flex-col bg-gradient-to-r from-gray-50 via-white to-gray-50 p-4 max-w-sm mx-auto rounded-lg border shadow-md lg:shadow-none">
           <ul>
             {tags.map(tag => (
               <React.Fragment key={tag.id}>
                 <li>
                   <Link href="/[tag]" as={`/${tag.id}`}>
-                    <a className="block font-head text-gray-700 m-1 group">
+                    <a className="block font-bold text-gray-700 m-1 group">
                       {tag.name} <FontAwesomeIcon icon={['fas', 'arrow-right']} className="transition duration-300 ease-in-out transform group-hover:translate-x-1" />
                     </a>
                   </Link>
