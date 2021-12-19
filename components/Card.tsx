@@ -48,13 +48,13 @@ type props = {
   small?: boolean,
 }
 export default function Card({data, small}: props): JSX.Element {
-  const cardHeight = !small ? 'md:h-44' : 'md:h-20'
+  const cardHeight = !small ? 'md:h-52' : 'md:h-28'
   const cardMargin = !small ? 'md:p-2' : ''
   const cardTitle = !small ? 'md:text-2xl' : 'md:font-body md:text-sm md:font-bold'
   return (
     <Link href="/blogs/[id]" as={`/blogs/${data.id}`}>
       <a className="block">
-        <div className={`${cardHeight} ${cardMargin} p-1 h-28 max-w-4xl bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-lg border shadow-md md:shadow-none md:transition md:duration-300 md:ease-in-out md:transform md:hover:-translate-y-1 md:hover:shadow-md`}>
+        <div className={`${cardHeight} ${cardMargin} p-1 h-28 bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-lg border shadow-md md:shadow-none md:transition md:duration-300 md:ease-in-out md:transform md:hover:-translate-y-1 md:hover:shadow-md`}>
           <div className="flex h-full">
             <div className="relative w-2/5 flex-none">
               <Image alt="" layout="fill" objectFit="cover" className="rounded-lg" src={data.image.url} />

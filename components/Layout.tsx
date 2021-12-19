@@ -19,7 +19,7 @@ export default function Layout({ blogDetails, latestBlogs, tags, children }: pro
       <div className="bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 overflow-x-hidden font-body">
         <Header siteName={siteName} />
         <div className="px-6 py-8">
-          <div className="flex justify-between container mx-auto">
+          <div className="flex justify-around container mx-auto">
             {/* Main Start */}
             <div className="w-full min-h-screen lg:w-8/12">
               {children}
