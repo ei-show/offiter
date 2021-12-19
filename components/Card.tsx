@@ -50,7 +50,7 @@ type props = {
 export default function Card({data, small}: props): JSX.Element {
   const cardHeight = !small ? 'md:h-52' : 'md:h-28'
   const cardMargin = !small ? 'md:p-2' : ''
-  const cardTitle = !small ? 'md:text-2xl' : 'md:font-body md:text-sm md:font-bold'
+  const cardTitle = !small ? 'md:text-2xl' : ''
   return (
     <Link href="/blogs/[id]" as={`/blogs/${data.id}`}>
       <a className="block">
@@ -60,7 +60,7 @@ export default function Card({data, small}: props): JSX.Element {
               <Image alt="" layout="fill" objectFit="cover" className="rounded-lg" src={data.image.url} />
             </div>
             <div className="w-full flex flex-col justify-between h-full ml-1 md:ml-2">
-              <h3 className={`${cardTitle} font-head text-base text-gray-700 flex-none`}>{data.title}</h3>
+              <h3 className={`${cardTitle} font-head text-xl text-gray-700 flex-none`}>{data.title}</h3>
               <Description description={data.description} small={small} />
               <DateTags tags={data.tags} updatedAt={data.updatedAt} small={small} />
             </div>
