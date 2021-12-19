@@ -1,68 +1,52 @@
-# Offiter's Homepage
-[https://offiter.net](https://offiter.net)
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## 動作環境
-```sh
-$ node -v
-v14.18.1
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
 ```
 
-## 使い方
-このリポジトリをクローンします。
-```sh
-git clone https://github.com/ei-show/offiter.git
-npm ci
-npx husky install
-```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### 環境変数の作成
-#### `local env` ファイルの作成
-`.env.development.local` ファイルを追加します。
+You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## microCMSのAPI_keyを環境変数に登録
+
+#### local envファイルの作成
+`.env.development.local`ファイルを追加
 ```
 API_KEY=8fae269a-fb4a-480d-83de-598e8fac61d1
-GA_TRACKING_ID=G-AXXXXXXXXX
+GA_TRACKING_ID=G-A123456789
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
 
 #### deploy env
-localの内容をdeploy先に環境変数として登録します。
+localの内容をdeploy先に環境変数として登録
 ```
 API_KEY=8fae269a-fb4a-480d-83de-598e8fac61d1
 GA_TRACKING_ID=G-AXXXXXXXXX
 NEXT_PUBLIC_BASE_URL=https://offiter.net
 ```
-
-`NEXT_PUBLIC_BASE_URL` だけ値が違うことに注意してください。
-なお、 `NEXT_PUBLIC_BASE_URL` の環境変数はproductionに応じた値に変更予定です。
-
-### ローカル実行
-`npm run dev` を実行します。
-ブラウザで [http://localhost:3000](http://localhost:3000) を開くと確認することができます。  
-なお、このリポジトリのproductionは [http://offiter.net](http://offiter.net) になります。
-
-## アーキテクチャ
-
-### デプロイ
-
-Next.jsを開発している [Vercel](https://vercel.com) としている。
-
-### ヘッドレスCMS
-
-APIベースの日本製ヘッドレスCMSである [microCMS](https://microcms.io) を利用しています。
-
-### その他主要なライブラリ
-
-- fontawesome
-- tailwindcss
-- canvas
-- highlight.js
-- jsdom
-- next-seo
-
-`fontawesome` はアイコンを提供するライブラリです。  
-`tailwindcss` はCSSフレームワークです。  
-`canvas` は自由にお絵かきできるライブラリです。  
-`highlight.js` はcodeにシンタックスハイライトを付与するライブラリです。  
-`jsdom` はhtml解析ライブラリです。  
-`next-seo` はSEOデータを付与するライブラリです。  
-
