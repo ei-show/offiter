@@ -1,22 +1,27 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
-import Layout from '@/components/Layout'
-import Card from '@/components/Card'
-import SEO from '@/lib/next-seo.config'
-import type { cmsKey, tag, tagsData, blog, blogsData } from '@/lib/types'
+import { Layout, Card, SEO, Pagination, client } from '@/src/index'
+import type { cmsKey, tag, tagsData, blog, blogsData } from '@/src/index'
 
 export const getStaticProps: GetStaticProps = async () => {
-  const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
-  const blogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
-  const blogsData: blogsData = await blogsRes.json()
-  const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags?fields=id%2Cname`, key)
-  const tagsData: tagsData = await tagsRes.json()
+  const blogsData: blogsData = await client.get({
+    endpoint: 'blogs',
+    queries: {fields: 'id,title,description,image,updatedAt,tags.id,tags.name'},
+  })
+  const tagsData: tagsData = await client.get({
+    endpoint: 'tags',
+    queries: {
+      fields: 'id,name',
+      limit: 100
+    },
+  })
 
   return {
     props: {
       blogs: blogsData.contents,
       tags: tagsData.contents,
+      blogCount: blogsData.totalCount,
     }
   }
 }
@@ -24,9 +29,10 @@ export const getStaticProps: GetStaticProps = async () => {
 type props = {
   blogs: blog[],
   tags: tag[],
+  blogCount: number,
 }
 
-export default function Home({blogs, tags}: props): JSX.Element {
+export default function Home({blogs, tags, blogCount}: props): JSX.Element {
   return (
     <>
       <NextSeo {...SEO} />
@@ -43,6 +49,8 @@ export default function Home({blogs, tags}: props): JSX.Element {
             </div>
           </React.Fragment>
         ))}
+
+        <Pagination totalCount={blogCount} />
 
       </Layout>
     </>
