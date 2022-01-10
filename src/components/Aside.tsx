@@ -32,7 +32,7 @@ const BlogDetails = ({ createdAt, updatedAt, tags }: blogDetails): JSX.Element |
         {tags.map(tag => (
           <React.Fragment key={tag.id}>
             <li className="inline-block mr-4 font-head text-gray-700 border-2 border-gray-200 rounded-2xl">
-              <Link href="/[tag]" as={`/${tag.id}`}>
+              <Link href="/pages/[tag]" as={`/pages/${tag.id}`}>
                 <a className="inline-block p-1">{tag.name}</a>
               </Link>
             </li>
@@ -74,7 +74,7 @@ export default function Aside({blogDetails, latestBlogs, tags}: props): JSX.Elem
             {tags.map(tag => (
               <React.Fragment key={tag.id}>
                 <li>
-                  <Link href="/[tag]" as={`/${tag.id}`}>
+                  <Link href="/pages/tags/[id]" as={`/pages/tags/${tag.id}`}>
                     <a className="block font-bold text-gray-700 m-1 group">
                       {tag.name} <FontAwesomeIcon icon={['fas', 'arrow-right']} className="transition duration-300 ease-in-out transform group-hover:translate-x-1" />
                     </a>
