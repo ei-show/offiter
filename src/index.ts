@@ -16,5 +16,10 @@ export { default as createOgp } from './libs/createOgp'
 export * as gtag from './libs/gtag'
 export { GA_TRACKING_ID } from './libs/gtag'
 export { default as client } from './libs/client'
+export { default as clientAspida } from './libs/clientAspida'
 export { default as SEO } from './libs/next-seo.config'
 export * from './libs/types'
+
+// api
+export * from './api/types'
+export { default as api } from './api/$api'
