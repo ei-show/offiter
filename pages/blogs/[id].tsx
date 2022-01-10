@@ -7,13 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import cheerio from 'cheerio';
 import hljs from 'highlight.js'
 import 'highlight.js/styles/night-owl.css'
-import Layout from '@/components/Layout'
-import Date from '@/components/Date'
-import Style from '@/styles/blog.module.scss'
-import SEO from '@/lib/next-seo.config'
-import createOgp from '@/lib/createOgp'
-import type { cmsKey, tag, tagsData, blog, blogData, blogsData } from '@/lib/types'
 import { JSDOM } from 'jsdom'
+import { Layout, Date, SEO, createOgp } from '@/src/index'
+import type { cmsKey, tag, tagsData, blog, blogData, blogsData } from '@/src/index'
+import Style from '@/src/styles/blog.module.scss'
 
 type repos = {
   contents: [
@@ -22,6 +19,8 @@ type repos = {
     }
   ]
 }
+
+const perPage: number = 10
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
@@ -38,7 +37,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const blog: blogData = await blogRes.json()
   const latestBlogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
   const latestBlogsData: blogsData = await latestBlogsRes.json()
-  const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags?fields=id%2Cname`, key)
+  const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags?limit=100%2fields=id%2Cname`, key)
   const tagsData: tagsData = await tagsRes.json()
 
   // codeタグを装飾

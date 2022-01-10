@@ -1,6 +1,4 @@
 import "tailwindcss/tailwind.css"
-
-// fontawesome
 import { config, library } from '@fortawesome/fontawesome-svg-core'
 import {
   faHome,
@@ -40,10 +38,8 @@ library.add(
 import { useEffect } from 'react'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import * as gtag from '@/lib/gtag'
-
 import { DefaultSeo } from 'next-seo'
-import SEO from '@/lib/next-seo.config'
+import { gtag, SEO } from '@/src/index'
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter()

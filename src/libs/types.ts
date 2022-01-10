@@ -33,7 +33,15 @@ type blogData = {
 } & blog
 
 type blogsData = {
-  contents: blog[]
+  contents: blog[],
+  totalCount: number,
 }
 
-export type { cmsKey, tag, tagsData, blog, blogData, blogsData }
+type blogCount = {
+  contents: {
+    id: string,
+  },
+  totalCount: number,
+}
+
+export type { cmsKey, tag, tagsData, blog, blogData, blogsData, blogCount }

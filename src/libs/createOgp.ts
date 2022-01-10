@@ -1,5 +1,5 @@
 import { createCanvas, loadImage, registerFont, Canvas } from 'canvas'
-import fs from 'fs'
+// import fs from 'fs'
 
 // だいたい半分で改行する関数
 const createTextLines = (canvas: Canvas, text: string): string[] => {
@@ -43,5 +43,5 @@ export default async function createOgp(id: string, title: string) {
 
   // pngに書き出し
   const buffer = canvas.toBuffer()
-  fs.writeFileSync(`public/ogp/${id}.png`,buffer)
+  // fs.writeFileSync(`public/ogp/${id}.png`,buffer)
 }

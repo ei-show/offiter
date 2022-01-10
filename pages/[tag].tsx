@@ -1,8 +1,7 @@
 import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import Layout from '@/components/Layout'
-import Card from '@/components/Card'
-import type { cmsKey, tag, tagsData, blog, blogsData } from '@/lib/types'
+import { Layout, Card } from '@/src/index'
+import type { cmsKey, tag, tagsData, blog, blogsData } from '@/src/index'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
