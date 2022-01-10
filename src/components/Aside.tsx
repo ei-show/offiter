@@ -1,9 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
-import Card from './Card'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Date from '@/components/Date'
-import { blog, blogData, tag } from '@/lib/types'
+import { Date, Card } from '@/src/index'
+import type { blog, blogData, tag } from '@/src/index'
 
 type blogDetails = {
   createdAt?: string,

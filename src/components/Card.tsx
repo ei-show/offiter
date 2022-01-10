@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import Date from './Date'
-import type { tag } from '@/lib/types'
+import { Date } from '@/src/index'
+import type { tag, blog } from '@/src/index'
 
 type dateTags = {
   tags: tag[],
@@ -40,8 +40,6 @@ const Description = ({ description, small}: description) => {
     />
   )
 }
-
-import { blog } from '@/lib/types'
 
 type props = {
   data: blog,

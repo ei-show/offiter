@@ -1,9 +1,6 @@
 import { ReactNode } from 'react'
-import Header from './Header'
-import Aside from './Aside'
-import Footer from './Footer'
-import Nav from './Nav'
-import type { tag, blog, blogData } from '@/lib/types'
+import { Header, Aside, Footer, Nav } from '@/src/index'
+import type { tag, blog, blogData } from '@/src/index'
 
 type props = {
   blogDetails?: blogData
