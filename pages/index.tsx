@@ -2,7 +2,7 @@ import React from 'react'
 import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import { Layout, Card, SEO, Pagination, client } from '@/src/index'
-import type { cmsKey, tag, tagsData, blog, blogsData } from '@/src/index'
+import type { tag, tagsData, blog, blogsData } from '@/src/index'
 
 export const getStaticProps: GetStaticProps = async () => {
   const blogsData: blogsData = await client.get({
