@@ -1,49 +1,28 @@
 import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { Layout, Card, client } from '@/src/index'
-import type { tag, tagsData, blog, blogsData } from '@/src/index'
+import { Layout, Card, Pagination, } from '@/src/index'
+import { tagsGetAllContents, blogsGetAllHeaderContents, blogsGetLatestHeaderContents, blogsGetTotalCount } from '@/src/index'
+import type { tag, blog, } from '@/src/index'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const tagsData: tagsData = await client.get({
-    endpoint: 'tags',
-    queries: {
-      fields: 'id,name',
-      limit: 100
-    },
-  })
-
-  const paths = tagsData.contents.map(repo => `/pages/tags/${repo.id}`);
+  const tagsData = await tagsGetAllContents()
+  const paths = tagsData.map(repo => `/pages/tags/${repo.id}`);
   return { paths, fallback: false };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const tag = context.params?.id
-  const blogsData: blogsData = await client.get({
-    endpoint: 'blogs',
-    queries: {
-      fields: 'id,title,description,image,updatedAt,tags.id,tags.name',
-      filters: `tags[contains]${tag}`
-    },
-  })
-  const latestBlogsData: blogsData = await client.get({
-    endpoint: 'blogs',
-    queries: {
-      fields: 'id,title,description,image,updatedAt,tags.id,tags.name',
-    },
-  })
-  const tagsData: tagsData = await client.get({
-    endpoint: 'tags',
-    queries: {
-      fields: 'id,name',
-      limit: 100
-    },
-  })
+  const blogsData = await blogsGetAllHeaderContents(10, 0, `tags[contains]${tag}`,)
+  const latestBlogsData = await blogsGetLatestHeaderContents()
+  const blogsTotalCount = await blogsGetTotalCount(`tags[contains]${tag}`,)
+  const tagsData = await tagsGetAllContents()
 
   return {
     props: {
-      blogs: blogsData.contents,
-      latestBlogs: latestBlogsData.contents,
-      tags: tagsData.contents,
+      blogs: blogsData,
+      latestBlogs: latestBlogsData,
+      tags: tagsData,
+      blogsCount: blogsTotalCount,
     }
   }
 }
@@ -52,9 +31,10 @@ type props = {
   blogs: blog[],
   latestBlogs: blog[],
   tags: tag[],
+  blogsCount : number,
 }
 
-export default function Home({blogs, latestBlogs, tags}: props): JSX.Element {
+export default function Home({blogs, latestBlogs, tags, blogsCount}: props): JSX.Element {
   return (
     <Layout latestBlogs={latestBlogs} tags={tags}>
 
@@ -69,7 +49,7 @@ export default function Home({blogs, latestBlogs, tags}: props): JSX.Element {
           </div>
         </React.Fragment>
       ))}
-
+      <Pagination totalCount={blogsCount} />
     </Layout>
   )
 }
