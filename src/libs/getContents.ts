@@ -1,6 +1,8 @@
 import { clientAspida, } from '@/src/index'
 
-export const tagsGetAllContents = async (limit = 10, offset = 0) => {
+const perPage: number = 10
+
+export const tagsGetAllContents = async (limit = perPage, offset = 0) => {
   const data = await clientAspida.tags.$get({ query: { fields: 'id,name', offset: offset, limit: limit, }})
 
   if (data.offset + data.limit < data.totalCount) {
@@ -11,18 +13,23 @@ export const tagsGetAllContents = async (limit = 10, offset = 0) => {
   return data.contents
 }
 
-export const blogsGetAllContents = async (limit = 10, offset = 0) => {
-  const data = await clientAspida.blogs.$get({ query: { fields: 'id,name', offset: offset, limit: limit, }})
+export const blogsGetAllHeaderContents = async (limit = perPage, offset = 0, filter?: string,) => {
+  const data = await clientAspida.blogs.$get({ query: {
+    fields: 'd,title,description,image,updatedAt,tags.id,tags.name',
+    filters: filter !== undefined ? filter : '',
+    offset: offset,
+    limit: limit,
+  }})
 
   if (data.offset + data.limit < data.totalCount) {
-    const contents: any = await blogsGetAllContents(data.limit, data.offset + data.limit)
+    const contents: any = await blogsGetAllHeaderContents(data.limit, data.offset + data.limit, filter)
     return [...data.contents, ...contents]
   }
   
   return data.contents
 }
 
-export const blogsGetLatestContents = async (limit = 10, offset = 0) => {
+export const blogsGetLatestHeaderContents = async (limit = perPage, offset = 0) => {
   const data = await clientAspida.blogs.$get({
     query: {
       fields: 'id,title,description,image,updatedAt,tags.id,tags.name',
@@ -33,7 +40,10 @@ export const blogsGetLatestContents = async (limit = 10, offset = 0) => {
   return data.contents
 }
 
-export const blogsGetTotalCount = async () => {
-  const data = await clientAspida.blogs.$get({ query: { fields: '', }})
+export const blogsGetTotalCount = async (filter?: string,) => {
+  const data = await clientAspida.blogs.$get({ query: {
+    fields: '',
+    filters: filter !== undefined ? filter : ''
+  }})
   return data.totalCount
 }
