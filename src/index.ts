@@ -19,6 +19,12 @@ export { default as client } from './libs/client'
 export { default as clientAspida } from './libs/clientAspida'
 export { default as SEO } from './libs/next-seo.config'
 export * from './libs/types'
+export {
+  tagsGetAllContents,
+  blogsGetAllContents,
+  blogsGetLatestContents,
+  blogsGetTotalCount,
+} from './libs/getContents'
 
 // api
 export * from './api/types'

@@ -1,18 +1,19 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
-import { Layout, Card, SEO, Pagination, clientAspida } from '@/src/index'
-import type { tag, tagsData, blog, blogsData } from '@/src/index'
+import { Layout, Card, SEO, Pagination, tagsGetAllContents, blogsGetLatestContents, blogsGetTotalCount } from '@/src/index'
+import type { tag, blog, } from '@/src/index'
 
 export const getStaticProps: GetStaticProps = async () => {
-  const blogsData = await clientAspida.blogs.$get({ query: { fields: 'id,title,description,image,updatedAt,tags.id,tags.name', }})
-  const tagsData = await clientAspida.tags.$get({ query: { fields: 'id,name', limit: 100 }})
+  const blogsData = await blogsGetLatestContents()
+  const tagsData = await tagsGetAllContents()
+  const blogsTotalCount = await blogsGetTotalCount()
 
   return {
     props: {
-      blogs: blogsData.contents,
-      tags: tagsData.contents,
-      blogsCount: blogsData.totalCount,
+      blogs: blogsData,
+      tags: tagsData,
+      blogsCount: blogsTotalCount,
     }
   }
 }
