@@ -21,8 +21,8 @@ export { default as SEO } from './libs/next-seo.config'
 export * from './libs/types'
 export {
   tagsGetAllContents,
+  blogsGetHeaderContents,
   blogsGetAllHeaderContents,
-  blogsGetLatestHeaderContents,
   blogsGetTotalCount,
 } from './libs/getContents'
 

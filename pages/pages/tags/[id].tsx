@@ -1,7 +1,7 @@
 import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { Layout, Card, Pagination, } from '@/src/index'
-import { tagsGetAllContents, blogsGetAllHeaderContents, blogsGetLatestHeaderContents, blogsGetTotalCount } from '@/src/index'
+import { tagsGetAllContents, blogsGetAllHeaderContents, blogsGetHeaderContents, blogsGetTotalCount } from '@/src/index'
 import type { tag, blog, } from '@/src/index'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -13,7 +13,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const tag = context.params?.id
   const blogsData = await blogsGetAllHeaderContents(10, 0, `tags[contains]${tag}`,)
-  const latestBlogsData = await blogsGetLatestHeaderContents()
+  const latestBlogsData = await blogsGetHeaderContents()
   const blogsTotalCount = await blogsGetTotalCount(`tags[contains]${tag}`,)
   const tagsData = await tagsGetAllContents()
 

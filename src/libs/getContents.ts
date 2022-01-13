@@ -15,7 +15,7 @@ export const tagsGetAllContents = async (limit = perPage, offset = 0) => {
 
 export const blogsGetAllHeaderContents = async (limit = perPage, offset = 0, filter?: string,) => {
   const data = await clientAspida.blogs.$get({ query: {
-    fields: 'd,title,description,image,updatedAt,tags.id,tags.name',
+    fields: 'id,title,description,image,updatedAt,tags.id,tags.name',
     filters: filter !== undefined ? filter : '',
     offset: offset,
     limit: limit,
@@ -29,14 +29,14 @@ export const blogsGetAllHeaderContents = async (limit = perPage, offset = 0, fil
   return data.contents
 }
 
-export const blogsGetLatestHeaderContents = async (limit = perPage, offset = 0) => {
-  const data = await clientAspida.blogs.$get({
-    query: {
-      fields: 'id,title,description,image,updatedAt,tags.id,tags.name',
-      offset: offset,
-      limit: limit,
-    }
-  })
+export const blogsGetHeaderContents = async (limit = perPage, offset = 0, filter?: string,) => {
+  const data = await clientAspida.blogs.$get({ query: {
+    fields: 'id,title,description,image,updatedAt,tags.id,tags.name',
+    filters: filter !== undefined ? filter : '',
+    offset: offset,
+    limit: limit,
+  }})
+
   return data.contents
 }
 
