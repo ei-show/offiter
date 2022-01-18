@@ -1,4 +1,5 @@
 export type Blogs = {
+  id: string
   title: string
   description: string
   body: string
@@ -13,5 +14,6 @@ export type Blogs = {
 }
 
 export type Tags = {
+  id: string
   name: string
 }

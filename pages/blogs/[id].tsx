@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/night-owl.css'
 import { JSDOM } from 'jsdom'
-import { Layout, Date, SEO, createOgp } from '@/src/index'
-import type { cmsKey, tag, tagsData, blog, blogData, blogsData } from '@/src/index'
+import { Layout, Date, SEO, createOgp, blogsGetAllHeader, blogsGetHeader, blogGetContent, tagsGetAllContents } from '@/src/index'
+import type { tag, tagsData, blog, blogData, blogsData } from '@/src/index'
 import Style from '@/src/styles/blog.module.scss'
 
 type repos = {
@@ -22,25 +22,19 @@ type repos = {
 const perPage: number = 10
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
-  const res = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id`, key);
-  const repos: repos = await res.json();
-  const paths = repos.contents.map(repo => `/blogs/${repo.id}`);
+  const blogsData = await blogsGetAllHeader()
+  const paths = blogsData.map(blogData => `/blogs/${blogData.id}`);
   return { paths, fallback: false };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context.params?.id;
-  const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
-  const blogRes = await fetch(`https://offiter.microcms.io/api/v1/blogs/${id}?fields=id%2Ctitle%2Cimage%2CcreatedAt%2CupdatedAt%2Cbody%2Ctags.id%2Ctags.name`, key)
-  const blog: blogData = await blogRes.json()
-  const latestBlogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
-  const latestBlogsData: blogsData = await latestBlogsRes.json()
-  const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags?limit=100%2fields=id%2Cname`, key)
-  const tagsData: tagsData = await tagsRes.json()
+  const id = context.params?.id
+  const blog = (id !== undefined && !Array.isArray(id)) ? await blogGetContent(id) : await blogGetContent('')
+  const latestBlogsData = await blogsGetHeader()
+  const tagsData = await tagsGetAllContents()
 
   // codeタグを装飾
-  const dom: JSDOM = new JSDOM(blog.body)
+  const dom = new JSDOM(blog.body)
   
   // シンタックスハイライト
   dom.window.document.querySelectorAll<HTMLElement>('pre code').forEach((element) => {
@@ -55,8 +49,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       blog: blog,
       highlightedBody: dom.window.document.body.outerHTML,
-      latestBlogs: latestBlogsData.contents,
-      tags: tagsData.contents,
+      latestBlogs: latestBlogsData,
+      tags: tagsData,
     }
   }
 }

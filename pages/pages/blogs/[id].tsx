@@ -2,7 +2,7 @@ import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import { Layout, Card, SEO, Pagination } from '@/src/index'
-import { tagsGetAllContents, blogsGetHeaderContents, blogsGetTotalCount } from '@/src/index'
+import { tagsGetAllContents, blogsGetHeader, blogsGetTotalCount } from '@/src/index'
 import type { tag, blog, } from '@/src/index'
 
 const perPage: number = 10
@@ -17,8 +17,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id
   const tagsData = await tagsGetAllContents()
-  const blogsData = await blogsGetHeaderContents(perPage, (Number(id) - 1) * perPage)
-  const latestBlogsData = await blogsGetHeaderContents()
+  const blogsData = await blogsGetHeader(perPage, (Number(id) - 1) * perPage)
+  const latestBlogsData = await blogsGetHeader()
   const blogsTotalCount = await blogsGetTotalCount()
 
   return {
