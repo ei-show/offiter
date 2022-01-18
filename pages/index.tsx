@@ -1,12 +1,12 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
-import { Layout, Card, SEO, Pagination, tagsGetAllContents, blogsGetHeaderContents, blogsGetTotalCount } from '@/src/index'
+import { Layout, Card, SEO, Pagination, tagsGetAllContents, blogsGetHeader, blogsGetTotalCount } from '@/src/index'
 import type { tag, blog, } from '@/src/index'
 
 export const getStaticProps: GetStaticProps = async () => {
   const tagsData = await tagsGetAllContents()
-  const blogsData = await blogsGetHeaderContents()
+  const blogsData = await blogsGetHeader()
   const blogsTotalCount = await blogsGetTotalCount()
 
   return {
