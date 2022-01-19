@@ -12,16 +12,6 @@ import { Layout, Date, SEO, createOgp, blogsGetAllHeader, blogsGetHeader, blogGe
 import type { tag, tagsData, blog, blogData, blogsData } from '@/src/index'
 import Style from '@/src/styles/blog.module.scss'
 
-type repos = {
-  contents: [
-    {
-      id: string
-    }
-  ]
-}
-
-const perPage: number = 10
-
 export const getStaticPaths: GetStaticPaths = async () => {
   const blogsData = await blogsGetAllHeader()
   const paths = blogsData.map(blogData => `/blogs/${blogData.id}`);

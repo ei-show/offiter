@@ -1,4 +1,3 @@
-import Router from 'next/router'
 import Link from 'next/link'
 
 type props = {
@@ -6,7 +5,7 @@ type props = {
 }
 
 export default function Pagination({ totalCount }: props): JSX.Element {
-  const PER_PAGE: number = 10
+  const PER_PAGE = 10
   const range = (start: number, end: number) => [...Array(end - start + 1)].map((_, i) => start + i)
 
   return (

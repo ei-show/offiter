@@ -5,7 +5,7 @@ import { Layout, Card, SEO, Pagination } from '@/src/index'
 import { tagsGetAllContents, blogsGetHeader, blogsGetTotalCount } from '@/src/index'
 import type { tag, blog, } from '@/src/index'
 
-const perPage: number = 10
+const perPage = 10
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const blogsTotalCount = await blogsGetTotalCount()
