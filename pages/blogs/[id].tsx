@@ -9,7 +9,7 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/night-owl.css'
 import { JSDOM } from 'jsdom'
 import { Layout, Date, SEO, createOgp, blogsGetAllHeader, blogsGetHeader, blogGetContent, tagsGetAllContents } from '@/src/index'
-import type { tag, tagsData, blog, blogData, blogsData } from '@/src/index'
+import type { tag, blog, blogData, } from '@/src/index'
 import Style from '@/src/styles/blog.module.scss'
 
 export const getStaticPaths: GetStaticPaths = async () => {

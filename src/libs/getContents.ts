@@ -1,19 +1,20 @@
 import { clientAspida, } from '@/src/index'
+import type { tag, } from '@/src/index'
 
-const perPage: number = 10
+const perPage = 10
 
-export const tagsGetAllContents = async (limit = perPage, offset = 0) => {
+export const tagsGetAllContents = async (limit = perPage, offset = 0): Promise<tag[]> => {
   const data = await clientAspida.tags.$get({ query: { fields: 'id,name', offset: offset, limit: limit, }})
 
   if (data.offset + data.limit < data.totalCount) {
-    const contents: any = await tagsGetAllContents(data.limit, data.offset + data.limit)
+    const contents = await tagsGetAllContents(data.limit, data.offset + data.limit)
     return [...data.contents, ...contents]
   }
   
   return data.contents
 }
 
-export const blogsGetAllHeader = async (limit = perPage, offset = 0, filter?: string,) => {
+export const blogsGetAllHeader = async (limit = perPage, offset = 0, filter?: string,): Promise<any[]> => {
   const data = await clientAspida.blogs.$get({ query: {
     fields: 'id,title,description,image,updatedAt,tags.id,tags.name',
     filters: filter !== undefined ? filter : '',
@@ -22,7 +23,7 @@ export const blogsGetAllHeader = async (limit = perPage, offset = 0, filter?: st
   }})
 
   if (data.offset + data.limit < data.totalCount) {
-    const contents: any = await blogsGetAllHeader(data.limit, data.offset + data.limit, filter)
+    const contents = await blogsGetAllHeader(data.limit, data.offset + data.limit, filter)
     return [...data.contents, ...contents]
   }
   
