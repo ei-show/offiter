@@ -1,0 +1,83 @@
+@layer components {
+  .blog {
+    h3 {
+      @apply bg-gradient-to-r;
+      @apply from-gray-50;
+      @apply via-white;
+      @apply to-gray-50;
+      @apply font-head;
+      @apply text-lg;
+      @apply text-blue-900;
+      @apply my-6;
+      @apply border-l-4;
+      @apply border-b-4;
+      @apply border-blue-300;
+      @apply rounded-tr-2xl;
+      @apply p-2;
+      @apply md:block;
+      @apply md:text-2xl;
+      @apply md:w-4/6;
+      @apply md:max-w-full;
+    }
+    h4 {
+      @extend h3;
+      @apply border-blue-200;
+      @apply pl-4;
+      @apply md:text-xl;
+      @apply md:w-5/6;
+    }
+    h5 {
+      @extend h3;
+      @apply border-blue-100;
+      @apply pl-6;
+      @apply md:text-lg;
+      @apply md:w-full;
+    }
+    p {
+      @apply ml-6;
+      @apply font-bold;
+    }
+    a {
+      @apply mt-6;
+      @apply ml-6;
+      @apply text-blue-400;
+      @apply hover:text-blue-600;
+      @apply hover:underline;
+    }
+    ul {
+      @apply list-disc;
+      @apply mt-6;
+      @apply ml-12;
+      @apply font-bold;
+    }
+    ol {
+      @extend ul;
+      @apply list-decimal;
+    }
+    pre {
+      code {
+        @apply mt-6;
+        @apply ml-6;
+      }
+    }
+    // 単一codeのみ
+    $singleCode: p, ul;
+    @each $s in $singleCode {
+      #{$s} {
+        code {
+          @apply px-2;
+          @apply bg-gray-300;
+          @apply font-normal;
+        }
+      }
+    }
+    blockquote {
+      @apply ml-6;
+      @apply p-2;
+      @apply bg-gray-300;
+      @apply border-l-4;
+      @apply border-gray-400;
+      @apply rounded-r-lg;
+    }
+  }
+}

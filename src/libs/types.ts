@@ -1,10 +1,3 @@
-
-type cmsKey = {
-  headers: {
-    'X-API-KEY'?: string
-  }
-}
-
 type tag = {
   id: string,
   name: string,
@@ -33,7 +26,15 @@ type blogData = {
 } & blog
 
 type blogsData = {
-  contents: blog[]
+  contents: blog[],
+  totalCount: number,
 }
 
-export type { cmsKey, tag, tagsData, blog, blogData, blogsData }
+type blogCount = {
+  contents: {
+    id: string,
+  },
+  totalCount: number,
+}
+
+export type { tag, tagsData, blog, blogData, blogsData, blogCount }

@@ -4,48 +4,33 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { NextSeo } from 'next-seo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import cheerio from 'cheerio';
 import hljs from 'highlight.js'
 import 'highlight.js/styles/night-owl.css'
-import Layout from '@/components/Layout'
-import Date from '@/components/Date'
-import Style from '@/styles/blog.module.scss'
-import SEO from '@/lib/next-seo.config'
-import createOgp from '@/lib/createOgp'
-import type { cmsKey, tag, tagsData, blog, blogData, blogsData } from '@/lib/types'
-
-type repos = {
-  contents: [
-    {
-      id: string
-    }
-  ]
-}
+import { JSDOM } from 'jsdom'
+import { Layout, Date, SEO, createOgp, blogsGetAllHeader, blogsGetHeader, blogGetContent, tagsGetAllContents } from '@/src/index'
+import type { tag, blog, blogData, } from '@/src/index'
+import Style from '@/src/styles/blog.module.scss'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
-  const res = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id`, key);
-  const repos: repos = await res.json();
-  const paths = repos.contents.map(repo => `/blogs/${repo.id}`);
+  const blogsData = await blogsGetAllHeader()
+  const paths = blogsData.map(blogData => `/blogs/${blogData.id}`);
   return { paths, fallback: false };
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context.params?.id;
-  const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
-  const blogRes = await fetch(`https://offiter.microcms.io/api/v1/blogs/${id}?fields=id%2Ctitle%2Cimage%2CcreatedAt%2CupdatedAt%2Cbody%2Ctags.id%2Ctags.name`, key)
-  const blog: blogData = await blogRes.json()
-  const latestBlogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
-  const latestBlogsData: blogsData = await latestBlogsRes.json()
-  const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags?fields=id%2Cname`, key)
-  const tagsData: tagsData = await tagsRes.json()
+  const id = context.params?.id
+  const blog = (id !== undefined && !Array.isArray(id)) ? await blogGetContent(id) : await blogGetContent('')
+  const latestBlogsData = await blogsGetHeader()
+  const tagsData = await tagsGetAllContents()
 
   // codeタグを装飾
-  const $ = cheerio.load(blog.body)
-  $('pre code').each((_, elm) => {
-    const result = hljs.highlightAuto($(elm).text())
-    $(elm).html(result.value)
-    $(elm).addClass('hljs')
+  const dom = new JSDOM(blog.body)
+  
+  // シンタックスハイライト
+  dom.window.document.querySelectorAll<HTMLElement>('pre code').forEach((element) => {
+      const result: AutoHighlightResult = hljs.highlightAuto(element.textContent ?? '')
+      element.innerHTML = result.value
+      element.classList.add('hljs')
   })
 
   void createOgp(blog.id, blog.title)
@@ -53,9 +38,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       blog: blog,
-      highlightedBody: $.html(),
-      latestBlogs: latestBlogsData.contents,
-      tags: tagsData.contents,
+      highlightedBody: dom.window.document.body.outerHTML,
+      latestBlogs: latestBlogsData,
+      tags: tagsData,
     }
   }
 }
