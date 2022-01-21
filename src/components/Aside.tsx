@@ -32,7 +32,7 @@ const BlogDetails = ({ createdAt, updatedAt, tags }: blogDetails): JSX.Element |
         {tags.map(tag => (
           <React.Fragment key={tag.id}>
             <li className="inline-block mr-4 font-head text-gray-700 border-2 border-gray-200 rounded-2xl">
-              <Link href="/pages/[tag]" as={`/pages/${tag.id}`}>
+              <Link href="/pages/[tag]" as={`/pages/tags/${tag.id}`}>
                 <a className="inline-block p-1">{tag.name}</a>
               </Link>
             </li>
