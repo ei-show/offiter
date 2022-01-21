@@ -1,22 +1,19 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
-import Layout from '@/components/Layout'
-import Card from '@/components/Card'
-import SEO from '@/lib/next-seo.config'
-import type { cmsKey, tag, tagsData, blog, blogsData } from '@/lib/types'
+import { Layout, Card, SEO, Pagination, tagsGetAllContents, blogsGetHeader, blogsGetTotalCount } from '@/src/index'
+import type { tag, blog, } from '@/src/index'
 
 export const getStaticProps: GetStaticProps = async () => {
-  const key: cmsKey = { headers: { 'X-API-KEY': process.env.API_KEY } }
-  const blogsRes = await fetch(`https://offiter.microcms.io/api/v1/blogs?fields=id%2Ctitle%2Cdescription%2Cimage%2CupdatedAt%2Ctags.id%2Ctags.name`, key)
-  const blogsData: blogsData = await blogsRes.json()
-  const tagsRes = await fetch(`https://offiter.microcms.io/api/v1/tags?fields=id%2Cname`, key)
-  const tagsData: tagsData = await tagsRes.json()
+  const tagsData = await tagsGetAllContents()
+  const blogsData = await blogsGetHeader()
+  const blogsTotalCount = await blogsGetTotalCount()
 
   return {
     props: {
-      blogs: blogsData.contents,
-      tags: tagsData.contents,
+      blogs: blogsData,
+      tags: tagsData,
+      blogsCount: blogsTotalCount,
     }
   }
 }
@@ -24,16 +21,17 @@ export const getStaticProps: GetStaticProps = async () => {
 type props = {
   blogs: blog[],
   tags: tag[],
+  blogsCount: number,
 }
 
-export default function Home({blogs, tags}: props): JSX.Element {
+export default function Home({blogs, tags, blogsCount}: props): JSX.Element {
   return (
     <>
       <NextSeo {...SEO} />
       <Layout latestBlogs={blogs} tags={tags}>
 
         <div className="mb-2 flex items-center justify-between">
-          <h2 className="text-xl text-gray-700 md:text-2xl font-bold">新着記事</h2>
+          <h2 className="text-xl text-gray-700 md:text-2xl font-head">新着記事</h2>
         </div>
 
         {blogs.map(blog => (
@@ -43,6 +41,8 @@ export default function Home({blogs, tags}: props): JSX.Element {
             </div>
           </React.Fragment>
         ))}
+
+        <Pagination totalCount={blogsCount} />
 
       </Layout>
     </>

@@ -1,5 +1,4 @@
 import { createCanvas, loadImage, registerFont, Canvas } from 'canvas'
-import fs from 'fs'
 
 // だいたい半分で改行する関数
 const createTextLines = (canvas: Canvas, text: string): string[] => {
@@ -18,7 +17,7 @@ const createTextLines = (canvas: Canvas, text: string): string[] => {
   return lines
 }
 
-export default async function createOgp(id: string, title: string) {
+export const createOgp = async (id: string, title: string): Promise<void> => {
   // canvas config
   const WIDTH = 1200 as const
   const HEIGHT = 630 as const
@@ -28,7 +27,7 @@ export default async function createOgp(id: string, title: string) {
   const ctx = canvas.getContext("2d")
   const backgroundImage = await loadImage('public/twitter_cards/article_1200x630.png')
   ctx.drawImage(backgroundImage, DX, DY, WIDTH, HEIGHT)
-  registerFont('lib/KosugiMaru-Regular.ttf', {family: 'Kosugi Maru'})
+  registerFont('src/libs/KosugiMaru-Regular.ttf', {family: 'Kosugi Maru'})
   ctx.font = "60px 'Kosugi Maru'"
   ctx.fillStyle = "#1F2937"
   ctx.textAlign = "left"
@@ -42,6 +41,8 @@ export default async function createOgp(id: string, title: string) {
   });
 
   // pngに書き出し
-  const buffer = canvas.toBuffer()
-  fs.writeFileSync(`public/ogp/${id}.png`,buffer)
+  canvas.toBuffer()
+  // fs.writeFileSync(`public/ogp/${id}.png`,buffer)
 }
+
+export default createOgp

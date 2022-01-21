@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import Date from './Date'
-import type { tag } from '@/lib/types'
+import { Date } from '@/src/index'
+import type { tag, blog } from '@/src/index'
 
 type dateTags = {
   tags: tag[],
@@ -41,26 +41,24 @@ const Description = ({ description, small}: description) => {
   )
 }
 
-import { blog } from '@/lib/types'
-
 type props = {
   data: blog,
   small?: boolean,
 }
 export default function Card({data, small}: props): JSX.Element {
-  const cardHeight = !small ? 'md:h-44' : 'md:h-20'
+  const cardHeight = !small ? 'md:h-52' : 'md:h-28'
   const cardMargin = !small ? 'md:p-2' : ''
-  const cardTitle = !small ? 'md:text-2xl' : 'md:font-body md:text-sm md:font-bold'
+  const cardTitle = !small ? 'md:text-2xl' : ''
   return (
     <Link href="/blogs/[id]" as={`/blogs/${data.id}`}>
       <a className="block">
-        <div className={`${cardHeight} ${cardMargin} p-1 h-28 max-w-4xl bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-lg border shadow-md md:shadow-none md:transition md:duration-300 md:ease-in-out md:transform md:hover:-translate-y-1 md:hover:shadow-md`}>
+        <div className={`${cardHeight} ${cardMargin} p-1 h-28 bg-gradient-to-r from-gray-50 via-white to-gray-50 rounded-lg border shadow-md md:shadow-none md:transition md:duration-300 md:ease-in-out md:transform md:hover:-translate-y-1 md:hover:shadow-md`}>
           <div className="flex h-full">
             <div className="relative w-2/5 flex-none">
               <Image alt="" layout="fill" objectFit="cover" className="rounded-lg" src={data.image.url} />
             </div>
             <div className="w-full flex flex-col justify-between h-full ml-1 md:ml-2">
-              <h3 className={`${cardTitle} font-head text-base text-gray-700 flex-none`}>{data.title}</h3>
+              <h3 className={`${cardTitle} font-head text-xl text-gray-700 flex-none`}>{data.title}</h3>
               <Description description={data.description} small={small} />
               <DateTags tags={data.tags} updatedAt={data.updatedAt} small={small} />
             </div>
