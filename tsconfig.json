@@ -19,6 +19,7 @@
     "baseUrl": ".",
     "paths": {
       "@/src/*": ["src/*"],
+      "@/pages/*": ["pages/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
