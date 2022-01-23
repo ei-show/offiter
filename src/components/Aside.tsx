@@ -16,32 +16,32 @@ const BlogDetails = ({ createdAt, updatedAt, tags }: blogDetails): JSX.Element |
   if (tags === undefined) { return null }
   return (
     <div className="mb-10 px-8">
-    <h2 className="mb-4 text-xl font-head text-gray-700">記事の情報</h2>
-    <div className="text-sm flex flex-col bg-gradient-to-r from-gray-50 via-white to-gray-50 p-4 max-w-sm mx-auto rounded-lg border shadow-md lg:shadow-none">
-      <div className="flex mb-4">
-        <span className="flex-1 font-head font-light text-gray-600">
-          <FontAwesomeIcon icon="calendar-plus" fixedWidth className="mr-1" />
-          {Date(createdAt)}
-        </span>
-        <span className="flex-1 font-head font-light text-gray-600">
-          <FontAwesomeIcon icon="edit" fixedWidth className="mr-1" />
-          {Date(updatedAt)}
-        </span>
+      <h2 className="mb-4 text-xl font-head text-gray-700">記事の情報</h2>
+      <div className="text-sm flex flex-col bg-gradient-to-r from-gray-50 via-white to-gray-50 p-4 max-w-sm mx-auto rounded-lg border shadow-md lg:shadow-none">
+        <div className="flex mb-4">
+          <span className="flex-1 font-head font-light text-gray-600">
+            <FontAwesomeIcon icon="calendar-plus" fixedWidth className="mr-1" />
+            {Date(createdAt)}
+          </span>
+          <span className="flex-1 font-head font-light text-gray-600">
+            <FontAwesomeIcon icon="edit" fixedWidth className="mr-1" />
+            {Date(updatedAt)}
+          </span>
+        </div>
+        <ul className="flex flex-wrap">
+          {tags.map(tag => (
+            <React.Fragment key={tag.id}>
+              <li className="inline-block mr-4 font-head text-gray-700 border-2 border-gray-200 rounded-2xl">
+                <Link href="/pages/[tag]" as={`/pages/tags/${tag.id}`}>
+                  <a className="inline-block p-1">{tag.name}</a>
+                </Link>
+              </li>
+            </React.Fragment>
+          ))}
+        </ul>
       </div>
-      <ul className="flex flex-wrap">
-        {tags.map(tag => (
-          <React.Fragment key={tag.id}>
-            <li className="inline-block mr-4 font-head text-gray-700 border-2 border-gray-200 rounded-2xl">
-              <Link href="/pages/[tag]" as={`/pages/${tag.id}`}>
-                <a className="inline-block p-1">{tag.name}</a>
-              </Link>
-            </li>
-          </React.Fragment>
-        ))}
-      </ul>
     </div>
-  </div>
-)
+  )
 }
 
 type props = {
