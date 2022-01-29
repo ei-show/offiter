@@ -23,13 +23,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: Install npm packages & update
-        run: |
-          npm ci
-          npm update
+      - name: Install npm packages
+        run: npm install
+
+      - name: Update npm
+        run: npm update
+
+      - name: Lint
+        run: npm run lint
+        
+      - name: Check type
+        run: npm run lint
 
       - name: Test
         run: npm run test
-
-      - name: Test all
-        run: npm run test-all

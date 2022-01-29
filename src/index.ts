@@ -12,7 +12,6 @@ export { default as Pagination } from './components/Pagination'
 export { default as SNSlink } from './components/SNSlink'
 
 // libs
-export { default as createOgp } from './libs/createOgp'
 export * as gtag from './libs/gtag'
 export { GA_TRACKING_ID } from './libs/gtag'
 export { default as clientAspida } from './libs/clientAspida'
