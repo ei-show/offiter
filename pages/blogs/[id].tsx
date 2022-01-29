@@ -7,9 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/night-owl.css'
 import { JSDOM } from 'jsdom'
-import { Layout, Date, SEO, createOgp, blogsGetAllHeader, blogsGetHeader, blogGetContent, tagsGetAllContents } from '@/src/index'
+import { Layout, Date, SEO, blogsGetAllHeader, blogsGetHeader, blogGetContent, tagsGetAllContents } from '@/src/index'
 import type { tag, blog, blogData, } from '@/src/index'
 import Style from '@/src/styles/blog.module.scss'
+import base64url from 'base64url'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const blogsData = await blogsGetAllHeader()
@@ -33,8 +34,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       element.classList.add('hljs')
   })
 
-  void createOgp(blog.id, blog.title)
-
   return {
     props: {
       blog: blog,
@@ -55,6 +54,9 @@ type props = {
 }
 
 export default function Blog({blog, highlightedBody, latestBlogs, tags}: props): JSX.Element {
+  const width = 1200
+  const ogpBaseImage = 'https://images.microcms-assets.io/assets/de88e062d820469698e6053f34bfe93b/22b0ff52ecf840b6a66468e97240dfbb/article_1200x630.png'
+  const ogpTitle = `https://assets.imgix.net/~text?txtsize=48&txt-color=1F2937&w=${width - 80}&txt-align=middle&txtfont=Hiragino%20Sans%20W6&txt-track=2`
   return (
     <>
       <NextSeo
@@ -69,7 +71,7 @@ export default function Blog({blog, highlightedBody, latestBlogs, tags}: props):
           description: blog.description,
           images: [
             {
-              url: `${baseURL}/ogp/${blog.id}.png`,
+              url: `${ogpBaseImage}?blend64=${base64url(`${ogpTitle}&txt64=${base64url(blog.title)}`)}&blend-mode=normal&blend-align=top,left&blend-x=40&blend-y=100`,
               height: 630,
               width: 1200,
               alt: 'Og Image Alt'
