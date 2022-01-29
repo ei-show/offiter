@@ -1,6 +1,6 @@
 type tag = {
-  id: string,
-  name: string,
+  id: string
+  name: string
 }
 
 type tagsData = {
@@ -8,33 +8,39 @@ type tagsData = {
 }
 
 type blog = {
-  id: string,
-  title: string,
-  description: string,
+  id: string
+  title: string
+  description: string
   image: {
-    url: string,
-    height: number,
-    width: number,
-  },
+    url: string
+    height: number
+    width: number
+  }
   updatedAt: string
   tags: tag[]
 }
 
 type blogData = {
-  createdAt: string,
-  body: string,
+  createdAt: string
+  body: string
 } & blog
 
 type blogsData = {
-  contents: blog[],
-  totalCount: number,
+  contents: blog[]
+  totalCount: number
 }
 
 type blogCount = {
   contents: {
-    id: string,
-  },
-  totalCount: number,
+    id: string
+  }
+  totalCount: number
 }
 
-export type { tag, tagsData, blog, blogData, blogsData, blogCount }
+type TOC = {
+  text: string | null
+  id: string | null
+  name: string
+}
+
+export type { tag, tagsData, blog, blogData, blogsData, blogCount, TOC }
