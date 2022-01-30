@@ -1,4 +1,4 @@
-import "tailwindcss/tailwind.css"
+import 'tailwindcss/tailwind.css'
 import { config, library } from '@fortawesome/fontawesome-svg-core'
 import {
   faHome,
@@ -8,6 +8,8 @@ import {
   faWindowMaximize,
   faArrowRight,
   faCalendarPlus,
+  faLongArrowAltDown,
+  faLevelUpAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faYoutube,
@@ -31,7 +33,9 @@ library.add(
   faInstagramSquare,
   faFacebookSquare,
   faTiktok,
-  faCalendarPlus
+  faCalendarPlus,
+  faLongArrowAltDown,
+  faLevelUpAlt
 )
 
 // gtag

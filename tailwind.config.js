@@ -1,14 +1,11 @@
 module.exports = {
-  purge: [
-    './pages/**/*.{js,ts,jsx,tsx,}',
-    './src/**/*.{js,ts,jsx,tsx,css,scss,}',
-  ],
+  purge: ['./pages/**/*.{js,ts,jsx,tsx,}', './src/**/*.{js,ts,jsx,tsx,css,scss,}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
       title: '"Hachi Maru Pop"', // Title
-      head: '"Kosugi Maru"',     // 見出し
-      body: '"Noto Sans JP"',    // 文章
+      head: '"Kosugi Maru"', // 見出し
+      body: '"Noto Sans JP"', // 文章
     },
     extend: {},
   },

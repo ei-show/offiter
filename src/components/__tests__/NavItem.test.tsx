@@ -3,14 +3,14 @@ import '@testing-library/jest-dom/extend-expect'
 import { NavItem } from 'src/index'
 
 type props = {
-  NavItemName: string,
+  NavItemName: string
   blogId: string
 }
 
 describe('Rendering', () => {
   const props: props = {
-    NavItemName: "testItem",
-    blogId: "testId",
+    NavItemName: 'testItem',
+    blogId: 'testId',
   }
 
   test('Should render NavItemName', () => {
