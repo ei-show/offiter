@@ -1,4 +1,4 @@
-import "tailwindcss/tailwind.css"
+import 'tailwindcss/tailwind.css'
 import { config, library } from '@fortawesome/fontawesome-svg-core'
 import {
   faHome,
