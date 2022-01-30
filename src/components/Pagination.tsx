@@ -12,7 +12,7 @@ export default function Pagination({ totalCount }: props): JSX.Element {
     <ul>
       {range(1, Math.ceil(totalCount / PER_PAGE)).map((number, index) => (
         <li key={index}>
-          <Link href={ `/pages/blogs/${number}`}>
+          <Link href={`/pages/blogs/${number}`}>
             <a>{number}</a>
           </Link>
         </li>

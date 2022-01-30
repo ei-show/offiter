@@ -1,28 +1,27 @@
 import { ReactNode } from 'react'
 import { Header, Aside, Footer, Nav } from '@/src/index'
-import type { tag, blog, blogData } from '@/src/index'
+import type { tag, blog, blogData, TOC } from '@/src/index'
 
 type props = {
   blogDetails?: blogData
-  latestBlogs: blog[],
-  tags: tag[],
+  latestBlogs: blog[]
+  tags: tag[]
+  toc?: TOC[]
   children: ReactNode
 }
 
-export default function Layout({ blogDetails, latestBlogs, tags, children }: props):JSX.Element {
+export default function Layout({ blogDetails, latestBlogs, tags, toc, children }: props): JSX.Element {
   const siteName = 'Offiter'
   return (
     <>
-      <div className="bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 overflow-x-hidden font-body">
+      <div className="via-cyan-200 overflow-x-hidden bg-gradient-to-b from-indigo-500 to-gray-500 font-body">
         <Header siteName={siteName} />
         <div className="px-6 py-8">
-          <div className="flex justify-around container mx-auto">
+          <div className="container mx-auto flex justify-around">
             {/* Main Start */}
-            <div className="w-full min-h-screen lg:w-8/12">
-              {children}
-            </div>
+            <div className="min-h-screen w-full lg:w-8/12">{children}</div>
             {/* Main End */}
-            <Aside blogDetails={blogDetails} latestBlogs={latestBlogs} tags={tags} />
+            <Aside blogDetails={blogDetails} latestBlogs={latestBlogs} tags={tags} toc={toc} />
           </div>
         </div>
         <Footer siteName={siteName} />
