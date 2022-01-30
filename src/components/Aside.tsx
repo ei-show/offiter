@@ -21,7 +21,9 @@ const BlogDetails = ({ createdAt, updatedAt, tags, toc }: blogDetails): JSX.Elem
   if (tags === undefined) {
     return null
   }
-  if (toc === undefined) {return null}
+  if (toc === undefined) {
+    return null
+  }
 
   return (
     <div className="mb-10 px-8">
@@ -48,14 +50,16 @@ const BlogDetails = ({ createdAt, updatedAt, tags, toc }: blogDetails): JSX.Elem
             </React.Fragment>
           ))}
         </ul>
-        <ul className="flex flex-col">
+        <ul className="">
           {toc.map((toc) => (
             <React.Fragment key={toc.id}>
-              <li className="ml-4 list-outside list-none border-bottom border-gray-200 font-head text-gray-700 after:content-['*'] after:ml-0.5 after:text-red-500">
-                <Link href={`#${toc.id}`} as={`#${toc.id}`}>
-                  <a className="inline-block p-1">{toc.text}</a>
-                </Link>
-              </li>
+              <Link href={`#${toc.id}`} as={`#${toc.id}`}>
+                <a className="flex items-center divide-y divide-gray-200">
+                  <FontAwesomeIcon icon="long-arrow-alt-down" fixedWidth className="mr-4" />
+                  {/* <FontAwesomeIcon icon="level-up-alt" fixedWidth rotation={90} className="mr-1" /> */}
+                  <li className="w-full list-none py-2  font-head text-gray-700 ">{toc.text}</li>
+                </a>
+              </Link>
             </React.Fragment>
           ))}
         </ul>
