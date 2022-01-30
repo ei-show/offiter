@@ -8,10 +8,10 @@ type blogDetails = {
   createdAt?: string
   updatedAt?: string
   tags?: tag[]
-  toc: TOC[]
+  toc?: TOC[]
 }
 
-const BlogDetails = ({ createdAt, updatedAt, tags, toc, }: blogDetails): JSX.Element | null => {
+const BlogDetails = ({ createdAt, updatedAt, tags, toc }: blogDetails): JSX.Element | null => {
   if (createdAt === undefined) {
     return null
   }
@@ -21,8 +21,8 @@ const BlogDetails = ({ createdAt, updatedAt, tags, toc, }: blogDetails): JSX.Ele
   if (tags === undefined) {
     return null
   }
-  console.log(toc);
-  
+  if (toc === undefined) {return null}
+
   return (
     <div className="mb-10 px-8">
       <h2 className="mb-4 font-head text-xl text-gray-700">記事の情報</h2>
@@ -37,21 +37,27 @@ const BlogDetails = ({ createdAt, updatedAt, tags, toc, }: blogDetails): JSX.Ele
             {Date(updatedAt)}
           </span>
         </div>
-        <ul className="flex flex-wrap">
+        <ul className="mb-4 flex flex-wrap">
           {tags.map((tag) => (
             <React.Fragment key={tag.id}>
               <li className="mr-4 inline-block rounded-2xl border-2 border-gray-200 font-head text-gray-700">
-                <Link href="/pages/[tag]" as={`/pages/tags/${tag.id}`}>
+                <Link href="/pages/tags/[tag]" as={`/pages/tags/${tag.id}`}>
                   <a className="inline-block p-1">{tag.name}</a>
                 </Link>
               </li>
             </React.Fragment>
           ))}
         </ul>
-        <ul>
-          {toc.map((chapter) => {
-            <li>{chapter.id}</li>
-          })}
+        <ul className="flex flex-col">
+          {toc.map((toc) => (
+            <React.Fragment key={toc.id}>
+              <li className="ml-4 list-outside list-none border-bottom border-gray-200 font-head text-gray-700 after:content-['*'] after:ml-0.5 after:text-red-500">
+                <Link href={`#${toc.id}`} as={`#${toc.id}`}>
+                  <a className="inline-block p-1">{toc.text}</a>
+                </Link>
+              </li>
+            </React.Fragment>
+          ))}
         </ul>
       </div>
     </div>
@@ -62,13 +68,18 @@ type props = {
   blogDetails?: blogData
   latestBlogs: blog[]
   tags: tag[]
-  toc: TOC[]
+  toc?: TOC[]
 }
 
 export default function Aside({ blogDetails, latestBlogs, tags, toc }: props): JSX.Element {
   return (
     <div className="-mx-8 hidden w-4/12 lg:block">
-      <BlogDetails createdAt={blogDetails?.createdAt} updatedAt={blogDetails?.updatedAt} tags={blogDetails?.tags} toc={toc} />
+      <BlogDetails
+        createdAt={blogDetails?.createdAt}
+        updatedAt={blogDetails?.updatedAt}
+        tags={blogDetails?.tags}
+        toc={toc}
+      />
 
       <div className="mb-10 px-8">
         <h2 className="mb-2 font-head text-xl text-gray-700">最新の記事</h2>

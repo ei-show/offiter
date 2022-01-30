@@ -6,7 +6,7 @@ type props = {
   blogDetails?: blogData
   latestBlogs: blog[]
   tags: tag[]
-  toc: TOC[]
+  toc?: TOC[]
   children: ReactNode
 }
 
