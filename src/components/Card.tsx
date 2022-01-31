@@ -59,7 +59,7 @@ export default function Card({ data, small }: props): JSX.Element {
     <Link href="/blogs/[id]" as={`/blogs/${data.id}`}>
       <a className="block">
         <div
-          className={`${cardHeight} ${cardMargin} h-28 rounded-lg border bg-gradient-to-r from-gray-50 via-white to-gray-50 p-1 shadow-md md:transform md:shadow-none md:transition md:duration-300 md:ease-in-out md:hover:-translate-y-1 md:hover:shadow-md`}
+          className={`${cardHeight} ${cardMargin} via-white h-28 rounded-lg border bg-gradient-to-r from-gray-50 to-gray-50 p-1 shadow-md md:transform md:shadow-none md:transition md:duration-300 md:ease-in-out md:hover:-translate-y-1 md:hover:shadow-md`}
         >
           <div className="flex h-full">
             <div className="relative w-2/5 flex-none">
