@@ -9,7 +9,7 @@ import 'highlight.js/styles/night-owl.css'
 import { JSDOM } from 'jsdom'
 import { Layout, Date, SEO, blogsGetAllHeader, blogsGetHeader, blogGetContent, tagsGetAllContents } from '@/src/index'
 import type { tag, blog, blogData, TOC } from '@/src/index'
-import Style from '@/src/styles/blog.module.scss'
+import Style from '@/styles/blog.module.scss'
 import base64url from 'base64url'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -115,7 +115,7 @@ export default function Blog({ blog, highlightedBody, latestBlogs, tags, toc }: 
             {blog.tags.map((tag) => (
               <React.Fragment key={tag.id}>
                 <Link href="/[tag]" as={`/${tag.id}`}>
-                  <a className="ml-2 rounded-lg bg-gradient-to-r from-gray-50 via-white to-gray-50 p-2 text-xs font-bold text-blue-900 shadow-md md:text-base lg:transform lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-md">
+                  <a className="via-white text-blue-900 ml-2 rounded-lg bg-gradient-to-r from-gray-50 to-gray-50 p-2 text-xs font-bold shadow-md md:text-base lg:transform lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-md">
                     <span>{tag.name}</span>
                   </a>
                 </Link>

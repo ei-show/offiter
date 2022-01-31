@@ -1,0 +1,45 @@
+@layer components {
+  .blog {
+    h3 {
+      @apply via-white text-blue-900 border-blue-300 my-6 rounded-tr-2xl border-l-4 border-b-4 bg-gradient-to-r from-gray-50 to-gray-50 p-2 font-head text-lg md:block md:w-4/6 md:max-w-full md:text-2xl;
+    }
+    h4 {
+      @extend h3;
+      @apply border-blue-200 pl-4 md:w-5/6 md:text-xl;
+    }
+    h5 {
+      @extend h3;
+      @apply border-blue-100 pl-6 md:w-full md:text-lg;
+    }
+    p {
+      @apply ml-6 font-bold;
+    }
+    a {
+      @apply text-blue-400 hover:text-blue-600 mt-6 ml-6 hover:underline;
+    }
+    ul {
+      @apply mt-6 ml-12 list-disc font-bold;
+    }
+    ol {
+      @extend ul;
+      @apply list-decimal;
+    }
+    pre {
+      code {
+        @apply mt-6 ml-6;
+      }
+    }
+    // 単一codeのみ
+    $singleCode: p, ul;
+    @each $s in $singleCode {
+      #{$s} {
+        code {
+          @apply bg-gray-300 px-2 font-normal;
+        }
+      }
+    }
+    blockquote {
+      @apply ml-6 rounded-r-lg border-l-4 border-gray-400 bg-gray-300 p-2;
+    }
+  }
+}
