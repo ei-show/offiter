@@ -98,37 +98,38 @@ export default function Blog({ blog, highlightedBody, latestBlogs, tags, toc }: 
         <div className="flex items-center justify-between">
           <h2 className="font-head text-xl text-gray-700 md:text-2xl">{blog.title}</h2>
         </div>
+        <div className="lg:bg-gray-100">
+          <div className="mt-4 flex items-center justify-between lg:hidden">
+            <div className="flex flex-col">
+              <span className="text-xs font-light text-gray-600">
+                <FontAwesomeIcon icon="calendar-plus" fixedWidth />
+                {Date(blog.createdAt)}
+              </span>
+              <span className="text-xs font-light text-gray-600">
+                <FontAwesomeIcon icon="edit" fixedWidth />
+                {Date(blog.updatedAt)}
+              </span>
+            </div>
 
-        <div className="mt-4 flex items-center justify-between lg:hidden">
-          <div className="flex flex-col">
-            <span className="text-xs font-light text-gray-600">
-              <FontAwesomeIcon icon="calendar-plus" fixedWidth />
-              {Date(blog.createdAt)}
-            </span>
-            <span className="text-xs font-light text-gray-600">
-              <FontAwesomeIcon icon="edit" fixedWidth />
-              {Date(blog.updatedAt)}
-            </span>
+            <div className="flex items-center justify-end">
+              {blog.tags.map((tag) => (
+                <React.Fragment key={tag.id}>
+                  <Link href="/[tag]" as={`/${tag.id}`}>
+                    <a className="ml-2 rounded-lg bg-gradient-to-r from-gray-50 via-white to-gray-50 p-2 text-xs font-bold text-blue-900 shadow-md md:text-base lg:transform lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-md">
+                      <span>{tag.name}</span>
+                    </a>
+                  </Link>
+                </React.Fragment>
+              ))}
+            </div>
           </div>
 
-          <div className="flex items-center justify-end">
-            {blog.tags.map((tag) => (
-              <React.Fragment key={tag.id}>
-                <Link href="/[tag]" as={`/${tag.id}`}>
-                  <a className="via-white text-blue-900 ml-2 rounded-lg bg-gradient-to-r from-gray-50 to-gray-50 p-2 text-xs font-bold shadow-md md:text-base lg:transform lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-md">
-                    <span>{tag.name}</span>
-                  </a>
-                </Link>
-              </React.Fragment>
-            ))}
+          <div className="mt-4 flex items-center justify-center border-8 border-gray-50 ">
+            <Image alt="" src={blog.image.url} width={blog.image.width} height={blog.image.height} />
           </div>
-        </div>
 
-        <div className="mt-4 flex items-center justify-center border-8 border-gray-50 ">
-          <Image alt="" src={blog.image.url} width={blog.image.width} height={blog.image.height} />
+          <div className={`${Style.blog} mt-4`} dangerouslySetInnerHTML={{ __html: `${highlightedBody}` }} />
         </div>
-
-        <div className={`${Style.blog} mt-4`} dangerouslySetInnerHTML={{ __html: `${highlightedBody}` }} />
       </Layout>
     </>
   )

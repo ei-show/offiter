@@ -28,7 +28,7 @@ const BlogDetails = ({ createdAt, updatedAt, tags, toc }: blogDetails): JSX.Elem
   return (
     <div className="mb-10 px-8">
       <h2 className="mb-4 font-head text-xl text-gray-700">記事の情報</h2>
-      <div className="via-white mx-auto flex flex-col rounded-lg border bg-gradient-to-r from-gray-50 to-gray-50 p-4 text-sm shadow-md lg:shadow-none">
+      <div className="mx-auto flex flex-col rounded-lg border bg-gradient-to-r from-gray-50 via-white to-gray-50 p-4 text-sm shadow-md lg:shadow-none">
         <div className="mb-4 flex">
           <span className="flex-1 font-head font-light text-gray-600">
             <FontAwesomeIcon icon="calendar-plus" fixedWidth className="mr-1" />
@@ -98,7 +98,7 @@ export default function Aside({ blogDetails, latestBlogs, tags, toc }: props): J
 
       <div className="px-8">
         <h2 className="mb-4 font-head text-xl text-gray-700">タグ</h2>
-        <div className="via-white mx-auto flex max-w-sm flex-col rounded-lg border bg-gradient-to-r from-gray-50 to-gray-50 p-4 shadow-md lg:shadow-none">
+        <div className="mx-auto flex max-w-sm flex-col rounded-lg border bg-gradient-to-r from-gray-50 via-white to-gray-50 p-4 shadow-md lg:shadow-none">
           <ul>
             {tags.map((tag) => (
               <React.Fragment key={tag.id}>
