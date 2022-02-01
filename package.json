@@ -22,8 +22,8 @@
   },
   "lint-staged": {
     "*.@(ts|tsx)": [
-      "npm lint",
-      "npm format"
+      "npm run lint",
+      "npm run format"
     ]
   },
   "dependencies": {
@@ -62,7 +62,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
-    "husky": "^7.0.1",
+    "husky": "^7.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.7",
     "jest-watch-typeahead": "^0.6.1",
