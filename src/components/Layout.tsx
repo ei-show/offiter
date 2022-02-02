@@ -4,8 +4,8 @@ import type { tag, blog, blogData, TOC } from '@/src/index'
 
 type props = {
   blogDetails?: blogData
-  latestBlogs: blog[]
-  tags: tag[]
+  latestBlogs?: blog[]
+  tags?: tag[]
   toc?: TOC[]
   children: ReactNode
 }
@@ -13,7 +13,7 @@ type props = {
 export default function Layout({ blogDetails, latestBlogs, tags, toc, children }: props): JSX.Element {
   const siteName = 'Offiter'
   return (
-    <div className="overflow-x-hidden bg-gradient-to-r from-gray-50 via-white to-gray-50 font-body lg:bg-gradient-to-b lg:from-cyan-50 lg:via-cyan-300 lg:to-blue-900">
+    <div className="bg-gradient-to-r from-gray-50 via-white to-gray-50 font-body lg:bg-gradient-to-b lg:from-cyan-50 lg:via-cyan-300 lg:to-blue-900">
       <Header siteName={siteName} />
       <div className="flex items-center justify-center">
         <h2 className="m-8 font-head text-xl text-gray-700 md:text-2xl">{blogDetails?.title}</h2>

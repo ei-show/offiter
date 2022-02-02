@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/night-owl.css'
 import { JSDOM } from 'jsdom'
-import { Layout, Date, SEO, blogsGetAllHeader, blogsGetHeader, blogGetContent, tagsGetAllContents } from '@/src/index'
-import type { tag, blog, blogData, TOC } from '@/src/index'
+import { Layout, Date, SEO, blogsGetAllHeader, blogGetContent } from '@/src/index'
+import type { blogData, TOC } from '@/src/index'
 import Style from '@/styles/blog.module.scss'
 import base64url from 'base64url'
 
@@ -21,8 +21,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id
   const blog = id !== undefined && !Array.isArray(id) ? await blogGetContent(id) : await blogGetContent('')
-  const latestBlogsData = await blogsGetHeader()
-  const tagsData = await tagsGetAllContents()
 
   // codeタグを装飾
   const dom = new JSDOM(blog.body)
@@ -46,8 +44,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       blog: blog,
       highlightedBody: dom.window.document.body.outerHTML,
-      latestBlogs: latestBlogsData,
-      tags: tagsData,
       toc: toc,
     },
   }
@@ -58,12 +54,10 @@ const baseURL: string = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 type props = {
   blog: blogData
   highlightedBody: string
-  latestBlogs: blog[]
-  tags: tag[]
   toc: TOC[]
 }
 
-export default function Blog({ blog, highlightedBody, latestBlogs, tags, toc }: props): JSX.Element {
+export default function Blog({ blog, highlightedBody, toc }: props): JSX.Element {
   const width = 1200
   const ogpBaseImage =
     'https://images.microcms-assets.io/assets/de88e062d820469698e6053f34bfe93b/22b0ff52ecf840b6a66468e97240dfbb/article_1200x630.png'
@@ -94,8 +88,8 @@ export default function Blog({ blog, highlightedBody, latestBlogs, tags, toc }: 
           ],
         }}
       />
-      <Layout blogDetails={blog} latestBlogs={latestBlogs} tags={tags} toc={toc}>
-        <div className="lg:rounded-lg lg:bg-gradient-to-r lg:from-gray-50 lg:via-white lg:to-gray-50 lg:p-2">
+      <Layout blogDetails={blog} toc={toc}>
+        <div className="lg:rounded-lg lg:border lg:bg-gradient-to-r lg:from-gray-50 lg:via-white lg:to-gray-50 lg:p-2 lg:shadow-md">
           <div className="mt-4 flex items-center justify-between lg:hidden">
             <div className="flex flex-col">
               <span className="text-xs font-light text-gray-600">
@@ -121,7 +115,7 @@ export default function Blog({ blog, highlightedBody, latestBlogs, tags, toc }: 
             </div>
           </div>
 
-          <div className="mt-4 flex items-center justify-center border-8 border-gray-50 ">
+          <div className="mt-4 flex items-center justify-center">
             <Image alt="" src={blog.image.url} width={blog.image.width} height={blog.image.height} />
           </div>
 
