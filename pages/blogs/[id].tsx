@@ -98,7 +98,7 @@ export default function Blog({ blog, highlightedBody, latestBlogs, tags, toc }: 
         <div className="flex items-center justify-between">
           <h2 className="font-head text-xl text-gray-700 md:text-2xl">{blog.title}</h2>
         </div>
-        <div className="lg:bg-gray-100">
+        <div className="lg:rounded-lg lg:bg-gradient-to-r lg:from-gray-50 lg:via-white lg:to-gray-50 lg:p-2">
           <div className="mt-4 flex items-center justify-between lg:hidden">
             <div className="flex flex-col">
               <span className="text-xs font-light text-gray-600">
@@ -128,7 +128,7 @@ export default function Blog({ blog, highlightedBody, latestBlogs, tags, toc }: 
             <Image alt="" src={blog.image.url} width={blog.image.width} height={blog.image.height} />
           </div>
 
-          <div className={`${Style.blog} mt-4`} dangerouslySetInnerHTML={{ __html: `${highlightedBody}` }} />
+          <div className={`${Style.blog} mt-4 md:text-lg`} dangerouslySetInnerHTML={{ __html: `${highlightedBody}` }} />
         </div>
       </Layout>
     </>

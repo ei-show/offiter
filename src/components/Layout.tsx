@@ -14,7 +14,7 @@ export default function Layout({ blogDetails, latestBlogs, tags, toc, children }
   const siteName = 'Offiter'
   return (
     <>
-      <div className="overflow-x-hidden bg-gray-50 font-body lg:bg-gradient-to-b lg:from-cyan-50 lg:via-cyan-300 lg:to-blue-900">
+      <div className="overflow-x-hidden bg-gradient-to-r from-gray-50 via-white to-gray-50 font-body lg:bg-gradient-to-b lg:from-cyan-50 lg:via-cyan-300 lg:to-blue-900">
         <Header siteName={siteName} />
         <div className="px-6 py-8">
           <div className="container mx-auto flex justify-around">
