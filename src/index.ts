@@ -12,6 +12,7 @@ export { default as Pagination } from './components/Pagination'
 export { default as SNSlink } from './components/SNSlink'
 export { default as BlogDetail } from './components/BlogDetail'
 export { default as TagsLists } from './components/TagsLists'
+export { default as LatestBlogsCardLists } from './components/LatestBlogsCardLists'
 
 // libs
 export * as gtag from './libs/gtag'
