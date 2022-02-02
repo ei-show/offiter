@@ -95,9 +95,6 @@ export default function Blog({ blog, highlightedBody, latestBlogs, tags, toc }: 
         }}
       />
       <Layout blogDetails={blog} latestBlogs={latestBlogs} tags={tags} toc={toc}>
-        <div className="flex items-center justify-between">
-          <h2 className="font-head text-xl text-gray-700 md:text-2xl">{blog.title}</h2>
-        </div>
         <div className="lg:rounded-lg lg:bg-gradient-to-r lg:from-gray-50 lg:via-white lg:to-gray-50 lg:p-2">
           <div className="mt-4 flex items-center justify-between lg:hidden">
             <div className="flex flex-col">

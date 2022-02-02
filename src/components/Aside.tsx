@@ -27,7 +27,6 @@ const BlogDetails = ({ createdAt, updatedAt, tags, toc }: blogDetails): JSX.Elem
 
   return (
     <div className="mb-10 px-8">
-      <h2 className="mb-4 font-head text-xl text-gray-700">記事の情報</h2>
       <div className="mx-auto flex flex-col rounded-lg border bg-gradient-to-r from-gray-50 via-white to-gray-50 p-4 text-sm shadow-md lg:shadow-none">
         <div className="mb-4 flex">
           <span className="flex-1 font-head font-light text-gray-600">
