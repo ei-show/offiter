@@ -27,6 +27,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       blogs: blogsData,
       latestBlogs: latestBlogsData,
       blogCount: blogsTotalCount,
+      pageNumber: Number(id),
     },
   }
 }
@@ -36,9 +37,10 @@ type props = {
   blogs: blog[]
   latestBlogs: blog[]
   blogCount: number
+  pageNumber: number
 }
 
-export default function Home({ tags, blogs, latestBlogs, blogCount }: props): JSX.Element {
+export default function Home({ tags, blogs, latestBlogs, blogCount, pageNumber }: props): JSX.Element {
   return (
     <>
       <NextSeo {...SEO} />
@@ -55,7 +57,7 @@ export default function Home({ tags, blogs, latestBlogs, blogCount }: props): JS
           </React.Fragment>
         ))}
 
-        <Pagination totalCount={blogCount} />
+        <Pagination totalCount={blogCount} pageNumber={pageNumber} />
       </Layout>
     </>
   )
