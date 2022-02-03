@@ -27,5 +27,11 @@ module.exports = {
       translate: ['group-hover'],
     },
   },
-  plugins: [],
+  plugins: [
+    require('daisyui')
+  ],
+  daisyui: {
+    styled: false,
+    themes: false
+  }
 }
