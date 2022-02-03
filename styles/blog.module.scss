@@ -12,13 +12,13 @@
       @apply border-blue-100 pl-6 md:w-full md:text-lg;
     }
     p {
-      @apply ml-6 font-bold;
+      @apply ml-6 font-bold text-gray-900;
     }
     a {
       @apply mt-6 ml-6 text-blue-400 hover:text-blue-600 hover:underline;
     }
     ul {
-      @apply mt-6 ml-12 list-disc font-bold;
+      @apply mt-6 ml-12 list-disc font-bold text-gray-900;
     }
     ol {
       @extend ul;

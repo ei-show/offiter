@@ -32,7 +32,7 @@ const PaginationButton = ({ pageNumber, currentPageNumber }: PaginationButton): 
   if (pageNumber === currentPageNumber) {
     return (
       <Link href={`/pages/blogs/${pageNumber}`}>
-        <button className="btn bg-gray-600 text-gray-50 md:btn-lg">
+        <button className="btn btn-active md:btn-lg">
           <a>{pageNumber}</a>
         </button>
       </Link>
@@ -41,7 +41,7 @@ const PaginationButton = ({ pageNumber, currentPageNumber }: PaginationButton): 
 
   return (
     <Link href={`/pages/blogs/${pageNumber}`}>
-      <button className="btn bg-gray-200 hover:bg-gray-600 hover:text-gray-50 md:btn-lg">
+      <button className="btn md:btn-lg">
         <a>{pageNumber}</a>
       </button>
     </Link>
