@@ -1,4 +1,7 @@
-@layer components {
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
   .blog {
     h3 {
       @apply my-6 rounded-tr-2xl border-l-4 border-b-4 border-cyan-300 bg-gradient-to-r from-gray-200 via-white to-gray-200 p-2 font-head text-lg text-blue-900 md:block md:w-4/6 md:max-w-full md:text-2xl;
