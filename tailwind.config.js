@@ -9,17 +9,6 @@ module.exports = {
       head: '"Kosugi Maru"', // 見出し
       body: '"Noto Sans JP"', // 文章
     },
-    // colors: {
-    //   transparent: 'transparent',
-    //   current: 'currentColor',
-    //   cyan: colors.cyan,
-    //   gray: colors.gray,
-    //   indigo: colors.indigo,
-    //   purple: colors.purple,
-    //   pink: colors.pink,
-    //   white: colors.white,
-    //   blue: colors.blue,
-    // },
     extend: {},
   },
   variants: {
