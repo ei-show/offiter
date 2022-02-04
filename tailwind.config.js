@@ -9,17 +9,17 @@ module.exports = {
       head: '"Kosugi Maru"', // 見出し
       body: '"Noto Sans JP"', // 文章
     },
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      cyan: colors.cyan,
-      gray: colors.gray,
-      indigo: colors.indigo,
-      purple: colors.purple,
-      pink: colors.pink,
-      white: colors.white,
-      blue: colors.blue,
-    },
+    // colors: {
+    //   transparent: 'transparent',
+    //   current: 'currentColor',
+    //   cyan: colors.cyan,
+    //   gray: colors.gray,
+    //   indigo: colors.indigo,
+    //   purple: colors.purple,
+    //   pink: colors.pink,
+    //   white: colors.white,
+    //   blue: colors.blue,
+    // },
     extend: {},
   },
   variants: {
@@ -27,15 +27,9 @@ module.exports = {
       translate: ['group-hover'],
     },
   },
-  plugins: [
-    require('daisyui'),
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [require('daisyui'), require('@tailwindcss/typography')],
   daisyui: {
     styled: true,
-    themes: [
-      'light',
-      'dark',
-    ],
+    themes: ['light', 'dark'],
   },
 }
