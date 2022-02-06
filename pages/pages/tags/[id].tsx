@@ -1,6 +1,6 @@
 import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { Layout, Card, Pagination } from '@/src/index'
+import { Layout, Card } from '@/src/index'
 import { tagsGetAllContents, blogsGetAllHeader, blogsGetHeader, blogsGetTotalCount } from '@/src/index'
 import type { tag, blog } from '@/src/index'
 
@@ -34,7 +34,7 @@ type props = {
   blogsCount: number
 }
 
-export default function Home({ blogs, latestBlogs, tags, blogsCount }: props): JSX.Element {
+export default function Home({ blogs, latestBlogs, tags }: props): JSX.Element {
   return (
     <Layout latestBlogs={latestBlogs} tags={tags}>
       <div className="mb-2 flex items-center justify-between">
@@ -48,7 +48,6 @@ export default function Home({ blogs, latestBlogs, tags, blogsCount }: props): J
           </div>
         </React.Fragment>
       ))}
-      <Pagination totalCount={blogsCount} />
     </Layout>
   )
 }

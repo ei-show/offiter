@@ -1,5 +1,3 @@
-const colors = require('tailwindcss/colors')
-
 module.exports = {
   purge: ['./pages/**/*.{js,ts,jsx,tsx,}', './src/**/*.{js,ts,jsx,tsx,css,scss,}'],
   darkMode: false, // or 'media' or 'class'
@@ -9,17 +7,6 @@ module.exports = {
       head: '"Kosugi Maru"', // 見出し
       body: '"Noto Sans JP"', // 文章
     },
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      cyan: colors.cyan,
-      gray: colors.gray,
-      indigo: colors.indigo,
-      purple: colors.purple,
-      pink: colors.pink,
-      white: colors.white,
-      blue: colors.blue,
-    },
     extend: {},
   },
   variants: {
@@ -27,5 +14,9 @@ module.exports = {
       translate: ['group-hover'],
     },
   },
-  plugins: [],
+  plugins: [require('daisyui'), require('@tailwindcss/typography')],
+  daisyui: {
+    styled: true,
+    themes: ['light', 'dark'],
+  },
 }

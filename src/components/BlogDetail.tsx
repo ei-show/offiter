@@ -49,15 +49,13 @@ const BlogDetail = ({ createdAt, updatedAt, tags, toc }: BlogDetail): JSX.Elemen
             </React.Fragment>
           ))}
         </ul>
-        <ul className="">
+        <ul className="steps steps-vertical divide-y divide-gray-200">
           {toc.map((toc) => (
             <React.Fragment key={toc.id}>
               <Link href={`#${toc.id}`} as={`#${toc.id}`}>
-                <a className="flex items-center divide-y divide-gray-200">
-                  <FontAwesomeIcon icon="long-arrow-alt-down" fixedWidth className="mr-4" />
-                  {/* <FontAwesomeIcon icon="level-up-alt" fixedWidth rotation={90} className="mr-1" /> */}
-                  <li className="w-full list-none py-2  font-head text-gray-700 ">{toc.text}</li>
-                </a>
+                <li className="step cursor-pointer py-2 font-head text-gray-700 ">
+                  <a className="block h-fit w-fit">{toc.text}</a>
+                </li>
               </Link>
             </React.Fragment>
           ))}

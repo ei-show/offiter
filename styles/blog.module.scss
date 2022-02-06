@@ -1,4 +1,7 @@
-@layer components {
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
   .blog {
     h3 {
       @apply my-6 rounded-tr-2xl border-l-4 border-b-4 border-cyan-300 bg-gradient-to-r from-gray-200 via-white to-gray-200 p-2 font-head text-lg text-blue-900 md:block md:w-4/6 md:max-w-full md:text-2xl;
@@ -12,13 +15,13 @@
       @apply border-blue-100 pl-6 md:w-full md:text-lg;
     }
     p {
-      @apply ml-6 font-bold;
+      @apply ml-6 font-bold text-gray-900;
     }
     a {
       @apply mt-6 ml-6 text-blue-400 hover:text-blue-600 hover:underline;
     }
     ul {
-      @apply mt-6 ml-12 list-disc font-bold;
+      @apply mt-6 ml-12 list-disc font-bold text-gray-900;
     }
     ol {
       @extend ul;
@@ -39,7 +42,7 @@
       }
     }
     blockquote {
-      @apply ml-6 rounded-r-lg border-l-4 border-gray-400 bg-gray-300 p-2;
+      @apply ml-6 rounded-r-lg border-l-4 border-gray-400 bg-gray-300 p-2 text-gray-900;
     }
   }
 }
