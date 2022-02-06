@@ -14,5 +14,9 @@ module.exports = {
       translate: ['group-hover'],
     },
   },
-  plugins: [],
+  plugins: [require('daisyui'), require('@tailwindcss/typography')],
+  daisyui: {
+    styled: true,
+    themes: ['light', 'dark'],
+  },
 }

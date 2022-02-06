@@ -41,7 +41,7 @@ export default function Home({ blogs, tags, blogsCount }: props): JSX.Element {
           </React.Fragment>
         ))}
 
-        <Pagination totalCount={blogsCount} />
+        <Pagination totalCount={blogsCount} pageNumber={1} />
       </Layout>
     </>
   )

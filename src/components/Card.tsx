@@ -41,7 +41,7 @@ const Description = ({ description, small }: description) => {
   }
   return (
     <p
-      className="mt-2 hidden overflow-hidden text-sm font-bold text-gray-600 md:block md:flex-grow"
+      className="mt-2 hidden overflow-hidden text-base font-bold text-gray-600 md:block md:flex-grow"
       dangerouslySetInnerHTML={{ __html: `${description}` }}
     />
   )
@@ -66,7 +66,7 @@ export default function Card({ data, small }: props): JSX.Element {
               <Image alt="" layout="fill" objectFit="cover" className="rounded-lg" src={data.image.url} />
             </div>
             <div className="ml-1 flex h-full w-full flex-col justify-between md:ml-2">
-              <h3 className={`${cardTitle} flex-none font-head text-xl text-gray-700`}>{data.title}</h3>
+              <h3 className={`${cardTitle} flex-none font-head text-base text-gray-700`}>{data.title}</h3>
               <Description description={data.description} small={small} />
               <DateTags tags={data.tags} updatedAt={data.updatedAt} small={small} />
             </div>
