@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import { Layout, Card, SEO, Pagination } from '@/src/index'
 import { tagsGetAllContents, blogsGetHeader, blogsGetTotalCount } from '@/src/index'
-import type { tag, blog, } from '@/src/index'
+import type { tag, blog } from '@/src/index'
 
 const perPage = 10
 
@@ -27,28 +27,29 @@ export const getStaticProps: GetStaticProps = async (context) => {
       blogs: blogsData,
       latestBlogs: latestBlogsData,
       blogCount: blogsTotalCount,
-    }
+      pageNumber: Number(id),
+    },
   }
 }
 
 type props = {
-  tags: tag[],
-  blogs: blog[],
-  latestBlogs: blog[],
-  blogCount: number,
+  tags: tag[]
+  blogs: blog[]
+  latestBlogs: blog[]
+  blogCount: number
+  pageNumber: number
 }
 
-export default function Home({tags, blogs, latestBlogs, blogCount}: props): JSX.Element {
+export default function Home({ tags, blogs, latestBlogs, blogCount, pageNumber }: props): JSX.Element {
   return (
     <>
       <NextSeo {...SEO} />
       <Layout latestBlogs={latestBlogs} tags={tags}>
-
         <div className="mb-2 flex items-center justify-between">
-          <h2 className="text-xl text-gray-700 md:text-2xl font-head">新着記事</h2>
+          <h2 className="font-head text-xl text-gray-700 md:text-2xl">新着記事</h2>
         </div>
 
-        {blogs.map(blog => (
+        {blogs.map((blog) => (
           <React.Fragment key={blog.id}>
             <div className="mb-2">
               <Card data={blog} />
@@ -56,8 +57,7 @@ export default function Home({tags, blogs, latestBlogs, blogCount}: props): JSX.
           </React.Fragment>
         ))}
 
-        <Pagination totalCount={blogCount} />
-
+        <Pagination totalCount={blogCount} pageNumber={pageNumber} />
       </Layout>
     </>
   )

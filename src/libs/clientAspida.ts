@@ -9,4 +9,4 @@ const fetchConfig = {
 }
 
 export const client = api(aspida(fetch, fetchConfig))
-export default client 
+export default client

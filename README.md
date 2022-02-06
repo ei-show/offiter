@@ -33,10 +33,12 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## microCMSのAPI_keyを環境変数に登録
+## microCMS の API_key を環境変数に登録
 
-#### local envファイルの作成
+#### local env ファイルの作成
+
 `.env.development.local`ファイルを追加
+
 ```
 API_KEY=8fae269a-fb4a-480d-83de-598e8fac61d1
 GA_TRACKING_ID=G-A123456789
@@ -44,7 +46,9 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
 
 #### deploy env
-localの内容をdeploy先に環境変数として登録
+
+local の内容を deploy 先に環境変数として登録
+
 ```
 API_KEY=8fae269a-fb4a-480d-83de-598e8fac61d1
 GA_TRACKING_ID=G-AXXXXXXXXX
