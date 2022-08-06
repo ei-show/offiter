@@ -41,7 +41,7 @@ const Description = ({ description, small }: description) => {
   }
   return (
     <p
-      className="mt-2 hidden overflow-hidden text-base font-bold text-gray-600 md:block md:flex-grow"
+      className="mt-2 hidden overflow-hidden text-base text-gray-600 md:block md:flex-grow"
       dangerouslySetInnerHTML={{ __html: `${description}` }}
     />
   )
