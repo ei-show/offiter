@@ -34,7 +34,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@types/gtag.js": "^0.0.8",
-    "aspida": "^1.8.0",
+    "aspida": "^1.10.2",
     "base64url": "^3.0.1",
     "daisyui": "^1.25.4",
     "date-fns": "^2.21.1",
