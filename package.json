@@ -45,7 +45,8 @@
     "next-seo": "^4.26.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "sass": "^1.49.4"
+    "sass": "^1.49.4",
+    "zenn-markdown-html": "^0.1.117"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.1",

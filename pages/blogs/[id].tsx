@@ -11,6 +11,7 @@ import { Layout, Date, SEO, blogsGetAllHeader, blogGetContent } from '@/src/inde
 import type { blogData, TOC } from '@/src/index'
 import Style from '@/styles/blog.module.scss'
 import base64url from 'base64url'
+import markdownToHtml from 'zenn-markdown-html'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const blogsData = await blogsGetAllHeader()
@@ -22,8 +23,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id
   const blog = id !== undefined && !Array.isArray(id) ? await blogGetContent(id) : await blogGetContent('')
 
-  // codeタグを装飾
-  const dom = new JSDOM(blog.body)
+  // markdownからhtmlに変換
+  const html = markdownToHtml(blog.body)
+
+  // htmlでパースできるようにする
+  const dom = new JSDOM(html)
 
   // シンタックスハイライト
   dom.window.document.querySelectorAll<HTMLElement>('pre code').forEach((element) => {
