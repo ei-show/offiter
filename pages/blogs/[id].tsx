@@ -4,14 +4,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { NextSeo } from 'next-seo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import hljs from 'highlight.js'
-import 'highlight.js/styles/night-owl.css'
 import { JSDOM } from 'jsdom'
 import { Layout, Date, SEO, blogsGetAllHeader, blogGetContent } from '@/src/index'
 import type { blogData, TOC } from '@/src/index'
 import Style from '@/styles/blog.module.scss'
 import base64url from 'base64url'
 import markdownToHtml from 'zenn-markdown-html'
+import 'zenn-content-css'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const blogsData = await blogsGetAllHeader()
@@ -28,13 +27,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   // htmlでパースできるようにする
   const dom = new JSDOM(html)
-
-  // シンタックスハイライト
-  dom.window.document.querySelectorAll<HTMLElement>('pre code').forEach((element) => {
-    const result: AutoHighlightResult = hljs.highlightAuto(element.textContent ?? '')
-    element.innerHTML = result.value
-    element.classList.add('hljs')
-  })
 
   // 目次
   const headings = Array.from(dom.window.document.querySelectorAll<HTMLElement>('h1, h2, h3, h4, h5, h6'))
@@ -123,7 +115,10 @@ export default function Blog({ blog, highlightedBody, toc }: props): JSX.Element
             <Image alt="" src={blog.image.url} width={blog.image.width} height={blog.image.height} />
           </div>
 
-          <div className={`${Style.blog} mt-4 md:text-lg`} dangerouslySetInnerHTML={{ __html: `${highlightedBody}` }} />
+          <div
+            className={`${Style.blog} znc mt-4 md:text-lg`}
+            dangerouslySetInnerHTML={{ __html: `${highlightedBody}` }}
+          />
         </div>
       </Layout>
     </>
