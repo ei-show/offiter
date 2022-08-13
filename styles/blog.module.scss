@@ -3,16 +3,28 @@
 
 @layer utilities {
   .blog {
+    h1 {
+      @apply border-b-8 border-cyan-300 font-head text-lg text-blue-900 md:block md:max-w-full md:text-2xl;
+    }
+    h2 {
+      @extend h1;
+      @apply border-b-4 border-cyan-300 md:text-xl;
+    }
     h3 {
-      @apply my-6 rounded-tr-2xl border-l-4 border-b-4 border-cyan-300 bg-gradient-to-r from-gray-200 via-white to-gray-200 p-2 font-head text-lg text-blue-900 md:block md:w-4/6 md:max-w-full md:text-2xl;
+      @extend h1;
+      @apply border-b-2 border-blue-300 md:text-lg;
     }
     h4 {
-      @extend h3;
-      @apply border-blue-200 pl-4 md:w-5/6 md:text-xl;
+      @extend h1;
+      @apply border-0 md:text-base;
     }
     h5 {
-      @extend h3;
-      @apply border-blue-100 pl-6 md:w-full md:text-lg;
+      @extend h1;
+      @apply border-0 md:text-base;
+    }
+    h6 {
+      @extend h1;
+      @apply border-0 md:text-base;
     }
     p {
       @apply ml-6 text-gray-900;
