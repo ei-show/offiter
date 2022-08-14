@@ -85,7 +85,7 @@ export default function Blog({ blog, highlightedBody, tableOfContents }: props):
         }}
       />
       <Layout blogDetails={blog} tableOfContents={tableOfContents}>
-        <div className="lg:rounded-lg lg:border lg:bg-gradient-to-r lg:from-gray-50 lg:via-white lg:to-gray-50 lg:p-2 lg:shadow-md">
+        <div className="lg:rounded-lg lg:border lg:bg-gray-50 lg:p-2 lg:shadow-md">
           <div className="mt-4 flex items-center justify-between lg:hidden">
             <div className="flex flex-col">
               <span className="text-xs font-light text-gray-600">

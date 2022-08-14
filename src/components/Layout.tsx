@@ -13,7 +13,7 @@ type props = {
 export default function Layout({ blogDetails, latestBlogs, tags, tableOfContents, children }: props): JSX.Element {
   const siteName = 'Offiter'
   return (
-    <div className="bg-gray-50 font-body lg:bg-gradient-to-b lg:from-cyan-50 lg:to-cyan-300">
+    <div className="bg-gray-50 font-body lg:bg-base-100">
       <Header siteName={siteName} />
       <div className="flex items-center justify-center">
         <h2 className="m-8 font-head text-xl text-gray-700 md:text-2xl">{blogDetails?.title}</h2>

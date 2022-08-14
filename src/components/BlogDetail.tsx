@@ -53,7 +53,7 @@ const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail)
           {tableOfContents.map((tableOfContents) => (
             <React.Fragment key={tableOfContents.id}>
               <Link href={`#${tableOfContents.id}`} as={`#${tableOfContents.id}`}>
-                <li className="step cursor-pointer py-2 font-head text-gray-700 ">
+                <li className="step step-neutral cursor-pointer py-2 font-head text-gray-700 ">
                   <a className="block h-fit w-fit">{tableOfContents.text}</a>
                 </li>
               </Link>
