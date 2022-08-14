@@ -20,9 +20,9 @@ module.exports = {
     themes: [
       {
         light: {
-          primary: '#6b7280',
+          primary: '#f3f4f6',
           secondary: '#3b82f6',
-          accent: '#f3f4f6',
+          accent: '#6b7280',
           neutral: '#93c5fd',
           'base-100': '#dbeafe',
           info: '#374151',
