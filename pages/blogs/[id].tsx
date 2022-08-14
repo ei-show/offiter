@@ -6,7 +6,7 @@ import { NextSeo } from 'next-seo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { JSDOM } from 'jsdom'
 import { Layout, Date, SEO, blogsGetAllHeader, blogGetContent } from '@/src/index'
-import type { blogData, TOC } from '@/src/index'
+import type { blogData, tableOfContents } from '@/src/index'
 import Style from '@/styles/blog.module.scss'
 import base64url from 'base64url'
 import markdownToHtml from 'zenn-markdown-html'
@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   // 目次
   const headings = Array.from(dom.window.document.querySelectorAll<HTMLElement>('h1, h2, h3, h4, h5, h6'))
-  const toc = headings.map((element) => ({
+  const tableOfContents = headings.map((element) => ({
     text: element.textContent,
     id: element.getAttribute('id'),
     name: element.nodeName,
@@ -40,7 +40,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       blog: blog,
       highlightedBody: dom.window.document.body.outerHTML,
-      toc: toc,
+      tableOfContents: tableOfContents,
     },
   }
 }
@@ -50,10 +50,10 @@ const baseURL: string = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 type props = {
   blog: blogData
   highlightedBody: string
-  toc: TOC[]
+  tableOfContents: tableOfContents[]
 }
 
-export default function Blog({ blog, highlightedBody, toc }: props): JSX.Element {
+export default function Blog({ blog, highlightedBody, tableOfContents }: props): JSX.Element {
   const width = 1200
   const ogpBaseImage =
     'https://images.microcms-assets.io/assets/de88e062d820469698e6053f34bfe93b/22b0ff52ecf840b6a66468e97240dfbb/article_1200x630.png'
@@ -84,7 +84,7 @@ export default function Blog({ blog, highlightedBody, toc }: props): JSX.Element
           ],
         }}
       />
-      <Layout blogDetails={blog} toc={toc}>
+      <Layout blogDetails={blog} tableOfContents={tableOfContents}>
         <div className="lg:rounded-lg lg:border lg:bg-gradient-to-r lg:from-gray-50 lg:via-white lg:to-gray-50 lg:p-2 lg:shadow-md">
           <div className="mt-4 flex items-center justify-between lg:hidden">
             <div className="flex flex-col">

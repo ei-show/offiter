@@ -2,16 +2,16 @@ import React from 'react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Date } from '@/src/index'
-import type { tag, TOC } from '@/src/index'
+import type { tag, tableOfContents } from '@/src/index'
 
 type BlogDetail = {
   createdAt?: string
   updatedAt?: string
   tags?: tag[]
-  toc?: TOC[]
+  tableOfContents?: tableOfContents[]
 }
 
-const BlogDetail = ({ createdAt, updatedAt, tags, toc }: BlogDetail): JSX.Element | null => {
+const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail): JSX.Element | null => {
   if (createdAt === undefined) {
     return null
   }
@@ -21,7 +21,7 @@ const BlogDetail = ({ createdAt, updatedAt, tags, toc }: BlogDetail): JSX.Elemen
   if (tags === undefined) {
     return null
   }
-  if (toc === undefined) {
+  if (tableOfContents === undefined) {
     return null
   }
 
@@ -50,11 +50,11 @@ const BlogDetail = ({ createdAt, updatedAt, tags, toc }: BlogDetail): JSX.Elemen
           ))}
         </ul>
         <ul className="steps steps-vertical divide-y divide-gray-200">
-          {toc.map((toc) => (
-            <React.Fragment key={toc.id}>
-              <Link href={`#${toc.id}`} as={`#${toc.id}`}>
+          {tableOfContents.map((tableOfContents) => (
+            <React.Fragment key={tableOfContents.id}>
+              <Link href={`#${tableOfContents.id}`} as={`#${tableOfContents.id}`}>
                 <li className="step cursor-pointer py-2 font-head text-gray-700 ">
-                  <a className="block h-fit w-fit">{toc.text}</a>
+                  <a className="block h-fit w-fit">{tableOfContents.text}</a>
                 </li>
               </Link>
             </React.Fragment>
