@@ -11,6 +11,22 @@ type BlogDetail = {
   tableOfContents?: tableOfContents[]
 }
 
+const changeIndentByHtag = (htag: string): void | string => {
+  const hLevel = Number(htag.substring(1))
+  switch (hLevel) {
+    case 2:
+      return 'ml-4'
+    case 3:
+      return 'ml-8'
+    case 4:
+      return 'ml-12'
+    case 5:
+      return 'ml-16'
+    case 6:
+      return 'ml-20'
+  }
+}
+
 const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail): JSX.Element | null => {
   if (createdAt === undefined) {
     return null
@@ -49,12 +65,14 @@ const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail)
             </React.Fragment>
           ))}
         </ul>
-        <ul className="steps steps-vertical divide-y divide-gray-200">
+        <ul className="steps steps-vertical list-inside divide-y divide-gray-200">
           {tableOfContents.map((tableOfContents) => (
             <React.Fragment key={tableOfContents.id}>
               <Link href={`#${tableOfContents.id}`} as={`#${tableOfContents.id}`}>
-                <li className="step step-neutral cursor-pointer py-2 font-head text-gray-700 ">
-                  <a className="block h-fit w-fit">{tableOfContents.text}</a>
+                <li className="step step-primary py-2 font-head text-gray-700">
+                  <a className={`${changeIndentByHtag(tableOfContents.name)} block h-fit w-fit`}>
+                    {tableOfContents.text}
+                  </a>
                 </li>
               </Link>
             </React.Fragment>
