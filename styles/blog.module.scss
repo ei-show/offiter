@@ -3,46 +3,72 @@
 
 @layer utilities {
   .blog {
-    h3 {
-      @apply my-6 rounded-tr-2xl border-l-4 border-b-4 border-cyan-300 bg-gradient-to-r from-gray-200 via-white to-gray-200 p-2 font-head text-lg text-blue-900 md:block md:w-4/6 md:max-w-full md:text-2xl;
-    }
-    h4 {
-      @extend h3;
-      @apply border-blue-200 pl-4 md:w-5/6 md:text-xl;
-    }
-    h5 {
-      @extend h3;
-      @apply border-blue-100 pl-6 md:w-full md:text-lg;
+    // h1 {
+    //   @apply border-b-8 border-cyan-300 font-head text-lg text-blue-900 md:block md:max-w-full md:text-2xl;
+    // }
+    // h2 {
+    //   @extend h1;
+    //   @apply border-b-4 border-cyan-300 md:text-xl;
+    // }
+    // h3 {
+    //   @extend h1;
+    //   @apply border-b-2 border-blue-300 md:text-lg;
+    // }
+    // h4 {
+    //   @extend h1;
+    //   @apply border-0 md:text-base;
+    // }
+    // h5 {
+    //   @extend h1;
+    //   @apply border-0 md:text-base;
+    // }
+    // h6 {
+    //   @extend h1;
+    //   @apply border-0 md:text-base;
+    // }
+    // p {
+    //   @apply ml-6 text-gray-900;
+    // }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply font-head text-gray-800 md:ml-4;
     }
     p {
-      @apply ml-6 text-gray-900;
-    }
-    a {
-      @apply mt-6 ml-6 text-blue-400 hover:text-blue-600 hover:underline;
-    }
-    ul {
-      @apply mt-6 ml-12 list-disc font-bold text-gray-900;
-    }
-    ol {
-      @extend ul;
-      @apply list-decimal;
-    }
-    pre {
+      @apply text-gray-600 md:ml-8;
       code {
-        @apply mt-6 ml-6;
+        @apply bg-gray-300 text-gray-900;
       }
     }
-    // 単一codeのみ
-    $singleCode: p, ul;
-    @each $s in $singleCode {
-      #{$s} {
-        code {
-          @apply bg-gray-300 px-2 font-normal;
-        }
-      }
-    }
-    blockquote {
-      @apply ml-6 rounded-r-lg border-l-4 border-gray-400 bg-gray-300 p-2 text-gray-900;
-    }
+    //   a {
+    //     @apply mt-6 ml-6 text-blue-400 hover:text-blue-600 hover:underline;
+    //   }
+    //   ul {
+    //     @apply mt-6 ml-12 list-disc font-bold text-gray-900;
+    //   }
+    //   ol {
+    //     @extend ul;
+    //     @apply list-decimal;
+    //   }
+    //   pre {
+    //     code {
+    //       @apply mt-6 ml-6;
+    //     }
+    //   }
+    //   // 単一codeのみ
+    //   $singleCode: p, ul;
+    //   @each $s in $singleCode {
+    //     #{$s} {
+    //       code {
+    //         @apply bg-gray-300 px-2 font-normal;
+    //       }
+    //     }
+    //   }
+    //   blockquote {
+    //     @apply ml-6 rounded-r-lg border-l-4 border-gray-400 bg-gray-300 p-2 text-gray-900;
+    //   }
   }
 }

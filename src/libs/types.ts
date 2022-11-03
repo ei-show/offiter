@@ -37,10 +37,10 @@ type blogCount = {
   totalCount: number
 }
 
-type TOC = {
+type tableOfContents = {
   text: string | null
   id: string | null
   name: string
 }
 
-export type { tag, tagsData, blog, blogData, blogsData, blogCount, TOC }
+export type { tag, tagsData, blog, blogData, blogsData, blogCount, tableOfContents }

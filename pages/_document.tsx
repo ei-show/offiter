@@ -4,7 +4,7 @@ import { GA_TRACKING_ID } from '@/src/index'
 export default class MyDocument extends Document {
   render(): JSX.Element {
     return (
-      <Html lang="ja">
+      <Html lang="ja" data-theme="pastel">
         <Head>
           {/* Google Fonts */}
           <link rel="preconnect" href="https://fonts.gstatic.com" />
