@@ -20,7 +20,7 @@ const DateTags = ({ tags, updatedAt, small }: dateTags) => {
       <div className="flex justify-end">
         {tags.map((tag) => (
           <React.Fragment key={tag.id}>
-            <p className="ml-1 hidden overflow-hidden rounded bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 px-1 py-0 text-xs text-gray-700 sm:block">
+            <p className="ml-1 hidden overflow-hidden rounded bg-neutral px-1 py-0 text-xs text-gray-700 sm:block">
               {tag.name}
             </p>
           </React.Fragment>
