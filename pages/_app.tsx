@@ -40,7 +40,6 @@ import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { DefaultSeo } from 'next-seo'
 import { gtag, SEO } from '@/src/index'
-import 'zenn-content-css'
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter()
