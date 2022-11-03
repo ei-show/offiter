@@ -20,7 +20,7 @@ const TagsLists = ({ tags }: TagsLists): JSX.Element | null => {
             <React.Fragment key={tag.id}>
               <li>
                 <Link href="/pages/tags/[id]" as={`/pages/tags/${tag.id}`}>
-                  <a className="group m-1 block font-bold text-gray-700">
+                  <a className="group m-1 block text-gray-700">
                     {tag.name}{' '}
                     <FontAwesomeIcon
                       icon={['fas', 'arrow-right']}

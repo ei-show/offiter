@@ -1,22 +1,22 @@
 import React from 'react'
 import { BlogDetail, TagsLists, LatestBlogsCardLists } from '@/src/index'
-import type { blog, blogData, tag, TOC } from '@/src/index'
+import type { blog, blogData, tag, tableOfContents } from '@/src/index'
 
 type props = {
   blogDetails?: blogData
   latestBlogs?: blog[]
   tags?: tag[]
-  toc?: TOC[]
+  tableOfContents?: tableOfContents[]
 }
 
-export default function Aside({ blogDetails, latestBlogs, tags, toc }: props): JSX.Element {
+export default function Aside({ blogDetails, latestBlogs, tags, tableOfContents }: props): JSX.Element {
   return (
     <div className="-mx-8 hidden w-4/12 lg:block">
       <BlogDetail
         createdAt={blogDetails?.createdAt}
         updatedAt={blogDetails?.updatedAt}
         tags={blogDetails?.tags}
-        toc={toc}
+        tableOfContents={tableOfContents}
       />
 
       <LatestBlogsCardLists latestBlogs={latestBlogs} />
