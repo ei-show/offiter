@@ -45,9 +45,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sass": "^1.49.4",
-    "zenn-content-css": "^0.1.106",
-    "zenn-embed-elements": "^0.1.106",
-    "zenn-markdown-html": "^0.1.106"
+    "zenn-content-css": "^0.1.131",
+    "zenn-embed-elements": "^0.1.131",
+    "zenn-markdown-html": "^0.1.131"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.1",

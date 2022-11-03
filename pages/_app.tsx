@@ -40,10 +40,11 @@ import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { DefaultSeo } from 'next-seo'
 import { gtag, SEO } from '@/src/index'
-import initTwitterScriptInner from 'zenn-embed-elements/lib/init-twitter-script-inner'
+import 'zenn-content-css'
 
 export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter()
+
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       gtag.pageview(url)
@@ -53,14 +54,15 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events])
+
   useEffect(() => {
     import('zenn-embed-elements')
   }, [])
+
   return (
     <>
       <DefaultSeo {...SEO} />
       <Component {...pageProps} />
-      <script dangerouslySetInnerHTML={{ __html: initTwitterScriptInner }} />
     </>
   )
 }
