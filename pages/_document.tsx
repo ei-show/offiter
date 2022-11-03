@@ -29,6 +29,8 @@ export default class MyDocument extends Document {
               />
             </>
           )}
+          {/* zenn-editor */}
+          <script src="https://embed.zenn.studio/js/listen-embed-event.js"></script>
         </Head>
         <body>
           <Main />
