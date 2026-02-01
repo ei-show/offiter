@@ -9,7 +9,7 @@ const compat = new FlatCompat({
 
 module.exports = [
   {
-    ignores: ['**/node_modules/**', '**/.next/**', '**/out/**'],
+    ignores: ['**/node_modules/**', '**/.next/**', '**/out/**', '**/coverage/**'],
   },
   ...compat.config({
     parser: '@typescript-eslint/parser',
