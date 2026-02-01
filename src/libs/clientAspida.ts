@@ -9,5 +9,5 @@ const fetchConfig = {
   throwHttpErrors: false,
 }
 
-export const client = api(aspida(fetch, fetchConfig))
+const client = api(aspida(fetch, fetchConfig))
 export default client
