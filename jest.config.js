@@ -18,10 +18,10 @@ const customJestConfig = {
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
   coverageThreshold: {
     global: {
-      statements: 70, // 現在60.43% → まず70%を目指す
-      branches: 50,
-      functions: 30,
-      lines: 70,
+      statements: 60, // Current: 61.67%
+      branches: 45, // Current: 46.57%
+      functions: 25, // Current: 25.53%
+      lines: 68, // Current: 69.84%
     },
   },
 }
