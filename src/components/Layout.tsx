@@ -10,7 +10,7 @@ type props = {
   children: ReactNode
 }
 
-export default function Layout({ blogDetails, latestBlogs, tags, tableOfContents, children }: props): JSX.Element {
+export default function Layout({ blogDetails, latestBlogs, tags, tableOfContents, children }: props) {
   const siteName = 'Offiter'
   return (
     <div className="bg-gray-50 font-body lg:bg-base-100">

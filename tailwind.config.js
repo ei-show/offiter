@@ -1,6 +1,6 @@
 module.exports = {
-  purge: ['./pages/**/*.{js,ts,jsx,tsx,}', './src/**/*.{js,ts,jsx,tsx,css,scss,}'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./pages/**/*.{js,ts,jsx,tsx,}', './src/**/*.{js,ts,jsx,tsx,css,scss,}'],
+  darkMode: 'media',
   theme: {
     fontFamily: {
       title: '"Hachi Maru Pop"', // Title

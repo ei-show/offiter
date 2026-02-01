@@ -2,7 +2,7 @@ import React from 'react'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { NextSeo } from 'next-seo'
+import { generateNextSeo } from 'next-seo/pages'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { JSDOM } from 'jsdom'
 import { Layout, Date, SEO, blogsGetAllHeader, blogGetContent } from '@/src/index'
@@ -15,7 +15,7 @@ import 'zenn-content-css'
 export const getStaticPaths: GetStaticPaths = async () => {
   const blogsData = await blogsGetAllHeader()
   const paths = blogsData.map((blogData) => `/blogs/${blogData.id}`)
-  return { paths, fallback: false }
+  return { paths, fallback: 'blocking' }
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const blog = id !== undefined && !Array.isArray(id) ? await blogGetContent(id) : await blogGetContent('')
 
   // markdownからhtmlに変換
-  const html = markdownToHtml(blog.body)
+  const html = await markdownToHtml(blog.body)
 
   // htmlでパースできるようにする
   const dom = new JSDOM(html)
@@ -53,7 +53,7 @@ type props = {
   tableOfContents: tableOfContents[]
 }
 
-export default function Blog({ blog, highlightedBody, tableOfContents }: props): JSX.Element {
+export default function Blog({ blog, highlightedBody, tableOfContents }: props) {
   const width = 1200
   const ogpBaseImage =
     'https://images.microcms-assets.io/assets/de88e062d820469698e6053f34bfe93b/22b0ff52ecf840b6a66468e97240dfbb/article_1200x630.png'
@@ -62,12 +62,12 @@ export default function Blog({ blog, highlightedBody, tableOfContents }: props):
   }&txt-align=middle&txtfont=Hiragino%20Sans%20W6&txt-track=2`
   return (
     <>
-      <NextSeo
-        {...SEO}
-        title={blog.title}
-        titleTemplate="%s - Offiter"
-        description={blog.description}
-        openGraph={{
+      {generateNextSeo({
+        ...SEO,
+        title: blog.title,
+        titleTemplate: '%s - Offiter',
+        description: blog.description,
+        openGraph: {
           type: 'article',
           url: `${baseURL}/blogs/${blog.id}`,
           title: blog.title,
@@ -75,15 +75,15 @@ export default function Blog({ blog, highlightedBody, tableOfContents }: props):
           images: [
             {
               url: `${ogpBaseImage}?blend64=${base64url(
-                `${ogpTitle}&txt64=${base64url(blog.title)}`
+                `${ogpTitle}&txt64=${base64url(blog.title)}`,
               )}&blend-mode=normal&blend-align=top,left&blend-x=40&blend-y=100`,
               height: 630,
               width: 1200,
               alt: 'Og Image Alt',
             },
           ],
-        }}
-      />
+        },
+      })}
       <Layout blogDetails={blog} tableOfContents={tableOfContents}>
         <div className="lg:rounded-lg lg:border lg:bg-gray-50 lg:p-2 lg:shadow-md">
           <div className="mt-4 flex items-center justify-between lg:hidden">
@@ -101,10 +101,12 @@ export default function Blog({ blog, highlightedBody, tableOfContents }: props):
             <div className="flex items-center justify-end">
               {blog.tags.map((tag) => (
                 <React.Fragment key={tag.id}>
-                  <Link href="/[tag]" as={`/${tag.id}`}>
-                    <a className="ml-2 rounded-lg bg-gradient-to-r from-gray-50 via-white to-gray-50 p-2 text-xs font-bold text-blue-900 shadow-md md:text-base lg:transform lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-md">
-                      <span>{tag.name}</span>
-                    </a>
+                  <Link
+                    href="/[tag]"
+                    as={`/${tag.id}`}
+                    className="ml-2 rounded-lg bg-gradient-to-r from-gray-50 via-white to-gray-50 p-2 text-xs font-bold text-blue-900 shadow-md md:text-base lg:transform lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-md"
+                  >
+                    <span>{tag.name}</span>
                   </Link>
                 </React.Fragment>
               ))}

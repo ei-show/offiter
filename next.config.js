@@ -9,7 +9,13 @@ module.exports = () => {
   }
 
   return {
-    images: { domains: ['images.microcms-assets.io'] },
-    swcMinify: true,
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'images.microcms-assets.io',
+        },
+      ],
+    },
   }
 }

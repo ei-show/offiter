@@ -1,6 +1,6 @@
 import NavItem from './FooterNavItem'
 
-export default function Nav(): JSX.Element {
+export default function Nav() {
   return (
     <nav className="fixed bottom-0 left-0 w-screen bg-gray-200 text-gray-800 md:hidden">
       <ul className="flex">

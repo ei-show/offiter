@@ -6,12 +6,10 @@ type props = {
   iconName: any
 }
 
-export default function SNSlink({ link, iconName }: props): JSX.Element {
+export default function SNSlink({ link, iconName }: props) {
   return (
-    <Link href={link}>
-      <a className="mx-2 hover:text-gray-400">
-        <FontAwesomeIcon icon={['fab', iconName]} />
-      </a>
+    <Link href={link} className="mx-2 hover:text-gray-400">
+      <FontAwesomeIcon icon={['fab', iconName]} />
     </Link>
   )
 }
