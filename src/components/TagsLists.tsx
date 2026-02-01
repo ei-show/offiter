@@ -7,7 +7,7 @@ type TagsLists = {
   tags?: tag[]
 }
 
-const TagsLists = ({ tags }: TagsLists): JSX.Element | null => {
+const TagsLists = ({ tags }: TagsLists) => {
   if (tags === undefined) {
     return null
   }
@@ -19,14 +19,12 @@ const TagsLists = ({ tags }: TagsLists): JSX.Element | null => {
           {tags.map((tag) => (
             <React.Fragment key={tag.id}>
               <li>
-                <Link href="/pages/tags/[id]" as={`/pages/tags/${tag.id}`}>
-                  <a className="group m-1 block text-gray-700">
-                    {tag.name}{' '}
-                    <FontAwesomeIcon
-                      icon={['fas', 'arrow-right']}
-                      className="transform transition duration-300 ease-in-out group-hover:translate-x-1"
-                    />
-                  </a>
+                <Link href="/pages/tags/[id]" as={`/pages/tags/${tag.id}`} className="group m-1 block text-gray-700">
+                  {tag.name}{' '}
+                  <FontAwesomeIcon
+                    icon={['fas', 'arrow-right']}
+                    className="transform transition duration-300 ease-in-out group-hover:translate-x-1"
+                  />
                 </Link>
               </li>
             </React.Fragment>

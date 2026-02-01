@@ -6,6 +6,7 @@ const fetchConfig = {
     'X-MICROCMS-API-KEY': process.env.API_KEY ?? '0123456789abcdef',
   },
   baseURL: process.env.HEADLESS_CMS ?? 'https://0123456789abcdef.microcms.io/api/v1',
+  throwHttpErrors: false,
 }
 
 export const client = api(aspida(fetch, fetchConfig))

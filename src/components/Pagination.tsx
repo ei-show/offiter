@@ -6,7 +6,7 @@ type Props = {
   pageNumber: number
 }
 
-export default function Pagination({ totalCount, pageNumber }: Props): JSX.Element {
+export default function Pagination({ totalCount, pageNumber }: Props) {
   const PER_PAGE = 10
   const range = (start: number, end: number) => [...Array(end - start + 1)].map((_, i) => start + i)
 
@@ -28,22 +28,14 @@ type PaginationButton = {
   currentPageNumber: number
 }
 
-const PaginationButton = ({ pageNumber, currentPageNumber }: PaginationButton): JSX.Element => {
+const PaginationButton = ({ pageNumber, currentPageNumber }: PaginationButton) => {
   if (pageNumber === currentPageNumber) {
-    return (
-      <Link href={`/pages/blogs/${pageNumber}`}>
-        <button className="btn btn-active font-head md:btn-lg">
-          <a>{pageNumber}</a>
-        </button>
-      </Link>
-    )
+    return <span className="btn btn-active font-head md:btn-lg">{pageNumber}</span>
   }
 
   return (
-    <Link href={`/pages/blogs/${pageNumber}`}>
-      <button className="btn font-head md:btn-lg">
-        <a>{pageNumber}</a>
-      </button>
+    <Link href={`/pages/blogs/${pageNumber}`} className="btn font-head md:btn-lg">
+      {pageNumber}
     </Link>
   )
 }

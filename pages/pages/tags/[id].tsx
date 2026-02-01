@@ -7,7 +7,7 @@ import type { tag, blog } from '@/src/index'
 export const getStaticPaths: GetStaticPaths = async () => {
   const tagsData = await tagsGetAllContents()
   const paths = tagsData.map((repo) => `/pages/tags/${repo.id}`)
-  return { paths, fallback: false }
+  return { paths, fallback: 'blocking' }
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -34,7 +34,7 @@ type props = {
   blogsCount: number
 }
 
-export default function Home({ blogs, latestBlogs, tags }: props): JSX.Element {
+export default function Home({ blogs, latestBlogs, tags }: props) {
   return (
     <Layout latestBlogs={latestBlogs} tags={tags}>
       <div className="mb-2 flex items-center justify-between">

@@ -1,4 +1,3 @@
-/* eslint-disable */
 // prettier-ignore
 import { AspidaClient, dataToURLString } from 'aspida'
 // prettier-ignore

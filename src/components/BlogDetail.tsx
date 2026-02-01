@@ -27,7 +27,7 @@ const changeIndentByHtag = (htag: string): void | string => {
   }
 }
 
-const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail): JSX.Element | null => {
+const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail) => {
   if (createdAt === undefined) {
     return null
   }
@@ -58,8 +58,8 @@ const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail)
           {tags.map((tag) => (
             <React.Fragment key={tag.id}>
               <li className="mr-4 inline-block rounded-2xl border-2 border-gray-200 font-head text-gray-700">
-                <Link href="/pages/tags/[tag]" as={`/pages/tags/${tag.id}`}>
-                  <a className="inline-block p-1">{tag.name}</a>
+                <Link href="/pages/tags/[tag]" as={`/pages/tags/${tag.id}`} className="inline-block p-1">
+                  {tag.name}
                 </Link>
               </li>
             </React.Fragment>
@@ -68,13 +68,15 @@ const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail)
         <ul className="steps steps-vertical list-inside divide-y divide-gray-200">
           {tableOfContents.map((tableOfContents) => (
             <React.Fragment key={tableOfContents.id}>
-              <Link href={`#${tableOfContents.id}`} as={`#${tableOfContents.id}`}>
-                <li className="step step-primary py-2 font-head text-gray-700">
-                  <a className={`${changeIndentByHtag(tableOfContents.name)} block h-fit w-fit`}>
-                    {tableOfContents.text}
-                  </a>
-                </li>
-              </Link>
+              <li className="step step-primary py-2 font-head text-gray-700">
+                <Link
+                  href={`#${tableOfContents.id}`}
+                  as={`#${tableOfContents.id}`}
+                  className={`${changeIndentByHtag(tableOfContents.name)} block h-fit w-fit`}
+                >
+                  {tableOfContents.text}
+                </Link>
+              </li>
             </React.Fragment>
           ))}
         </ul>

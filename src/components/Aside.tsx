@@ -9,7 +9,7 @@ type props = {
   tableOfContents?: tableOfContents[]
 }
 
-export default function Aside({ blogDetails, latestBlogs, tags, tableOfContents }: props): JSX.Element {
+export default function Aside({ blogDetails, latestBlogs, tags, tableOfContents }: props) {
   return (
     <div className="-mx-8 hidden w-4/12 lg:block">
       <BlogDetail

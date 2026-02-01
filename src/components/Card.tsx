@@ -51,28 +51,26 @@ type props = {
   data: blog
   small?: boolean
 }
-export default function Card({ data, small }: props): JSX.Element {
+export default function Card({ data, small }: props) {
   const cardHeight = !small ? 'md:h-52' : 'md:h-28'
   const cardMargin = !small ? 'md:p-2' : ''
   const cardTitle = !small ? 'md:text-2xl' : ''
   return (
-    <Link href="/blogs/[id]" as={`/blogs/${data.id}`}>
-      <a className="block">
-        <div
-          className={`${cardHeight} ${cardMargin} h-28 rounded-lg border bg-gradient-to-r from-gray-50 via-white to-gray-50 p-1 shadow-md md:transform md:shadow-none md:transition md:duration-300 md:ease-in-out md:hover:-translate-y-1 md:hover:shadow-md`}
-        >
-          <div className="flex h-full">
-            <div className="relative w-2/5 flex-none">
-              <Image alt="" layout="fill" objectFit="cover" className="rounded-lg" src={data.image.url} />
-            </div>
-            <div className="ml-1 flex h-full w-full flex-col justify-between md:ml-2">
-              <h3 className={`${cardTitle} flex-none font-head text-base text-gray-700`}>{data.title}</h3>
-              <Description description={data.description} small={small} />
-              <DateTags tags={data.tags} updatedAt={data.updatedAt} small={small} />
-            </div>
+    <Link href="/blogs/[id]" as={`/blogs/${data.id}`} className="block">
+      <div
+        className={`${cardHeight} ${cardMargin} h-28 rounded-lg border bg-gradient-to-r from-gray-50 via-white to-gray-50 p-1 shadow-md md:transform md:shadow-none md:transition md:duration-300 md:ease-in-out md:hover:-translate-y-1 md:hover:shadow-md`}
+      >
+        <div className="flex h-full">
+          <div className="relative w-2/5 flex-none">
+            <Image alt="" layout="fill" objectFit="cover" className="rounded-lg" src={data.image.url} />
+          </div>
+          <div className="ml-1 flex h-full w-full flex-col justify-between md:ml-2">
+            <h3 className={`${cardTitle} flex-none font-head text-base text-gray-700`}>{data.title}</h3>
+            <Description description={data.description} small={small} />
+            <DateTags tags={data.tags} updatedAt={data.updatedAt} small={small} />
           </div>
         </div>
-      </a>
+      </div>
     </Link>
   )
 }

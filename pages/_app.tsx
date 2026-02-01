@@ -1,4 +1,4 @@
-import 'tailwindcss/tailwind.css'
+import '../styles/globals.css'
 import { config, library } from '@fortawesome/fontawesome-svg-core'
 import {
   faHome,
@@ -31,17 +31,17 @@ library.add(
   faInstagramSquare,
   faFacebookSquare,
   faTiktok,
-  faCalendarPlus
+  faCalendarPlus,
 )
 
 // gtag
 import { useEffect } from 'react'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import { DefaultSeo } from 'next-seo'
+import { generateDefaultSeo } from 'next-seo/pages'
 import { gtag, SEO } from '@/src/index'
 
-export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
   return (
     <>
-      <DefaultSeo {...SEO} />
+      {generateDefaultSeo(SEO)}
       <Component {...pageProps} />
     </>
   )

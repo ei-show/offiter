@@ -6,7 +6,7 @@ type LatestBlogsCardLists = {
   latestBlogs?: blog[]
 }
 
-const LatestBlogsCardLists = ({ latestBlogs }: LatestBlogsCardLists): JSX.Element | null => {
+const LatestBlogsCardLists = ({ latestBlogs }: LatestBlogsCardLists) => {
   if (latestBlogs === undefined) {
     return null
   }
