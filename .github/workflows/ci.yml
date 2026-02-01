@@ -43,7 +43,7 @@ jobs:
       - run: npm ci
       - run: npm test -- --coverage --ci
       - name: Upload coverage to Codecov (optional)
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         if: success()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
