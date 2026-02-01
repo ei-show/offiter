@@ -5,29 +5,27 @@
 
 import { mockTags, mockBlogs, mockBlog, mockApiResponse, mockEmptyApiResponse } from '../../../__mocks__/testData'
 
-// Create mock functions
+// Create mock functions before they're used
 const mockTagsGet = jest.fn()
 const mockBlogsGet = jest.fn()
 const mockBlogGetById = jest.fn()
 
-// Mock the clientAspida module completely
-jest.mock('../clientAspida', () => ({
-  clientAspida: {
-    tags: {
-      get $get() {
-        return mockTagsGet
+// Mock only the clientAspida export from @/src/index
+jest.mock('@/src/index', () => {
+  return {
+    clientAspida: {
+      tags: {
+        $get: (...args: any[]) => mockTagsGet(...args),
+      },
+      blogs: {
+        $get: (...args: any[]) => mockBlogsGet(...args),
+        _id: (_blogId: string) => ({
+          $get: (...args: any[]) => mockBlogGetById(...args),
+        }),
       },
     },
-    blogs: {
-      get $get() {
-        return mockBlogsGet
-      },
-      _id: (_blogId: string) => ({
-        $get: mockBlogGetById,
-      }),
-    },
-  },
-}))
+  }
+})
 
 // Import after mocking
 import {
@@ -68,13 +66,13 @@ describe('getContents.ts', () => {
       // Arrange
       const page1Response = {
         contents: [mockTags[0], mockTags[1]],
-        totalCount: 5,
+        totalCount: 3,
         offset: 0,
         limit: 2,
       }
       const page2Response = {
         contents: [mockTags[2]],
-        totalCount: 5,
+        totalCount: 3,
         offset: 2,
         limit: 2,
       }
@@ -163,13 +161,13 @@ describe('getContents.ts', () => {
       // Arrange
       const page1Response = {
         contents: [mockBlogs[0]],
-        totalCount: 3,
+        totalCount: 2,
         offset: 0,
         limit: 1,
       }
       const page2Response = {
         contents: [mockBlogs[1]],
-        totalCount: 3,
+        totalCount: 2,
         offset: 1,
         limit: 1,
       }

@@ -18,8 +18,9 @@ jest.mock('next/link', () => {
 // Mock Next.js Image
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt, ...props }: any) => {
-    return <img src={src} alt={alt || ''} {...props} />
+  default: ({ src, alt, layout: _layout, objectFit: _objectFit, ...props }: any) => {
+    // Exclude Next.js specific props and provide a default alt for accessibility
+    return <img src={src} alt={alt || 'blog image'} {...props} />
   },
 }))
 
