@@ -3,11 +3,13 @@
 ## [2026-02-01] Dead Code Cleanup
 
 ### Summary
+
 Removing unused files, exports, dependencies identified by knip and depcheck.
 
 ### Findings from Analysis Tools
 
 #### knip results:
+
 - **Unused files**: aspida.config.js, src/testData.ts
 - **Unused dependencies**: @fortawesome/free-regular-svg-icons
 - **Unused devDependencies**: @types/highlight.js, babel-jest, eslint-config-prettier, eslint-plugin-prettier, identity-obj-proxy, jest-watch-typeahead, prettier-plugin-tailwindcss
@@ -15,12 +17,14 @@ Removing unused files, exports, dependencies identified by knip and depcheck.
 - **Unused types**: ApiInstance in src/api/$api.ts
 
 #### depcheck results:
+
 - Confirmed unused: @fortawesome/free-regular-svg-icons, @types/highlight.js, babel-jest, eslint-config-prettier, eslint-plugin-prettier, identity-obj-proxy, jest-watch-typeahead, prettier-plugin-tailwindcss
 - False positives (actually used): autoprefixer, postcss, jest-environment-jsdom
 
 ### Risk Assessment
 
 #### SAFE to remove:
+
 1. **src/testData.ts** - Only used in tests, tests already have inline test data
 2. **@fortawesome/free-regular-svg-icons** - Not imported anywhere
 3. **@types/highlight.js** - No highlight.js usage found
@@ -32,6 +36,7 @@ Removing unused files, exports, dependencies identified by knip and depcheck.
 9. **Duplicate export in clientAspida.ts** - Has both named and default export only
 
 #### KEEP (false positives):
+
 1. **aspida.config.js** - Required by aspida build command
 2. **autoprefixer** - Used in postcss.config.js
 3. **postcss** - Required by Next.js build
@@ -41,6 +46,7 @@ Removing unused files, exports, dependencies identified by knip and depcheck.
 ### Completed Removals
 
 #### Phase 1: Unused Dependencies (7 packages) ✅
+
 - @fortawesome/free-regular-svg-icons - 13 packages removed
 - @types/highlight.js
 - babel-jest
@@ -50,12 +56,15 @@ Removing unused files, exports, dependencies identified by knip and depcheck.
 - prettier-plugin-tailwindcss
 
 #### Phase 2: Unused Files (1 file) ✅
+
 - src/testData.ts - Test data file that was not being used
 
 #### Phase 3: Duplicate Exports ✅
+
 - Removed named export 'client' from src/libs/clientAspida.ts, kept default export only
 
 ### Testing Results
+
 - [x] Run tests before changes (baseline: 2 failed test suites, 14 failed tests - pre-existing)
 - [x] Run tests after Phase 1 - Same baseline, no regressions
 - [x] Run tests after Phase 2 - Same baseline, no regressions
@@ -64,6 +73,7 @@ Removing unused files, exports, dependencies identified by knip and depcheck.
 - [x] Run lint - ✓ No linting errors
 
 ### Impact Summary
+
 - **Files deleted**: 1 (src/testData.ts)
 - **Dependencies removed**: 7 packages (13 total packages with transitive deps)
 - **Exports cleaned**: 1 duplicate export removed
@@ -72,4 +82,5 @@ Removing unused files, exports, dependencies identified by knip and depcheck.
 - **Lint status**: ✅ Clean
 
 ### Bundle Size Impact
+
 Estimated reduction: ~200-300KB from removed dependencies (pre-minified)
