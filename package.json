@@ -36,7 +36,7 @@
     "@types/gtag.js": "0.0.20",
     "aspida": "1.14.0",
     "base64url": "3.0.1",
-    "daisyui": "5.5.14",
+    "daisyui": "5.5.16",
     "date-fns": "4.1.0",
     "jsdom": "27.4.0",
     "microcms-js-sdk": "3.2.0",
