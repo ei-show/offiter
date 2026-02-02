@@ -45,17 +45,15 @@ export default function Home({ tags, blogs, latestBlogs, blogCount, pageNumber }
     <>
       {generateNextSeo(SEO)}
       <Layout latestBlogs={latestBlogs} tags={tags}>
-        <div className="mb-2 flex items-center justify-between">
-          <h2 className="font-head text-xl text-gray-700 md:text-2xl">新着記事</h2>
+        <div className="mb-4">
+          <h2 className="font-head text-2xl md:text-3xl">新着記事</h2>
         </div>
 
-        {blogs.map((blog) => (
-          <React.Fragment key={blog.id}>
-            <div className="mb-2">
-              <Card data={blog} />
-            </div>
-          </React.Fragment>
-        ))}
+        <div className="space-y-4">
+          {blogs.map((blog) => (
+            <Card key={blog.id} data={blog} />
+          ))}
+        </div>
 
         <Pagination totalCount={blogCount} pageNumber={pageNumber} />
       </Layout>
