@@ -6,13 +6,12 @@ type props = {
   iconName: any
   itemName: string
 }
-export default function NavItem({ link, iconName, itemName }: props) {
+
+export default function FooterNavItem({ link, iconName, itemName }: props) {
   return (
-    <li className="flex-1 text-center">
-      <Link href={link} className="block w-full py-3 leading-normal">
-        <FontAwesomeIcon icon={iconName} size="lg" fixedWidth />
-        <p>{itemName}</p>
-      </Link>
-    </li>
+    <Link href={link} className="flex flex-col items-center gap-1">
+      <FontAwesomeIcon icon={iconName} size="lg" fixedWidth />
+      <span className="btm-nav-label">{itemName}</span>
+    </Link>
   )
 }

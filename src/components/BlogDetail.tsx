@@ -42,44 +42,36 @@ const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail)
   }
 
   return (
-    <div className="sticky top-6 mb-10 px-8">
-      <div className="mx-auto flex flex-col rounded-lg border bg-gradient-to-r from-gray-50 via-white to-gray-50 p-4 text-sm shadow-md">
-        <div className="mb-4 flex">
-          <span className="flex-1 font-head font-light text-gray-600">
-            <FontAwesomeIcon icon="calendar-plus" fixedWidth className="mr-1" />
-            {Date(createdAt)}
-          </span>
-          <span className="flex-1 font-head font-light text-gray-600">
-            <FontAwesomeIcon icon="edit" fixedWidth className="mr-1" />
-            {Date(updatedAt)}
-          </span>
+    <div className="sticky top-6">
+      <div className="card bg-base-100 shadow-xl">
+        <div className="card-body">
+          <div className="flex gap-4 text-sm mb-4">
+            <div className="flex items-center gap-1">
+              <FontAwesomeIcon icon="calendar-plus" fixedWidth />
+              <time>{Date(createdAt)}</time>
+            </div>
+            <div className="flex items-center gap-1">
+              <FontAwesomeIcon icon="edit" fixedWidth />
+              <time>{Date(updatedAt)}</time>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {tags.map((tag) => (
+              <Link key={tag.id} href="/pages/tags/[tag]" as={`/pages/tags/${tag.id}`}>
+                <div className="badge badge-outline">{tag.name}</div>
+              </Link>
+            ))}
+          </div>
+          <ul className="steps steps-vertical">
+            {tableOfContents.map((item) => (
+              <li key={item.id} className="step step-primary">
+                <Link href={`#${item.id}`} className={`${changeIndentByHtag(item.name)} text-sm text-left`}>
+                  {item.text}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="mb-4 flex flex-wrap">
-          {tags.map((tag) => (
-            <React.Fragment key={tag.id}>
-              <li className="mr-4 inline-block rounded-2xl border-2 border-gray-200 font-head text-gray-700">
-                <Link href="/pages/tags/[tag]" as={`/pages/tags/${tag.id}`} className="inline-block p-1">
-                  {tag.name}
-                </Link>
-              </li>
-            </React.Fragment>
-          ))}
-        </ul>
-        <ul className="steps steps-vertical list-inside divide-y divide-gray-200">
-          {tableOfContents.map((tableOfContents) => (
-            <React.Fragment key={tableOfContents.id}>
-              <li className="step step-primary py-2 font-head text-gray-700">
-                <Link
-                  href={`#${tableOfContents.id}`}
-                  as={`#${tableOfContents.id}`}
-                  className={`${changeIndentByHtag(tableOfContents.name)} block h-fit w-fit`}
-                >
-                  {tableOfContents.text}
-                </Link>
-              </li>
-            </React.Fragment>
-          ))}
-        </ul>
       </div>
     </div>
   )

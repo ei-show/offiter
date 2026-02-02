@@ -6,11 +6,13 @@ type props = {
 }
 
 export default function NavItem({ NavItemName, blogId }: props) {
-  const href = blogId ? '/blogs/[id]' : '/'
-  const as = blogId ? `/blogs/${blogId}` : ''
+  const href = blogId ? `/blogs/${blogId}` : '/'
+
   return (
-    <Link href={href} as={as} className="my-1 font-head hover:text-blue-500 md:mx-4 md:my-0">
-      {NavItemName}
-    </Link>
+    <li>
+      <Link href={href} className="btn btn-ghost normal-case font-head">
+        {NavItemName}
+      </Link>
+    </li>
   )
 }

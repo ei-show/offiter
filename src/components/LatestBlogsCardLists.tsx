@@ -12,15 +12,15 @@ const LatestBlogsCardLists = ({ latestBlogs }: LatestBlogsCardLists) => {
   }
 
   return (
-    <div className="mb-10 px-8">
-      <h2 className="mb-2 font-head text-xl text-gray-700">最新の記事</h2>
-      {latestBlogs.map((blog) => (
-        <React.Fragment key={blog.id}>
-          <div className="pt-2">
-            <Card data={blog} small={true} />
-          </div>
-        </React.Fragment>
-      ))}
+    <div className="card bg-base-100 shadow-xl">
+      <div className="card-body">
+        <h2 className="card-title font-head mb-2">最新の記事</h2>
+        <div className="space-y-2">
+          {latestBlogs.map((blog) => (
+            <Card key={blog.id} data={blog} small={true} />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
