@@ -12,22 +12,20 @@ const TagsLists = ({ tags }: TagsLists) => {
     return null
   }
   return (
-    <div className="mb-10 px-8">
-      <h2 className="mb-4 font-head text-xl text-gray-700">タグ</h2>
-      <div className="mx-auto flex flex-col rounded-lg border bg-gradient-to-r from-gray-50 via-white to-gray-50 p-4 shadow-md lg:shadow-none">
-        <ul>
+    <div className="card bg-base-100 shadow-xl">
+      <div className="card-body">
+        <h2 className="card-title font-head">タグ</h2>
+        <ul className="menu">
           {tags.map((tag) => (
-            <React.Fragment key={tag.id}>
-              <li>
-                <Link href="/pages/tags/[id]" as={`/pages/tags/${tag.id}`} className="group m-1 block text-gray-700">
-                  {tag.name}{' '}
-                  <FontAwesomeIcon
-                    icon={['fas', 'arrow-right']}
-                    className="transform transition duration-300 ease-in-out group-hover:translate-x-1"
-                  />
-                </Link>
-              </li>
-            </React.Fragment>
+            <li key={tag.id}>
+              <Link href="/pages/tags/[id]" as={`/pages/tags/${tag.id}`} className="group">
+                {tag.name}
+                <FontAwesomeIcon
+                  icon={['fas', 'arrow-right']}
+                  className="transform transition duration-300 ease-in-out group-hover:translate-x-1"
+                />
+              </Link>
+            </li>
           ))}
         </ul>
       </div>

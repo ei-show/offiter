@@ -22,13 +22,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id
   const blog = id !== undefined && !Array.isArray(id) ? await blogGetContent(id) : await blogGetContent('')
 
-  // markdownからhtmlに変換
   const html = await markdownToHtml(blog.body)
-
-  // htmlでパースできるようにする
   const dom = new JSDOM(html)
-
-  // 目次
   const headings = Array.from(dom.window.document.querySelectorAll<HTMLElement>('h1, h2, h3, h4, h5, h6'))
   const tableOfContents = headings.map((element) => ({
     text: element.textContent,
@@ -85,42 +80,35 @@ export default function Blog({ blog, highlightedBody, tableOfContents }: props) 
         },
       })}
       <Layout blogDetails={blog} tableOfContents={tableOfContents}>
-        <div className="lg:rounded-lg lg:border lg:bg-gray-50 lg:p-2 lg:shadow-md">
-          <div className="mt-4 flex items-center justify-between lg:hidden">
-            <div className="flex flex-col">
-              <span className="text-xs font-light text-gray-600">
+        <div className="card bg-base-100 shadow-xl">
+          <div className="card-body">
+            <div className="flex flex-wrap gap-4 lg:hidden mb-4">
+              <div className="flex items-center gap-2 text-sm">
                 <FontAwesomeIcon icon="calendar-plus" fixedWidth />
-                {Date(blog.createdAt)}
-              </span>
-              <span className="text-xs font-light text-gray-600">
+                <time>{Date(blog.createdAt)}</time>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
                 <FontAwesomeIcon icon="edit" fixedWidth />
-                {Date(blog.updatedAt)}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-end">
-              {blog.tags.map((tag) => (
-                <React.Fragment key={tag.id}>
-                  <Link
-                    href="/[tag]"
-                    as={`/${tag.id}`}
-                    className="ml-2 rounded-lg bg-gradient-to-r from-gray-50 via-white to-gray-50 p-2 text-xs font-bold text-blue-900 shadow-md md:text-base lg:transform lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-md"
-                  >
-                    <span>{tag.name}</span>
+                <time>{Date(blog.updatedAt)}</time>
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                {blog.tags.map((tag) => (
+                  <Link key={tag.id} href="/[tag]" as={`/${tag.id}`}>
+                    <div className="badge badge-primary">{tag.name}</div>
                   </Link>
-                </React.Fragment>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="mt-4 flex items-center justify-center">
-            <Image alt="" src={blog.image.url} width={blog.image.width} height={blog.image.height} />
-          </div>
+            <figure className="flex justify-center">
+              <Image alt={blog.title} src={blog.image.url} width={blog.image.width} height={blog.image.height} />
+            </figure>
 
-          <div
-            className={`${Style.blog} znc mt-4 md:text-lg`}
-            dangerouslySetInnerHTML={{ __html: `${highlightedBody}` }}
-          />
+            <div
+              className={`${Style.blog} znc prose max-w-none`}
+              dangerouslySetInnerHTML={{ __html: `${highlightedBody}` }}
+            />
+          </div>
         </div>
       </Layout>
     </>
