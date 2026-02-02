@@ -46,16 +46,17 @@ type props = {
 }
 
 export default function Card({ data, small }: props) {
-  const cardClass = !small ? 'card-side h-52' : 'card-side h-28'
+  const cardHeight = !small ? 'h-52' : 'h-28'
+  const titleSize = !small ? 'text-2xl' : 'text-base'
 
   return (
     <Link href="/blogs/[id]" as={`/blogs/${data.id}`} className="block">
-      <div className={`card bg-base-100 shadow-xl hover:shadow-2xl transition-all ${cardClass}`}>
-        <figure className="w-2/5 relative">
+      <div className={`card card-side bg-base-100 shadow-xl hover:shadow-2xl transition-all ${cardHeight}`}>
+        <figure className="relative w-2/5">
           <Image alt={data.title} layout="fill" objectFit="cover" src={data.image.url} />
         </figure>
         <div className="card-body p-4">
-          <h3 className={`card-title ${!small ? 'text-2xl' : 'text-base'}`}>{data.title}</h3>
+          <h3 className={`card-title ${titleSize}`}>{data.title}</h3>
           <Description description={data.description} small={small} />
           <DateTags tags={data.tags} updatedAt={data.updatedAt} small={small} />
         </div>
