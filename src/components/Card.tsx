@@ -20,9 +20,7 @@ const DateTags = ({ tags, updatedAt, small }: dateTags) => {
       <div className="flex justify-end">
         {tags.map((tag) => (
           <React.Fragment key={tag.id}>
-            <p className="ml-1 hidden overflow-hidden rounded bg-neutral px-1 py-0 text-xs text-gray-700 sm:block">
-              {tag.name}
-            </p>
+            <span className="badge badge-neutral badge-sm ml-1 hidden sm:inline-block">{tag.name}</span>
           </React.Fragment>
         ))}
       </div>
@@ -51,6 +49,7 @@ type props = {
   data: blog
   small?: boolean
 }
+
 export default function Card({ data, small }: props) {
   const cardHeight = !small ? 'md:h-52' : 'md:h-28'
   const cardMargin = !small ? 'md:p-2' : ''
@@ -58,11 +57,11 @@ export default function Card({ data, small }: props) {
   return (
     <Link href="/blogs/[id]" as={`/blogs/${data.id}`} className="block">
       <div
-        className={`${cardHeight} ${cardMargin} h-28 rounded-lg border bg-gradient-to-r from-gray-50 via-white to-gray-50 p-1 shadow-md md:transform md:shadow-none md:transition md:duration-300 md:ease-in-out md:hover:-translate-y-1 md:hover:shadow-md`}
+        className={`${cardHeight} ${cardMargin} h-28 rounded-lg border bg-base-100 p-1 shadow-md md:transform md:shadow-none md:transition md:duration-300 md:ease-in-out md:hover:-translate-y-1 md:hover:shadow-md`}
       >
         <div className="flex h-full">
           <div className="relative w-2/5 flex-none">
-            <Image alt="" layout="fill" objectFit="cover" className="rounded-lg" src={data.image.url} />
+            <Image alt={data.title} layout="fill" objectFit="cover" className="rounded-lg" src={data.image.url} />
           </div>
           <div className="ml-1 flex h-full w-full flex-col justify-between md:ml-2">
             <h3 className={`${cardTitle} flex-none font-head text-base text-gray-700`}>{data.title}</h3>
