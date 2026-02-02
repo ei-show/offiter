@@ -35,3 +35,5 @@ yarn-error.log*
 
 # ogp
 /public/ogp/*.png
+# TypeScript build info
+tsconfig.tsbuildinfo
