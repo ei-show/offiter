@@ -12,7 +12,7 @@ export default function Pagination({ totalCount, pageNumber }: Props) {
 
   return (
     <div className="flex items-center justify-center pt-10">
-      <div className="btn-group">
+      <div className="join">
         {range(1, Math.ceil(totalCount / PER_PAGE)).map((number, index) => (
           <React.Fragment key={index}>
             <PaginationButton pageNumber={number} currentPageNumber={pageNumber} />

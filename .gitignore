@@ -34,4 +34,4 @@ yarn-error.log*
 .vercel
 
 # ogp
-/public/ogp/*.png
+/public/ogp/*.pngtsconfig.tsbuildinfo

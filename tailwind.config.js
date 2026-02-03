@@ -3,9 +3,9 @@ module.exports = {
   darkMode: 'media',
   theme: {
     fontFamily: {
-      title: '"Hachi Maru Pop"', // Title
-      head: '"Kosugi Maru"', // 見出し
-      body: '"Noto Sans JP"', // 文章
+      title: '"Hachi Maru Pop"',
+      head: '"Kosugi Maru"',
+      body: '"Noto Sans JP"',
     },
     extend: {},
   },
@@ -32,5 +32,8 @@ module.exports = {
         },
       },
     ],
+    base: true,
+    utils: true,
+    logs: false,
   },
 }
