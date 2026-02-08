@@ -46,7 +46,7 @@
     "react-dom": "19.2.4",
     "sass": "1.97.3",
     "zenn-content-css": "0.4.4",
-    "zenn-embed-elements": "0.4.4",
+    "zenn-embed-elements": "0.4.5",
     "zenn-markdown-html": "0.4.4"
   },
   "devDependencies": {
