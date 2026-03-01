@@ -107,6 +107,7 @@ uses flat config format in `eslint.config.cjs`.
 #### Phase 1: Unused type exports in src/libs/types.ts
 
 Removed 3 types that were exported but never imported as types anywhere:
+
 - `tagsData` - type definition for tag contents array
 - `blogsData` - type definition for blog contents with totalCount
 - `blogCount` - type definition for blog count response
