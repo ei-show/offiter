@@ -1,5 +1,5 @@
 import { MicroCMSListResponse, MicroCMSQueries } from 'microcms-js-sdk'
-import { Blogs } from '@/src/index'
+import { Blogs } from '../types'
 
 export type Methods = {
   get: {

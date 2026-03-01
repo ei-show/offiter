@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "predev": "node scripts/copy-blog-images.js",
     "build": "next build",
+    "prebuild": "node scripts/copy-blog-images.js",
     "start": "next start",
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",
@@ -13,7 +15,8 @@
     "test": "jest",
     "test-all": "npm run lint && npm run type-check && npm run test",
     "prepare": "husky install",
-    "api:build": "aspida"
+    "api:build": "aspida",
+    "submodule:update": "git submodule update --remote --merge"
   },
   "husky": {
     "hooks": {
@@ -38,6 +41,7 @@
     "base64url": "3.0.1",
     "daisyui": "5.5.16",
     "date-fns": "4.1.0",
+    "gray-matter": "^4.0.3",
     "jsdom": "27.4.0",
     "microcms-js-sdk": "3.2.0",
     "next": "16.1.6",

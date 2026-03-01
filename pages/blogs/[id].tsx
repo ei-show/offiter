@@ -116,7 +116,7 @@ export default function Blog({ blog, highlightedBody, tableOfContents }: props) 
           </div>
 
           <div className="mt-4 flex items-center justify-center">
-            <Image alt="" src={blog.image.url} width={blog.image.width} height={blog.image.height} />
+            <Image alt="" src={blog.image.url} width={blog.image.width ?? 1200} height={blog.image.height ?? 630} />
           </div>
 
           <div

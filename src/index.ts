@@ -16,7 +16,6 @@ export { default as LatestBlogsCardLists } from './components/LatestBlogsCardLis
 // libs
 export * as gtag from './libs/gtag'
 export { GA_TRACKING_ID } from './libs/gtag'
-export { default as clientAspida } from './libs/clientAspida'
 export { default as SEO } from './libs/next-seo.config'
 export * from './libs/types'
 export {
@@ -26,6 +25,3 @@ export {
   blogGetContent,
   blogsGetTotalCount,
 } from './libs/getContents'
-
-// api
-export * from './api/types'
