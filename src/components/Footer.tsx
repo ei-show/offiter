@@ -7,7 +7,7 @@ type props = {
 
 export default function Header({ siteName }: props) {
   return (
-    <footer className="px-6 py-2 text-gray-800">
+    <footer className="bg-base-200 px-6 py-2 text-base-content">
       <div className="container mx-auto flex flex-col items-center justify-between md:flex-row">
         <Link href="/" className="font-title text-2xl">
           {siteName}

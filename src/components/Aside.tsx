@@ -11,7 +11,7 @@ type props = {
 
 export default function Aside({ blogDetails, latestBlogs, tags, tableOfContents }: props) {
   return (
-    <div className="-mx-8 hidden w-4/12 lg:block">
+    <aside className="-mx-8 hidden w-4/12 lg:block">
       <BlogDetail
         createdAt={blogDetails?.createdAt}
         updatedAt={blogDetails?.updatedAt}
@@ -21,6 +21,6 @@ export default function Aside({ blogDetails, latestBlogs, tags, tableOfContents 
 
       <LatestBlogsCardLists latestBlogs={latestBlogs} />
       <TagsLists tags={tags} />
-    </div>
+    </aside>
   )
 }

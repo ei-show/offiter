@@ -3,7 +3,6 @@ export { default as Aside } from './components/Aside'
 export { default as Card } from './components/Card'
 export { default as Date } from './components/Date'
 export { default as Footer } from './components/Footer'
-export { default as FooterNavItem } from './components/FooterNavItem'
 export { default as Header } from './components/Header'
 export { default as Layout } from './components/Layout'
 export { default as Nav } from './components/Nav'
@@ -30,4 +29,3 @@ export {
 
 // api
 export * from './api/types'
-export { default as api } from './api/$api'

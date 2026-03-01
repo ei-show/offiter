@@ -43,6 +43,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 API_KEY=8fae269a-fb4a-480d-83de-598e8fac61d1
 GA_TRACKING_ID=G-A123456789
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
+HEADLESS_CMS=https://offiter.microcms.io/api/v1
 ```
 
 #### deploy env
@@ -53,4 +54,5 @@ local の内容を deploy 先に環境変数として登録
 API_KEY=8fae269a-fb4a-480d-83de-598e8fac61d1
 GA_TRACKING_ID=G-AXXXXXXXXX
 NEXT_PUBLIC_BASE_URL=https://offiter.net
+HEADLESS_CMS=https://offiter.microcms.io/api/v1
 ```

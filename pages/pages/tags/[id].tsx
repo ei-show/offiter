@@ -38,7 +38,7 @@ export default function Home({ blogs, latestBlogs, tags }: props) {
   return (
     <Layout latestBlogs={latestBlogs} tags={tags}>
       <div className="mb-2 flex items-center justify-between">
-        <h2 className="text-xl font-bold text-gray-700 md:text-2xl">新着記事</h2>
+        <h2 className="text-xl font-bold text-base-content md:text-2xl">新着記事</h2>
       </div>
 
       {blogs.map((blog) => (
