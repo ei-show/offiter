@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @plugin "daisyui" {
   themes: pastel;
@@ -7,7 +7,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-title: "Hachi Maru Pop";
-  --font-head: "Kosugi Maru";
-  --font-body: "Noto Sans JP";
+  --font-title: 'Hachi Maru Pop';
+  --font-head: 'Kosugi Maru';
+  --font-body: 'Noto Sans JP';
 }

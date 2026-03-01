@@ -7,6 +7,7 @@ Offiter is a Next.js blog built with TypeScript, using microCMS as the headless 
 ## Build, Test, and Development Commands
 
 ### Development
+
 ```bash
 npm run dev              # Start dev server on http://localhost:3000
 npm run build            # Create production build
@@ -14,6 +15,7 @@ npm run start            # Run production server
 ```
 
 ### Code Quality
+
 ```bash
 npm run lint             # Run ESLint on ts/tsx/js files
 npm run format           # Format code with Prettier
@@ -21,17 +23,20 @@ npm run type-check       # Run TypeScript compiler checks
 ```
 
 ### Testing
+
 ```bash
 npm run test             # Run Jest unit tests
 npm run test-all         # Run lint + type-check + tests (full suite)
 ```
 
 To run a single test file:
+
 ```bash
 npx jest src/components/__tests__/Card.test.tsx
 ```
 
 ### API Client Generation
+
 ```bash
 npm run api:build        # Generate Aspida API client from src/api
 ```
@@ -105,6 +110,7 @@ Run this after modifying API type definitions in `src/api/`.
 ### Environment Variables
 
 Required in `.env.development.local`:
+
 ```
 API_KEY=<microcms-api-key>
 GA_TRACKING_ID=<google-analytics-id>
@@ -121,6 +127,7 @@ HEADLESS_CMS=https://offiter.microcms.io/api/v1
 ### Test Coverage Thresholds
 
 Maintain minimum coverage (configured in `jest.config.js`):
+
 - Statements: 60%
 - Branches: 45%
 - Functions: 25%
