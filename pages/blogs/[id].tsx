@@ -23,7 +23,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const blog = id !== undefined && !Array.isArray(id) ? await blogGetContent(id) : await blogGetContent('')
 
   // markdownからhtmlに変換
-  const html = await markdownToHtml(blog.body)
+  const html = await markdownToHtml(blog.body, {
+    embedOrigin: 'https://embed.zenn.studio',
+  })
 
   // htmlでパースできるようにする
   const dom = new JSDOM(html)
