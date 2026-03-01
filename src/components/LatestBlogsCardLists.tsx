@@ -13,7 +13,8 @@ const LatestBlogsCardLists = ({ latestBlogs }: LatestBlogsCardLists) => {
 
   return (
     <div className="mb-10 px-8">
-      <h2 className="mb-2 font-head text-xl text-gray-700">最新の記事</h2>
+      <h2 className="mb-2 font-head text-xl text-base-content">最新の記事</h2>
+      <div className="divider mt-0"></div>
       {latestBlogs.map((blog) => (
         <React.Fragment key={blog.id}>
           <div className="pt-2">

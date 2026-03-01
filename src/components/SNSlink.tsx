@@ -8,7 +8,7 @@ type props = {
 
 export default function SNSlink({ link, iconName }: props) {
   return (
-    <Link href={link} className="mx-2 hover:text-gray-400">
+    <Link href={link} className="mx-2 hover:text-base-content/50">
       <FontAwesomeIcon icon={['fab', iconName]} />
     </Link>
   )

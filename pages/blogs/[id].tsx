@@ -85,14 +85,14 @@ export default function Blog({ blog, highlightedBody, tableOfContents }: props) 
         },
       })}
       <Layout blogDetails={blog} tableOfContents={tableOfContents}>
-        <div className="lg:rounded-lg lg:border lg:bg-gray-50 lg:p-2 lg:shadow-md">
+        <div className="lg:card lg:bg-base-100 lg:p-2 lg:shadow-md">
           <div className="mt-4 flex items-center justify-between lg:hidden">
             <div className="flex flex-col">
-              <span className="text-xs font-light text-gray-600">
+              <span className="text-xs font-light text-base-content/70">
                 <FontAwesomeIcon icon="calendar-plus" fixedWidth />
                 {Date(blog.createdAt)}
               </span>
-              <span className="text-xs font-light text-gray-600">
+              <span className="text-xs font-light text-base-content/70">
                 <FontAwesomeIcon icon="edit" fixedWidth />
                 {Date(blog.updatedAt)}
               </span>
@@ -104,7 +104,7 @@ export default function Blog({ blog, highlightedBody, tableOfContents }: props) 
                   <Link
                     href="/[tag]"
                     as={`/${tag.id}`}
-                    className="ml-2 rounded-lg bg-gradient-to-r from-gray-50 via-white to-gray-50 p-2 text-xs font-bold text-blue-900 shadow-md md:text-base lg:transform lg:shadow-none lg:transition lg:duration-300 lg:ease-in-out lg:hover:-translate-y-1 lg:hover:shadow-md"
+                    className="badge badge-neutral ml-2 text-xs font-bold md:text-base"
                   >
                     <span>{tag.name}</span>
                   </Link>

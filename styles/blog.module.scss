@@ -1,5 +1,4 @@
-@tailwind components;
-@tailwind utilities;
+@reference "./globals.css";
 
 @layer utilities {
   .blog {
@@ -35,12 +34,15 @@
     h4,
     h5,
     h6 {
-      @apply font-head text-gray-800 md:ml-4;
+      @apply font-head md:ml-4;
+      color: oklch(var(--bc));
     }
     p {
-      @apply text-gray-600 md:ml-8;
+      @apply md:ml-8;
+      color: oklch(var(--bc) / 0.7);
       code {
-        @apply bg-gray-300 text-gray-900;
+        background-color: oklch(var(--b3));
+        color: oklch(var(--bc));
       }
     }
     //   a {
