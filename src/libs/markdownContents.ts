@@ -42,8 +42,13 @@ function parseBlogFile(filename: string): { frontmatter: Frontmatter; body: stri
   return { frontmatter, body, id }
 }
 
+function normalizeDate(dateStr: string): string {
+  return dateStr.replace(/\//g, '-')
+}
+
 function frontmatterToBlog(id: string, frontmatter: Frontmatter): blog {
-  const updatedAt = frontmatter.updated_at?.trim() ? frontmatter.updated_at : frontmatter.created_at
+  const rawUpdatedAt = frontmatter.updated_at?.trim() ? frontmatter.updated_at : frontmatter.created_at
+  const updatedAt = normalizeDate(rawUpdatedAt)
   return {
     id,
     title: frontmatter.title,
@@ -105,7 +110,7 @@ export function getBlogById(id: string): blogData {
   const blog = frontmatterToBlog(id, frontmatter)
   return {
     ...blog,
-    createdAt: frontmatter.created_at,
+    createdAt: normalizeDate(frontmatter.created_at),
     body,
   }
 }

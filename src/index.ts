@@ -18,10 +18,3 @@ export * as gtag from './libs/gtag'
 export { GA_TRACKING_ID } from './libs/gtag'
 export { default as SEO } from './libs/next-seo.config'
 export * from './libs/types'
-export {
-  tagsGetAllContents,
-  blogsGetAllHeader,
-  blogsGetHeader,
-  blogGetContent,
-  blogsGetTotalCount,
-} from './libs/getContents'
