@@ -14,13 +14,13 @@ export default function Pagination({ totalCount, pageNumber }: Props) {
   return (
     <div className="flex items-center justify-center pt-10">
       <div className="join">
-        {pageNumber > 1 ? (
+        {/* {pageNumber > 1 ? (
           <Link href={`/pages/blogs/${pageNumber - 1}`} className="btn join-item font-head md:btn-lg">
             «
           </Link>
         ) : (
           <span className="btn btn-disabled join-item font-head md:btn-lg">«</span>
-        )}
+        )} */}
 
         {range(1, totalPages).map((number, index) => (
           <React.Fragment key={index}>
@@ -28,13 +28,13 @@ export default function Pagination({ totalCount, pageNumber }: Props) {
           </React.Fragment>
         ))}
 
-        {pageNumber < totalPages ? (
+        {/* {pageNumber < totalPages ? (
           <Link href={`/pages/blogs/${pageNumber + 1}`} className="btn join-item font-head md:btn-lg">
             »
           </Link>
         ) : (
           <span className="btn btn-disabled join-item font-head md:btn-lg">»</span>
-        )}
+        )} */}
       </div>
     </div>
   )
@@ -47,11 +47,11 @@ type PaginationButton = {
 
 const PaginationButton = ({ pageNumber, currentPageNumber }: PaginationButton) => {
   if (pageNumber === currentPageNumber) {
-    return <span className="btn btn-primary join-item font-head md:btn-lg">{pageNumber}</span>
+    return <span className="btn btn-neutral join-item font-head md:btn-lg">{pageNumber}</span>
   }
 
   return (
-    <Link href={`/pages/blogs/${pageNumber}`} className="btn btn-outline join-item font-head md:btn-lg">
+    <Link href={`/pages/blogs/${pageNumber}`} className="btn btn-soft join-item font-head md:btn-lg">
       {pageNumber}
     </Link>
   )
