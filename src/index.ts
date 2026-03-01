@@ -29,4 +29,3 @@ export {
 
 // api
 export * from './api/types'
-export { default as api } from './api/$api'

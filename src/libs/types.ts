@@ -3,10 +3,6 @@ type tag = {
   name: string
 }
 
-type tagsData = {
-  contents: tag[]
-}
-
 type blog = {
   id: string
   title: string
@@ -25,22 +21,10 @@ type blogData = {
   body: string
 } & blog
 
-type blogsData = {
-  contents: blog[]
-  totalCount: number
-}
-
-type blogCount = {
-  contents: {
-    id: string
-  }
-  totalCount: number
-}
-
 type tableOfContents = {
   text: string | null
   id: string | null
   name: string
 }
 
-export type { tag, tagsData, blog, blogData, blogsData, blogCount, tableOfContents }
+export type { tag, blog, blogData, tableOfContents }
