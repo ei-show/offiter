@@ -58,8 +58,7 @@ type props = {
 
 export default function Blog({ blog, highlightedBody, tableOfContents }: props) {
   const width = 1200
-  const ogpBaseImage =
-    'https://images.microcms-assets.io/assets/de88e062d820469698e6053f34bfe93b/22b0ff52ecf840b6a66468e97240dfbb/article_1200x630.png'
+  const ogpBaseImage = `${baseURL}/ogp/article_1200x630.png`
   const ogpTitle = `https://assets.imgix.net/~text?txtsize=48&txt-color=1F2937&w=${
     width - 80
   }&txt-align=middle&txtfont=Hiragino%20Sans%20W6&txt-track=2`
