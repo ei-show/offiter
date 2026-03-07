@@ -20,7 +20,7 @@ const DateTags = ({ tags, updatedAt, small }: dateTags) => {
       <div className="flex justify-end">
         {tags.map((tag) => (
           <React.Fragment key={tag.id}>
-            <span className="badge badge-neutral badge-sm ml-1 hidden sm:inline-block">{tag.name}</span>
+            <span className="badge badge-soft badge-sm ml-1 hidden sm:inline-block">{tag.name}</span>
           </React.Fragment>
         ))}
       </div>

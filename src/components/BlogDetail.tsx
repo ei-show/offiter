@@ -60,7 +60,7 @@ const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail)
             {tags.map((tag) => (
               <React.Fragment key={tag.id}>
                 <li>
-                  <Link href="/pages/tags/[tag]" as={`/pages/tags/${tag.id}`} className="badge badge-outline font-head">
+                  <Link href="/pages/tags/[tag]" as={`/pages/tags/${tag.id}`} className="badge badge-soft font-head">
                     {tag.name}
                   </Link>
                 </li>
@@ -71,7 +71,7 @@ const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail)
           <ul className="steps steps-vertical list-inside divide-y divide-base-300">
             {tableOfContents.map((tableOfContents) => (
               <React.Fragment key={tableOfContents.id}>
-                <li className="step step-primary py-2 font-head text-base-content">
+                <li className="step step-soft py-2 font-head text-base-content">
                   <Link
                     href={`#${tableOfContents.id}`}
                     as={`#${tableOfContents.id}`}
