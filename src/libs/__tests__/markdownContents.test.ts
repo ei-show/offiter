@@ -3,18 +3,10 @@
  * Tests markdown file parsing, tag extraction, filtering, and error handling
  */
 
-// Mock fs before importing the module
-const mockExistsSync = jest.fn()
-const mockReaddirSync = jest.fn()
-const mockReadFileSync = jest.fn()
-
-jest.mock('fs', () => ({
-  existsSync: (...args: any[]) => mockExistsSync(...args),
-  readdirSync: (...args: any[]) => mockReaddirSync(...args),
-  readFileSync: (...args: any[]) => mockReadFileSync(...args),
-}))
-
 import { getAllTags, getAllBlogs, getBlogs, getBlogsCount, getBlogById } from '../markdownContents'
+
+const GITHUB_RAW_BASE = `https://raw.githubusercontent.com/ei-show/managed-life/refs/heads/main`
+const GITHUB_API_BASE = 'https://api.github.com/repos/ei-show/managed-life/contents'
 
 const FRONTMATTER_BASIC = `---
 title: Test Page
@@ -58,38 +50,49 @@ tag:
 
 // files: { '<blog-id>': '<frontmatter content>' }
 function setupMocks(files: Record<string, string>) {
-  const ids = Object.keys(files)
-  mockExistsSync.mockImplementation((p: string) => {
-    if (p.endsWith('blog')) return true
-    // blog/<id>/blog.md
-    return ids.some((id) => p.endsWith(`${id}/blog.md`))
-  })
-  mockReaddirSync.mockImplementation((_p: string, opts?: { withFileTypes?: boolean }) => {
-    if (opts?.withFileTypes) {
-      return ids.map((id) => ({ name: id, isDirectory: () => true }))
+  const ids = Object.keys(files).sort().reverse()
+
+  ;(global.fetch as jest.Mock).mockImplementation((url: string) => {
+    // GitHub API directory listing
+    if (url === `${GITHUB_API_BASE}/blog`) {
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(ids.map((id) => ({ name: id, type: 'dir' }))),
+      })
     }
-    return ids
-  })
-  mockReadFileSync.mockImplementation((p: string) => {
-    const id = ids.find((id) => p.endsWith(`${id}/blog.md`))
-    if (id) return files[id]
-    throw new Error(`File not found: ${p}`)
+
+    // Raw blog.md fetch
+    for (const id of ids) {
+      if (url === `${GITHUB_RAW_BASE}/blog/${id}/blog.md`) {
+        return Promise.resolve({
+          ok: true,
+          text: () => Promise.resolve(files[id]),
+        })
+      }
+    }
+
+    // 404 for unknown URLs
+    return Promise.resolve({ ok: false, status: 404 })
   })
 }
 
 describe('markdownContents.ts', () => {
   beforeEach(() => {
+    global.fetch = jest.fn()
+  })
+
+  afterEach(() => {
     jest.clearAllMocks()
   })
 
   describe('getAllTags', () => {
-    it('collects unique tags from all files', () => {
+    it('collects unique tags from all files', async () => {
       setupMocks({
         '20260301-test': FRONTMATTER_BASIC,
         '20260201-image': FRONTMATTER_WITH_IMAGE,
       })
 
-      const tags = getAllTags()
+      const tags = await getAllTags()
 
       expect(tags).toEqual(
         expect.arrayContaining([
@@ -101,76 +104,79 @@ describe('markdownContents.ts', () => {
       expect(tags).toHaveLength(3)
     })
 
-    it('deduplicates tags across files', () => {
+    it('deduplicates tags across files', async () => {
       setupMocks({
         '20260301-a': FRONTMATTER_BASIC,
         '20260201-b': FRONTMATTER_BASIC,
       })
 
-      const tags = getAllTags()
+      const tags = await getAllTags()
 
       const tagIds = tags.map((t) => t.id)
       expect(new Set(tagIds).size).toBe(tagIds.length)
     })
 
-    it('returns empty array when no content directory', () => {
-      mockExistsSync.mockReturnValue(false)
+    it('returns empty array when no blog directories', async () => {
+      ;(global.fetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve([]),
+      })
 
-      const tags = getAllTags()
+      const tags = await getAllTags()
 
       expect(tags).toEqual([])
     })
   })
 
   describe('getAllBlogs', () => {
-    it('returns blogs sorted by directory name descending', () => {
+    it('returns blogs sorted by directory name descending', async () => {
       setupMocks({
         '20260201-second': FRONTMATTER_WITH_IMAGE,
         '20260301-first': FRONTMATTER_BASIC,
       })
 
-      const blogs = getAllBlogs()
+      const blogs = await getAllBlogs()
 
       expect(blogs[0].id).toBe('20260301-first')
       expect(blogs[1].id).toBe('20260201-second')
     })
 
-    it('uses default image when no image in frontmatter', () => {
+    it('uses default image when no image in frontmatter', async () => {
       setupMocks({ '20260301-test': FRONTMATTER_BASIC })
 
-      const blogs = getAllBlogs()
+      const blogs = await getAllBlogs()
 
       expect(blogs[0].image.url).toBe('/twitter_cards/large_image_1200x630.png')
     })
 
-    it('uses custom image from frontmatter', () => {
+    it('uses custom image from frontmatter', async () => {
       setupMocks({ '20260201-image': FRONTMATTER_WITH_IMAGE })
 
-      const blogs = getAllBlogs()
+      const blogs = await getAllBlogs()
 
       expect(blogs[0].image.url).toBe('/custom/image.png')
     })
 
-    it('falls back to created_at when updated_at is empty', () => {
+    it('falls back to created_at when updated_at is empty', async () => {
       setupMocks({ '20260301-test': FRONTMATTER_BASIC })
 
-      const blogs = getAllBlogs()
+      const blogs = await getAllBlogs()
 
       expect(blogs[0].updatedAt).toBe('2026-03-01')
     })
 
-    it('uses updated_at when set', () => {
+    it('uses updated_at when set', async () => {
       setupMocks({ '20260201-image': FRONTMATTER_WITH_IMAGE })
 
-      const blogs = getAllBlogs()
+      const blogs = await getAllBlogs()
 
       expect(blogs[0].updatedAt).toBe('2026-02-15')
     })
 
-    it('converts tag strings to tag objects', () => {
+    it('converts tag strings to tag objects', async () => {
       setupMocks({ '20260301-test': FRONTMATTER_BASIC })
 
-      const blogs = getAllBlogs()
+      const blogs = await getAllBlogs()
 
       expect(blogs[0].tags).toEqual([
         { id: 'test', name: 'test' },
@@ -178,49 +184,52 @@ describe('markdownContents.ts', () => {
       ])
     })
 
-    it('filters by tag using microCMS filter syntax with braces', () => {
+    it('filters by tag using microCMS filter syntax with braces', async () => {
       setupMocks({
         '20260301-test': FRONTMATTER_BASIC,
         '20260201-image': FRONTMATTER_WITH_IMAGE,
       })
 
-      const blogs = getAllBlogs('tags[contains]{docker}')
+      const blogs = await getAllBlogs('tags[contains]{docker}')
 
       expect(blogs).toHaveLength(1)
       expect(blogs[0].id).toBe('20260201-image')
     })
 
-    it('filters by tag using microCMS filter syntax without braces', () => {
+    it('filters by tag using microCMS filter syntax without braces', async () => {
       setupMocks({
         '20260301-test': FRONTMATTER_BASIC,
         '20260201-image': FRONTMATTER_WITH_IMAGE,
       })
 
-      const blogs = getAllBlogs('tags[contains]test')
+      const blogs = await getAllBlogs('tags[contains]test')
 
       expect(blogs).toHaveLength(1)
       expect(blogs[0].id).toBe('20260301-test')
     })
 
-    it('returns empty array when content dir does not exist', () => {
-      mockExistsSync.mockReturnValue(false)
+    it('returns empty array when no blog directories', async () => {
+      ;(global.fetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve([]),
+      })
 
-      const blogs = getAllBlogs()
+      const blogs = await getAllBlogs()
 
       expect(blogs).toEqual([])
     })
   })
 
   describe('getBlogs', () => {
-    it('returns paginated slice of blogs', () => {
+    it('returns paginated slice of blogs', async () => {
       setupMocks({
         '20260301-a': FRONTMATTER_BASIC,
         '20260201-b': FRONTMATTER_WITH_IMAGE,
         '20260101-c': FRONTMATTER_WITH_RELATIVE_IMAGE,
       })
 
-      const page1 = getBlogs(2, 0)
-      const page2 = getBlogs(2, 2)
+      const page1 = await getBlogs(2, 0)
+      const page2 = await getBlogs(2, 2)
 
       expect(page1).toHaveLength(2)
       expect(page2).toHaveLength(1)
@@ -228,31 +237,33 @@ describe('markdownContents.ts', () => {
   })
 
   describe('getBlogsCount', () => {
-    it('returns total number of blogs', () => {
+    it('returns total number of blogs', async () => {
       setupMocks({
         '20260301-a': FRONTMATTER_BASIC,
         '20260201-b': FRONTMATTER_WITH_IMAGE,
       })
 
-      expect(getBlogsCount()).toBe(2)
+      expect(await getBlogsCount()).toBe(2)
     })
 
-    it('returns filtered count when filter provided', () => {
+    it('returns filtered count when filter provided', async () => {
       setupMocks({
         '20260301-a': FRONTMATTER_BASIC,
         '20260201-b': FRONTMATTER_WITH_IMAGE,
       })
 
-      expect(getBlogsCount('tags[contains]{docker}')).toBe(1)
+      expect(await getBlogsCount('tags[contains]{docker}')).toBe(1)
     })
   })
 
   describe('getBlogById', () => {
-    it('returns full blog data including body', () => {
-      mockExistsSync.mockReturnValue(true)
-      mockReadFileSync.mockReturnValue(FRONTMATTER_BASIC)
+    it('returns full blog data including body', async () => {
+      ;(global.fetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve(FRONTMATTER_BASIC),
+      })
 
-      const blog = getBlogById('20260301-test')
+      const blog = await getBlogById('20260301-test')
 
       expect(blog.id).toBe('20260301-test')
       expect(blog.title).toBe('Test Page')
@@ -260,19 +271,21 @@ describe('markdownContents.ts', () => {
       expect(blog.body).toContain('# Body')
     })
 
-    it('throws when file not found', () => {
-      mockExistsSync.mockReturnValue(false)
+    it('throws when file not found', async () => {
+      ;(global.fetch as jest.Mock).mockResolvedValue({ ok: false, status: 404 })
 
-      expect(() => getBlogById('nonexistent')).toThrow('Blog not found: nonexistent')
+      await expect(getBlogById('nonexistent')).rejects.toThrow('Blog not found: nonexistent')
     })
 
-    it('converts relative image paths in body', () => {
-      mockExistsSync.mockReturnValue(true)
-      mockReadFileSync.mockReturnValue(FRONTMATTER_WITH_RELATIVE_IMAGE)
+    it('converts relative image paths to raw.githubusercontent.com URLs in body', async () => {
+      ;(global.fetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve(FRONTMATTER_WITH_RELATIVE_IMAGE),
+      })
 
-      const blog = getBlogById('20260101-c')
+      const blog = await getBlogById('20260101-c')
 
-      expect(blog.body).toContain('![alt text](/blog/20260101-c/image.png)')
+      expect(blog.body).toContain(`![alt text](${GITHUB_RAW_BASE}/blog/20260101-c/image.png)`)
       expect(blog.body).toContain('![external](https://example.com/image.png)')
       expect(blog.body).toContain('![absolute](/public/image.png)')
     })

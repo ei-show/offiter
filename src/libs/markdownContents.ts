@@ -1,9 +1,8 @@
-import fs from 'fs'
-import path from 'path'
 import matter from 'gray-matter'
 import type { tag, blog, blogData } from '@/src/libs/types'
 
-const CONTENT_DIR = path.join(process.cwd(), 'content/managed-life/blog')
+const GITHUB_RAW_BASE = `https://raw.githubusercontent.com/${process.env.GITHUB_USERNAME}/${process.env.GITHUB_REPO}/refs/heads/${process.env.GITHUB_BRANCH}`
+const GITHUB_API_BASE = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/${process.env.GITHUB_REPO}/contents`
 const DEFAULT_IMAGE = '/twitter_cards/large_image_1200x630.png'
 
 type Frontmatter = {
@@ -15,6 +14,48 @@ type Frontmatter = {
   tag?: string[]
 }
 
+function authHeaders(): Record<string, string> {
+  if (process.env.GITHUB_TOKEN) return { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
+  return {}
+}
+
+async function githubFetch(url: string): Promise<unknown> {
+  const headers = { Accept: 'application/vnd.github.v3+json', ...authHeaders() }
+  const res = await fetch(url, { headers })
+  if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${url}`)
+  return res.json()
+}
+
+async function rawFetch(url: string): Promise<string> {
+  const res = await fetch(url, { headers: authHeaders() })
+  if (!res.ok) throw new Error(`Fetch error: ${res.status} ${url}`)
+  return res.text()
+}
+
+async function getBlogIds(): Promise<string[]> {
+  const items = (await githubFetch(`${GITHUB_API_BASE}/blog`)) as Array<{ name: string; type: string }>
+  return items
+    .filter((i) => i.type === 'dir')
+    .map((i) => i.name)
+    .sort()
+    .reverse()
+}
+
+async function parseBlogFile(id: string): Promise<{ frontmatter: Frontmatter; body: string; id: string }> {
+  const raw = await rawFetch(`${GITHUB_RAW_BASE}/blog/${id}/blog.md`)
+  const { data, content } = matter(raw)
+  const body = convertRelativeImagePaths(content.trim(), id)
+  return { frontmatter: data as Frontmatter, body, id }
+}
+
+function convertRelativeImagePaths(body: string, id: string): string {
+  return body.replace(/!\[([^\]]*)\]\((?!https?:\/\/)(?!\/)(.*?)\)/g, `![$1](${GITHUB_RAW_BASE}/blog/${id}/$2)`)
+}
+
+function normalizeDate(dateStr: string): string {
+  return dateStr.replace(/\//g, '-')
+}
+
 function tagsFromStrings(tagStrings: string[]): tag[] {
   return tagStrings.map((t) => ({ id: t, name: t }))
 }
@@ -22,27 +63,9 @@ function tagsFromStrings(tagStrings: string[]): tag[] {
 function extractTagIdFromFilter(filter: string): string | null {
   const match = filter.match(/tags\[contains\]\{([^}]+)\}/)
   if (match) return match[1]
-  // Support filter like: tags[contains]kubernetes (without braces)
   const simpleMatch = filter.match(/tags\[contains\](.+)/)
   if (simpleMatch) return simpleMatch[1].trim()
   return null
-}
-
-function convertRelativeImagePaths(body: string, id: string): string {
-  return body.replace(/!\[([^\]]*)\]\((?!https?:\/\/)(?!\/)(.*?)\)/g, `![$1](/blog/${id}/$2)`)
-}
-
-function parseBlogFile(id: string): { frontmatter: Frontmatter; body: string; id: string } {
-  const filePath = path.join(CONTENT_DIR, id, 'blog.md')
-  const raw = fs.readFileSync(filePath, 'utf-8')
-  const { data, content } = matter(raw)
-  const frontmatter = data as Frontmatter
-  const body = convertRelativeImagePaths(content.trim(), id)
-  return { frontmatter, body, id }
-}
-
-function normalizeDate(dateStr: string): string {
-  return dateStr.replace(/\//g, '-')
 }
 
 function frontmatterToBlog(id: string, frontmatter: Frontmatter): blog {
@@ -58,20 +81,11 @@ function frontmatterToBlog(id: string, frontmatter: Frontmatter): blog {
   }
 }
 
-function getBlogIds(): string[] {
-  if (!fs.existsSync(CONTENT_DIR)) return []
-  return (fs.readdirSync(CONTENT_DIR, { withFileTypes: true }) as fs.Dirent[])
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort()
-    .reverse()
-}
-
-export function getAllTags(): tag[] {
-  const ids = getBlogIds()
+export async function getAllTags(): Promise<tag[]> {
+  const ids = await getBlogIds()
   const tagSet = new Map<string, tag>()
   for (const id of ids) {
-    const { frontmatter } = parseBlogFile(id)
+    const { frontmatter } = await parseBlogFile(id)
     for (const t of frontmatter.tag ?? []) {
       if (!tagSet.has(t)) tagSet.set(t, { id: t, name: t })
     }
@@ -79,12 +93,12 @@ export function getAllTags(): tag[] {
   return Array.from(tagSet.values())
 }
 
-export function getAllBlogs(filter?: string): blog[] {
-  const ids = getBlogIds()
+export async function getAllBlogs(filter?: string): Promise<blog[]> {
+  const ids = await getBlogIds()
   const tagId = filter ? extractTagIdFromFilter(filter) : null
   const blogs: blog[] = []
   for (const id of ids) {
-    const { frontmatter } = parseBlogFile(id)
+    const { frontmatter } = await parseBlogFile(id)
     const blog = frontmatterToBlog(id, frontmatter)
     if (tagId && !blog.tags.some((t) => t.id === tagId)) continue
     blogs.push(blog)
@@ -92,20 +106,23 @@ export function getAllBlogs(filter?: string): blog[] {
   return blogs
 }
 
-export function getBlogs(limit: number, offset: number, filter?: string): blog[] {
-  return getAllBlogs(filter).slice(offset, offset + limit)
+export async function getBlogs(limit: number, offset: number, filter?: string): Promise<blog[]> {
+  const all = await getAllBlogs(filter)
+  return all.slice(offset, offset + limit)
 }
 
-export function getBlogsCount(filter?: string): number {
-  return getAllBlogs(filter).length
+export async function getBlogsCount(filter?: string): Promise<number> {
+  const all = await getAllBlogs(filter)
+  return all.length
 }
 
-export function getBlogById(id: string): blogData {
-  const filePath = path.join(CONTENT_DIR, id, 'blog.md')
-  if (!fs.existsSync(filePath)) {
+export async function getBlogById(id: string): Promise<blogData> {
+  const raw = await rawFetch(`${GITHUB_RAW_BASE}/blog/${id}/blog.md`).catch(() => {
     throw new Error(`Blog not found: ${id}`)
-  }
-  const { frontmatter, body } = parseBlogFile(id)
+  })
+  const { data, content } = matter(raw)
+  const frontmatter = data as Frontmatter
+  const body = convertRelativeImagePaths(content.trim(), id)
   const blog = frontmatterToBlog(id, frontmatter)
   return {
     ...blog,
