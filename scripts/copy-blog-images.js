@@ -14,16 +14,25 @@ if (!fs.existsSync(DEST_DIR)) {
   fs.mkdirSync(DEST_DIR, { recursive: true })
 }
 
-const files = fs.readdirSync(SOURCE_DIR)
+const blogDirs = fs.readdirSync(SOURCE_DIR, { withFileTypes: true }).filter((entry) => entry.isDirectory())
+
 let copied = 0
 
-for (const file of files) {
-  const ext = path.extname(file).toLowerCase()
-  if (!IMAGE_EXTENSIONS.has(ext)) continue
-  const src = path.join(SOURCE_DIR, file)
-  const dest = path.join(DEST_DIR, file)
-  fs.copyFileSync(src, dest)
-  copied++
+for (const dir of blogDirs) {
+  const blogId = dir.name
+  const srcDir = path.join(SOURCE_DIR, blogId)
+  const destDir = path.join(DEST_DIR, blogId)
+
+  if (!fs.existsSync(destDir)) {
+    fs.mkdirSync(destDir, { recursive: true })
+  }
+
+  for (const file of fs.readdirSync(srcDir)) {
+    const ext = path.extname(file).toLowerCase()
+    if (!IMAGE_EXTENSIONS.has(ext)) continue
+    fs.copyFileSync(path.join(srcDir, file), path.join(destDir, file))
+    copied++
+  }
 }
 
 console.warn(`Copied ${copied} blog image(s) to public/blog/`)

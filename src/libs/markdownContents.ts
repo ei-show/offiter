@@ -28,17 +28,16 @@ function extractTagIdFromFilter(filter: string): string | null {
   return null
 }
 
-function convertRelativeImagePaths(body: string): string {
-  return body.replace(/!\[([^\]]*)\]\((?!https?:\/\/)(?!\/)(.*?)\)/g, '![$1](/blog/$2)')
+function convertRelativeImagePaths(body: string, id: string): string {
+  return body.replace(/!\[([^\]]*)\]\((?!https?:\/\/)(?!\/)(.*?)\)/g, `![$1](/blog/${id}/$2)`)
 }
 
-function parseBlogFile(filename: string): { frontmatter: Frontmatter; body: string; id: string } {
-  const id = filename.replace(/\.md$/, '')
-  const filePath = path.join(CONTENT_DIR, filename)
+function parseBlogFile(id: string): { frontmatter: Frontmatter; body: string; id: string } {
+  const filePath = path.join(CONTENT_DIR, id, 'blog.md')
   const raw = fs.readFileSync(filePath, 'utf-8')
   const { data, content } = matter(raw)
   const frontmatter = data as Frontmatter
-  const body = convertRelativeImagePaths(content.trim())
+  const body = convertRelativeImagePaths(content.trim(), id)
   return { frontmatter, body, id }
 }
 
@@ -59,20 +58,20 @@ function frontmatterToBlog(id: string, frontmatter: Frontmatter): blog {
   }
 }
 
-function getMdFilenames(): string[] {
+function getBlogIds(): string[] {
   if (!fs.existsSync(CONTENT_DIR)) return []
-  return fs
-    .readdirSync(CONTENT_DIR)
-    .filter((f) => f.endsWith('.md'))
+  return (fs.readdirSync(CONTENT_DIR, { withFileTypes: true }) as fs.Dirent[])
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
     .sort()
     .reverse()
 }
 
 export function getAllTags(): tag[] {
-  const filenames = getMdFilenames()
+  const ids = getBlogIds()
   const tagSet = new Map<string, tag>()
-  for (const filename of filenames) {
-    const { frontmatter } = parseBlogFile(filename)
+  for (const id of ids) {
+    const { frontmatter } = parseBlogFile(id)
     for (const t of frontmatter.tag ?? []) {
       if (!tagSet.has(t)) tagSet.set(t, { id: t, name: t })
     }
@@ -81,11 +80,11 @@ export function getAllTags(): tag[] {
 }
 
 export function getAllBlogs(filter?: string): blog[] {
-  const filenames = getMdFilenames()
+  const ids = getBlogIds()
   const tagId = filter ? extractTagIdFromFilter(filter) : null
   const blogs: blog[] = []
-  for (const filename of filenames) {
-    const { frontmatter, id } = parseBlogFile(filename)
+  for (const id of ids) {
+    const { frontmatter } = parseBlogFile(id)
     const blog = frontmatterToBlog(id, frontmatter)
     if (tagId && !blog.tags.some((t) => t.id === tagId)) continue
     blogs.push(blog)
@@ -102,11 +101,11 @@ export function getBlogsCount(filter?: string): number {
 }
 
 export function getBlogById(id: string): blogData {
-  const filePath = path.join(CONTENT_DIR, `${id}.md`)
+  const filePath = path.join(CONTENT_DIR, id, 'blog.md')
   if (!fs.existsSync(filePath)) {
     throw new Error(`Blog not found: ${id}`)
   }
-  const { frontmatter, body } = parseBlogFile(`${id}.md`)
+  const { frontmatter, body } = parseBlogFile(id)
   const blog = frontmatterToBlog(id, frontmatter)
   return {
     ...blog,

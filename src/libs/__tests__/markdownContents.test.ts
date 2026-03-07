@@ -56,17 +56,23 @@ tag:
 ![absolute](/public/image.png)
 `
 
+// files: { '<blog-id>': '<frontmatter content>' }
 function setupMocks(files: Record<string, string>) {
-  const filenames = Object.keys(files).filter((f) => f.endsWith('.md'))
+  const ids = Object.keys(files)
   mockExistsSync.mockImplementation((p: string) => {
     if (p.endsWith('blog')) return true
-    const basename = p.split('/').pop() ?? ''
-    return basename in files || filenames.some((f) => p.endsWith(f))
+    // blog/<id>/blog.md
+    return ids.some((id) => p.endsWith(`${id}/blog.md`))
   })
-  mockReaddirSync.mockReturnValue([...Object.keys(files)])
+  mockReaddirSync.mockImplementation((_p: string, opts?: { withFileTypes?: boolean }) => {
+    if (opts?.withFileTypes) {
+      return ids.map((id) => ({ name: id, isDirectory: () => true }))
+    }
+    return ids
+  })
   mockReadFileSync.mockImplementation((p: string) => {
-    const basename = p.split('/').pop() ?? ''
-    if (basename in files) return files[basename]
+    const id = ids.find((id) => p.endsWith(`${id}/blog.md`))
+    if (id) return files[id]
     throw new Error(`File not found: ${p}`)
   })
 }
@@ -79,8 +85,8 @@ describe('markdownContents.ts', () => {
   describe('getAllTags', () => {
     it('collects unique tags from all files', () => {
       setupMocks({
-        '20260301-test.md': FRONTMATTER_BASIC,
-        '20260201-image.md': FRONTMATTER_WITH_IMAGE,
+        '20260301-test': FRONTMATTER_BASIC,
+        '20260201-image': FRONTMATTER_WITH_IMAGE,
       })
 
       const tags = getAllTags()
@@ -97,8 +103,8 @@ describe('markdownContents.ts', () => {
 
     it('deduplicates tags across files', () => {
       setupMocks({
-        '20260301-a.md': FRONTMATTER_BASIC,
-        '20260201-b.md': FRONTMATTER_BASIC,
+        '20260301-a': FRONTMATTER_BASIC,
+        '20260201-b': FRONTMATTER_BASIC,
       })
 
       const tags = getAllTags()
@@ -117,10 +123,10 @@ describe('markdownContents.ts', () => {
   })
 
   describe('getAllBlogs', () => {
-    it('returns blogs sorted by filename descending', () => {
+    it('returns blogs sorted by directory name descending', () => {
       setupMocks({
-        '20260201-second.md': FRONTMATTER_WITH_IMAGE,
-        '20260301-first.md': FRONTMATTER_BASIC,
+        '20260201-second': FRONTMATTER_WITH_IMAGE,
+        '20260301-first': FRONTMATTER_BASIC,
       })
 
       const blogs = getAllBlogs()
@@ -130,7 +136,7 @@ describe('markdownContents.ts', () => {
     })
 
     it('uses default image when no image in frontmatter', () => {
-      setupMocks({ '20260301-test.md': FRONTMATTER_BASIC })
+      setupMocks({ '20260301-test': FRONTMATTER_BASIC })
 
       const blogs = getAllBlogs()
 
@@ -138,7 +144,7 @@ describe('markdownContents.ts', () => {
     })
 
     it('uses custom image from frontmatter', () => {
-      setupMocks({ '20260201-image.md': FRONTMATTER_WITH_IMAGE })
+      setupMocks({ '20260201-image': FRONTMATTER_WITH_IMAGE })
 
       const blogs = getAllBlogs()
 
@@ -146,23 +152,23 @@ describe('markdownContents.ts', () => {
     })
 
     it('falls back to created_at when updated_at is empty', () => {
-      setupMocks({ '20260301-test.md': FRONTMATTER_BASIC })
+      setupMocks({ '20260301-test': FRONTMATTER_BASIC })
 
       const blogs = getAllBlogs()
 
-      expect(blogs[0].updatedAt).toBe('2026/03/01')
+      expect(blogs[0].updatedAt).toBe('2026-03-01')
     })
 
     it('uses updated_at when set', () => {
-      setupMocks({ '20260201-image.md': FRONTMATTER_WITH_IMAGE })
+      setupMocks({ '20260201-image': FRONTMATTER_WITH_IMAGE })
 
       const blogs = getAllBlogs()
 
-      expect(blogs[0].updatedAt).toBe('2026/02/15')
+      expect(blogs[0].updatedAt).toBe('2026-02-15')
     })
 
     it('converts tag strings to tag objects', () => {
-      setupMocks({ '20260301-test.md': FRONTMATTER_BASIC })
+      setupMocks({ '20260301-test': FRONTMATTER_BASIC })
 
       const blogs = getAllBlogs()
 
@@ -174,8 +180,8 @@ describe('markdownContents.ts', () => {
 
     it('filters by tag using microCMS filter syntax with braces', () => {
       setupMocks({
-        '20260301-test.md': FRONTMATTER_BASIC,
-        '20260201-image.md': FRONTMATTER_WITH_IMAGE,
+        '20260301-test': FRONTMATTER_BASIC,
+        '20260201-image': FRONTMATTER_WITH_IMAGE,
       })
 
       const blogs = getAllBlogs('tags[contains]{docker}')
@@ -186,8 +192,8 @@ describe('markdownContents.ts', () => {
 
     it('filters by tag using microCMS filter syntax without braces', () => {
       setupMocks({
-        '20260301-test.md': FRONTMATTER_BASIC,
-        '20260201-image.md': FRONTMATTER_WITH_IMAGE,
+        '20260301-test': FRONTMATTER_BASIC,
+        '20260201-image': FRONTMATTER_WITH_IMAGE,
       })
 
       const blogs = getAllBlogs('tags[contains]test')
@@ -208,9 +214,9 @@ describe('markdownContents.ts', () => {
   describe('getBlogs', () => {
     it('returns paginated slice of blogs', () => {
       setupMocks({
-        '20260301-a.md': FRONTMATTER_BASIC,
-        '20260201-b.md': FRONTMATTER_WITH_IMAGE,
-        '20260101-c.md': FRONTMATTER_WITH_RELATIVE_IMAGE,
+        '20260301-a': FRONTMATTER_BASIC,
+        '20260201-b': FRONTMATTER_WITH_IMAGE,
+        '20260101-c': FRONTMATTER_WITH_RELATIVE_IMAGE,
       })
 
       const page1 = getBlogs(2, 0)
@@ -224,8 +230,8 @@ describe('markdownContents.ts', () => {
   describe('getBlogsCount', () => {
     it('returns total number of blogs', () => {
       setupMocks({
-        '20260301-a.md': FRONTMATTER_BASIC,
-        '20260201-b.md': FRONTMATTER_WITH_IMAGE,
+        '20260301-a': FRONTMATTER_BASIC,
+        '20260201-b': FRONTMATTER_WITH_IMAGE,
       })
 
       expect(getBlogsCount()).toBe(2)
@@ -233,8 +239,8 @@ describe('markdownContents.ts', () => {
 
     it('returns filtered count when filter provided', () => {
       setupMocks({
-        '20260301-a.md': FRONTMATTER_BASIC,
-        '20260201-b.md': FRONTMATTER_WITH_IMAGE,
+        '20260301-a': FRONTMATTER_BASIC,
+        '20260201-b': FRONTMATTER_WITH_IMAGE,
       })
 
       expect(getBlogsCount('tags[contains]{docker}')).toBe(1)
@@ -250,7 +256,7 @@ describe('markdownContents.ts', () => {
 
       expect(blog.id).toBe('20260301-test')
       expect(blog.title).toBe('Test Page')
-      expect(blog.createdAt).toBe('2026/03/01')
+      expect(blog.createdAt).toBe('2026-03-01')
       expect(blog.body).toContain('# Body')
     })
 
@@ -266,7 +272,7 @@ describe('markdownContents.ts', () => {
 
       const blog = getBlogById('20260101-c')
 
-      expect(blog.body).toContain('![alt text](/blog/image.png)')
+      expect(blog.body).toContain('![alt text](/blog/20260101-c/image.png)')
       expect(blog.body).toContain('![external](https://example.com/image.png)')
       expect(blog.body).toContain('![absolute](/public/image.png)')
     })
