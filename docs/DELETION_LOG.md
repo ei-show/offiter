@@ -1,5 +1,79 @@
 # Code Deletion Log
 
+## [2026-03-07] Dead Code Cleanup - microCMS/aspida Removal
+
+### Summary
+
+Post-migration cleanup: removed all aspida/microCMS code, dependencies, and
+config left behind after the markdown content source migration (issue #147).
+
+### Analysis Method
+
+- knip v5.85.0 for unused files/dependencies detection
+- Manual grep verification for all findings
+- Checked node_modules/next/ for identity-obj-proxy usage (none found)
+
+### Completed Removals
+
+#### Phase 1: Dead aspida/microCMS Files and Dependencies
+
+Files deleted:
+- `src/api/$api.ts` -- aspida-generated API client
+- `src/api/types.ts` -- microCMS Blogs/Tags type definitions
+- `src/api/blogs/index.ts` -- microCMS blogs endpoint types
+- `src/api/blogs/_id@string/index.ts` -- microCMS blog detail types
+- `src/api/tags/index.ts` -- microCMS tags endpoint types
+- `src/libs/clientAspida.ts` -- microCMS API client wrapper
+- `aspida.config.js` -- aspida build configuration
+
+Dependencies removed:
+- `@aspida/fetch` (1.14.0) -- microCMS fetch adapter
+- `aspida` (1.14.0) -- microCMS API code generator
+- `microcms-js-sdk` (3.2.0) -- microCMS SDK types
+- `identity-obj-proxy` (3.0.0) -- not used by next/jest (false positive in previous analysis)
+
+Total: 20 packages removed from node_modules.
+
+#### Phase 2: Dead Config and Scripts
+
+- Removed `"api:build": "aspida"` script from package.json
+- Removed `images.microcms-assets.io` remotePattern from next.config.js
+- Removed dead canvas LD_LIBRARY_PATH manipulation from next.config.js
+- Simplified next.config.js to `module.exports = {}`
+
+#### Phase 3: Unused Test Mock Data
+
+Removed 3 unused exports from `__mocks__/testData.ts`:
+- `mockApiResponse` -- microCMS API response shape, never imported
+- `mockApiResponseWithPagination` -- microCMS paginated response, never imported
+- `mockEmptyApiResponse` -- microCMS empty response, never imported
+
+### Items Investigated but Kept
+
+- `.babelrc` -- May affect Jest test transpilation via next/jest
+- `@typescript-eslint/eslint-plugin` -- knip false positive; used in eslint.config.cjs
+- `@typescript-eslint/parser` -- knip false positive; used in eslint.config.cjs
+- `eslint-plugin-react` -- knip false positive; used in eslint.config.cjs
+
+### Testing Results
+
+- [x] Tests after Phase 1: 123/123 passed
+- [x] TypeScript after Phase 1: Clean
+- [x] Tests after all phases: 123/123 passed
+- [x] TypeScript after all phases: Clean
+
+### Impact Summary
+
+- **Files deleted**: 8
+- **Dependencies removed**: 4 packages (20 with transitive deps)
+- **Dead config cleaned**: next.config.js (remotePatterns, canvas LD_LIBRARY_PATH)
+- **Dead scripts removed**: 1 (api:build)
+- **Unused mock exports removed**: 3
+- **Test status**: All 123 tests passing
+- **Type-check status**: Clean
+
+---
+
 ## [2026-02-01] Dead Code Cleanup
 
 ### Summary
