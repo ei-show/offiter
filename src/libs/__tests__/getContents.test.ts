@@ -1,33 +1,42 @@
 /**
  * Unit tests for getContents.ts
- * Tests API client functions with mocked responses
+ * Tests wrapper functions with mocked markdownContents
  */
 
-import { mockTags, mockBlogs, mockBlog, mockApiResponse, mockEmptyApiResponse } from '../../../__mocks__/testData'
+import type { tag, blog, blogData } from '@/src/libs/types'
 
-// Create mock functions before they're used
-const mockTagsGet = jest.fn()
-const mockBlogsGet = jest.fn()
-const mockBlogGetById = jest.fn()
+const mockTag1: tag = { id: 'kubernetes', name: 'kubernetes' }
+const mockTag2: tag = { id: 'docker', name: 'docker' }
 
-// Mock only the clientAspida export from @/src/index
-jest.mock('@/src/index', () => {
-  return {
-    clientAspida: {
-      tags: {
-        $get: (...args: any[]) => mockTagsGet(...args),
-      },
-      blogs: {
-        $get: (...args: any[]) => mockBlogsGet(...args),
-        _id: (_blogId: string) => ({
-          $get: (...args: any[]) => mockBlogGetById(...args),
-        }),
-      },
-    },
-  }
-})
+const mockBlogHeader: blog = {
+  id: '20260301-test',
+  title: 'Test Blog',
+  description: 'Test description',
+  image: { url: '/twitter_cards/large_image_1200x630.png' },
+  updatedAt: '2026/03/01',
+  tags: [mockTag1],
+}
 
-// Import after mocking
+const mockBlogData: blogData = {
+  ...mockBlogHeader,
+  createdAt: '2026/03/01',
+  body: '# Test\n\nContent here.',
+}
+
+const mockGetAllTags = jest.fn()
+const mockGetAllBlogs = jest.fn()
+const mockGetBlogs = jest.fn()
+const mockGetBlogsCount = jest.fn()
+const mockGetBlogById = jest.fn()
+
+jest.mock('@/src/libs/markdownContents', () => ({
+  getAllTags: (...args: any[]) => mockGetAllTags(...args),
+  getAllBlogs: (...args: any[]) => mockGetAllBlogs(...args),
+  getBlogs: (...args: any[]) => mockGetBlogs(...args),
+  getBlogsCount: (...args: any[]) => mockGetBlogsCount(...args),
+  getBlogById: (...args: any[]) => mockGetBlogById(...args),
+}))
+
 import {
   tagsGetAllContents,
   blogsGetAllHeader,
@@ -42,303 +51,150 @@ describe('getContents.ts', () => {
   })
 
   describe('tagsGetAllContents', () => {
-    it('returns all tags when no pagination needed', async () => {
-      // Arrange
-      const mockResponse = {
-        contents: mockTags,
-        totalCount: 3,
-        offset: 0,
-        limit: 10,
-      }
-      mockTagsGet.mockResolvedValue(mockResponse)
+    it('returns all tags from getAllTags', async () => {
+      const tags = [mockTag1, mockTag2]
+      mockGetAllTags.mockReturnValue(tags)
 
-      // Act
       const result = await tagsGetAllContents()
 
-      // Assert
-      expect(result).toEqual(mockTags)
-      expect(mockTagsGet).toHaveBeenCalledWith({
-        query: { fields: 'id,name', offset: 0, limit: 10 },
-      })
+      expect(result).toEqual(tags)
+      expect(mockGetAllTags).toHaveBeenCalledTimes(1)
     })
 
-    it('recursively fetches all pages when pagination needed', async () => {
-      // Arrange
-      const page1Response = {
-        contents: [mockTags[0], mockTags[1]],
-        totalCount: 3,
-        offset: 0,
-        limit: 2,
-      }
-      const page2Response = {
-        contents: [mockTags[2]],
-        totalCount: 3,
-        offset: 2,
-        limit: 2,
-      }
-      mockTagsGet.mockResolvedValueOnce(page1Response).mockResolvedValueOnce(page2Response)
-
-      // Act
-      const result = await tagsGetAllContents(2)
-
-      // Assert
-      expect(result).toHaveLength(3)
-      expect(result).toEqual([mockTags[0], mockTags[1], mockTags[2]])
-      expect(mockTagsGet).toHaveBeenCalledTimes(2)
-    })
-
-    it('returns empty array on API error', async () => {
-      // Arrange
+    it('returns empty array on error', async () => {
       const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
-      mockTagsGet.mockRejectedValue(new Error('API Error'))
+      mockGetAllTags.mockImplementation(() => {
+        throw new Error('Read error')
+      })
 
-      // Act
       const result = await tagsGetAllContents()
 
-      // Assert
       expect(result).toEqual([])
       expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching tags:', expect.any(Error))
-
-      consoleErrorSpy.mockRestore()
-    })
-
-    it('handles network timeout gracefully', async () => {
-      // Arrange
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
-      mockTagsGet.mockRejectedValue(new Error('Network timeout'))
-
-      // Act
-      const result = await tagsGetAllContents()
-
-      // Assert
-      expect(result).toEqual([])
-      expect(consoleErrorSpy).toHaveBeenCalled()
-
       consoleErrorSpy.mockRestore()
     })
   })
 
   describe('blogsGetAllHeader', () => {
-    it('returns all blogs when no pagination needed', async () => {
-      // Arrange
-      mockBlogsGet.mockResolvedValue(mockApiResponse)
+    it('returns all blogs from getAllBlogs', async () => {
+      const blogs = [mockBlogHeader]
+      mockGetAllBlogs.mockReturnValue(blogs)
 
-      // Act
       const result = await blogsGetAllHeader()
 
-      // Assert
-      expect(result).toEqual(mockBlogs)
-      expect(mockBlogsGet).toHaveBeenCalledWith({
-        query: {
-          fields: 'id,title,description,image,updatedAt,tags.id,tags.name',
-          filters: '',
-          offset: 0,
-          limit: 10,
-        },
-      })
+      expect(result).toEqual(blogs)
+      expect(mockGetAllBlogs).toHaveBeenCalledWith(undefined)
     })
 
-    it('applies filter parameter correctly', async () => {
-      // Arrange
-      mockBlogsGet.mockResolvedValue(mockApiResponse)
-      const filter = 'tags[contains]kubernetes'
+    it('passes filter to getAllBlogs', async () => {
+      const filter = 'tags[contains]{kubernetes}'
+      mockGetAllBlogs.mockReturnValue([mockBlogHeader])
 
-      // Act
       await blogsGetAllHeader(10, 0, filter)
 
-      // Assert
-      expect(mockBlogsGet).toHaveBeenCalledWith({
-        query: {
-          fields: 'id,title,description,image,updatedAt,tags.id,tags.name',
-          filters: filter,
-          offset: 0,
-          limit: 10,
-        },
-      })
+      expect(mockGetAllBlogs).toHaveBeenCalledWith(filter)
     })
 
-    it('recursively fetches all pages when pagination needed', async () => {
-      // Arrange
-      const page1Response = {
-        contents: [mockBlogs[0]],
-        totalCount: 2,
-        offset: 0,
-        limit: 1,
-      }
-      const page2Response = {
-        contents: [mockBlogs[1]],
-        totalCount: 2,
-        offset: 1,
-        limit: 1,
-      }
-      mockBlogsGet.mockResolvedValueOnce(page1Response).mockResolvedValueOnce(page2Response)
-
-      // Act
-      const result = await blogsGetAllHeader(1)
-
-      // Assert
-      expect(result).toHaveLength(2)
-      expect(mockBlogsGet).toHaveBeenCalledTimes(2)
-    })
-
-    it('returns empty array on API error', async () => {
-      // Arrange
+    it('returns empty array on error', async () => {
       const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
-      mockBlogsGet.mockRejectedValue(new Error('API Error'))
+      mockGetAllBlogs.mockImplementation(() => {
+        throw new Error('Read error')
+      })
 
-      // Act
       const result = await blogsGetAllHeader()
 
-      // Assert
       expect(result).toEqual([])
       expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching blogs header:', expect.any(Error))
-
       consoleErrorSpy.mockRestore()
-    })
-
-    it('handles empty response correctly', async () => {
-      // Arrange
-      mockBlogsGet.mockResolvedValue(mockEmptyApiResponse)
-
-      // Act
-      const result = await blogsGetAllHeader()
-
-      // Assert
-      expect(result).toEqual([])
     })
   })
 
   describe('blogsGetHeader', () => {
-    it('returns blog headers without pagination', async () => {
-      // Arrange
-      mockBlogsGet.mockResolvedValue(mockApiResponse)
+    it('returns paginated blogs from getBlogs', async () => {
+      const blogs = [mockBlogHeader]
+      mockGetBlogs.mockReturnValue(blogs)
 
-      // Act
-      const result = await blogsGetHeader()
+      const result = await blogsGetHeader(10, 0)
 
-      // Assert
-      expect(result).toEqual(mockBlogs)
+      expect(result).toEqual(blogs)
+      expect(mockGetBlogs).toHaveBeenCalledWith(10, 0, undefined)
     })
 
-    it('returns empty array on API error', async () => {
-      // Arrange
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
-      mockBlogsGet.mockRejectedValue(new Error('Network Error'))
+    it('passes filter to getBlogs', async () => {
+      const filter = 'tags[contains]{kubernetes}'
+      mockGetBlogs.mockReturnValue([mockBlogHeader])
 
-      // Act
+      await blogsGetHeader(5, 10, filter)
+
+      expect(mockGetBlogs).toHaveBeenCalledWith(5, 10, filter)
+    })
+
+    it('returns empty array on error', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
+      mockGetBlogs.mockImplementation(() => {
+        throw new Error('Read error')
+      })
+
       const result = await blogsGetHeader()
 
-      // Assert
       expect(result).toEqual([])
       expect(consoleErrorSpy).toHaveBeenCalled()
-
       consoleErrorSpy.mockRestore()
     })
   })
 
   describe('blogGetContent', () => {
-    it('fetches single blog content by ID', async () => {
-      // Arrange
-      mockBlogGetById.mockResolvedValue(mockBlog)
+    it('returns blog data by ID', async () => {
+      mockGetBlogById.mockReturnValue(mockBlogData)
 
-      // Act
-      const result = await blogGetContent('test-blog-1')
+      const result = await blogGetContent('20260301-test')
 
-      // Assert
-      expect(result).toEqual(mockBlog)
-      expect(mockBlogGetById).toHaveBeenCalledWith({
-        query: { fields: 'id,title,image,createdAt,updatedAt,body,tags.id,tags.name' },
+      expect(result).toEqual(mockBlogData)
+      expect(mockGetBlogById).toHaveBeenCalledWith('20260301-test')
+    })
+
+    it('throws when blog not found', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
+      mockGetBlogById.mockImplementation(() => {
+        throw new Error('Blog not found: missing-id')
       })
-    })
 
-    it('throws error when blog not found', async () => {
-      // Arrange
-      mockBlogGetById.mockRejectedValue(new Error('Blog not found'))
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
-
-      // Act & Assert
-      await expect(blogGetContent('non-existent')).rejects.toThrow('Blog not found')
-      expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching blog non-existent:', expect.any(Error))
-
-      consoleErrorSpy.mockRestore()
-    })
-
-    it('logs error with correct blog ID', async () => {
-      // Arrange
-      mockBlogGetById.mockRejectedValue(new Error('Server Error'))
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
-
-      // Act
-      try {
-        await blogGetContent('blog-123')
-      } catch {
-        // Expected to throw
-      }
-
-      // Assert
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        'Error fetching blog blog-123:',
-        expect.objectContaining({ message: 'Server Error' }),
-      )
-
+      await expect(blogGetContent('missing-id')).rejects.toThrow('Blog not found: missing-id')
+      expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching blog missing-id:', expect.any(Error))
       consoleErrorSpy.mockRestore()
     })
   })
 
   describe('blogsGetTotalCount', () => {
-    it('returns total count of blogs', async () => {
-      // Arrange
-      mockBlogsGet.mockResolvedValue({
-        ...mockApiResponse,
-        totalCount: 42,
-      })
+    it('returns total count from getBlogsCount', async () => {
+      mockGetBlogsCount.mockReturnValue(42)
 
-      // Act
       const result = await blogsGetTotalCount()
 
-      // Assert
       expect(result).toBe(42)
-      expect(mockBlogsGet).toHaveBeenCalledWith({
-        query: {
-          fields: '',
-          filters: '',
-        },
-      })
+      expect(mockGetBlogsCount).toHaveBeenCalledWith(undefined)
     })
 
-    it('applies filter when provided', async () => {
-      // Arrange
-      const filter = 'tags[contains]kubernetes'
-      mockBlogsGet.mockResolvedValue({
-        ...mockApiResponse,
-        totalCount: 15,
-      })
+    it('passes filter to getBlogsCount', async () => {
+      const filter = 'tags[contains]{kubernetes}'
+      mockGetBlogsCount.mockReturnValue(5)
 
-      // Act
       const result = await blogsGetTotalCount(filter)
 
-      // Assert
-      expect(result).toBe(15)
-      expect(mockBlogsGet).toHaveBeenCalledWith({
-        query: {
-          fields: '',
-          filters: filter,
-        },
-      })
+      expect(result).toBe(5)
+      expect(mockGetBlogsCount).toHaveBeenCalledWith(filter)
     })
 
-    it('returns 0 on API error', async () => {
-      // Arrange
+    it('returns 0 on error', async () => {
       const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation()
-      mockBlogsGet.mockRejectedValue(new Error('API Error'))
+      mockGetBlogsCount.mockImplementation(() => {
+        throw new Error('Read error')
+      })
 
-      // Act
       const result = await blogsGetTotalCount()
 
-      // Assert
       expect(result).toBe(0)
       expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching blog count:', expect.any(Error))
-
       consoleErrorSpy.mockRestore()
     })
   })

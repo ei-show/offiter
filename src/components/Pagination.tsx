@@ -47,7 +47,7 @@ type PaginationButton = {
 
 const PaginationButton = ({ pageNumber, currentPageNumber }: PaginationButton) => {
   if (pageNumber === currentPageNumber) {
-    return <span className="btn btn-neutral join-item font-head md:btn-lg">{pageNumber}</span>
+    return <span className="btn btn-active join-item font-head md:btn-lg">{pageNumber}</span>
   }
 
   return (

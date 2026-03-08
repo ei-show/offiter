@@ -1,7 +1,8 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
 import { generateNextSeo } from 'next-seo/pages'
-import { Layout, Card, SEO, Pagination, tagsGetAllContents, blogsGetHeader, blogsGetTotalCount } from '@/src/index'
+import { Layout, Card, SEO, Pagination } from '@/src/index'
+import { tagsGetAllContents, blogsGetHeader, blogsGetTotalCount } from '@/src/libs/getContents'
 import type { tag, blog } from '@/src/index'
 
 export const getStaticProps: GetStaticProps = async () => {

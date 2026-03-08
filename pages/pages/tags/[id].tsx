@@ -1,7 +1,7 @@
 import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { Layout, Card } from '@/src/index'
-import { tagsGetAllContents, blogsGetAllHeader, blogsGetHeader, blogsGetTotalCount } from '@/src/index'
+import { tagsGetAllContents, blogsGetAllHeader, blogsGetHeader, blogsGetTotalCount } from '@/src/libs/getContents'
 import type { tag, blog } from '@/src/index'
 
 export const getStaticPaths: GetStaticPaths = async () => {

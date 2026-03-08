@@ -42,24 +42,3 @@ export const mockBlogs = [
     tags: [mockTags[2]],
   },
 ]
-
-export const mockApiResponse = {
-  contents: mockBlogs,
-  totalCount: 2,
-  offset: 0,
-  limit: 10,
-}
-
-export const mockApiResponseWithPagination = {
-  contents: mockBlogs,
-  totalCount: 25,
-  offset: 0,
-  limit: 10,
-}
-
-export const mockEmptyApiResponse = {
-  contents: [],
-  totalCount: 0,
-  offset: 0,
-  limit: 10,
-}

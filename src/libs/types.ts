@@ -9,8 +9,8 @@ type blog = {
   description: string
   image: {
     url: string
-    height: number
-    width: number
+    height?: number
+    width?: number
   }
   updatedAt: string
   tags: tag[]

@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { generateNextSeo } from 'next-seo/pages'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { JSDOM } from 'jsdom'
-import { Layout, Date, SEO, blogsGetAllHeader, blogGetContent } from '@/src/index'
+import { Layout, Date, SEO } from '@/src/index'
+import { blogsGetAllHeader, blogGetContent } from '@/src/libs/getContents'
 import type { blogData, tableOfContents } from '@/src/index'
 import Style from '@/styles/blog.module.scss'
 import base64url from 'base64url'
@@ -57,8 +58,7 @@ type props = {
 
 export default function Blog({ blog, highlightedBody, tableOfContents }: props) {
   const width = 1200
-  const ogpBaseImage =
-    'https://images.microcms-assets.io/assets/de88e062d820469698e6053f34bfe93b/22b0ff52ecf840b6a66468e97240dfbb/article_1200x630.png'
+  const ogpBaseImage = `${baseURL}/ogp/article_1200x630.png`
   const ogpTitle = `https://assets.imgix.net/~text?txtsize=48&txt-color=1F2937&w=${
     width - 80
   }&txt-align=middle&txtfont=Hiragino%20Sans%20W6&txt-track=2`
@@ -116,7 +116,7 @@ export default function Blog({ blog, highlightedBody, tableOfContents }: props) 
           </div>
 
           <div className="mt-4 flex items-center justify-center">
-            <Image alt="" src={blog.image.url} width={blog.image.width} height={blog.image.height} />
+            <Image alt="" src={blog.image.url} width={blog.image.width ?? 1200} height={blog.image.height ?? 630} />
           </div>
 
           <div

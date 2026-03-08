@@ -2,7 +2,7 @@ import React from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { generateNextSeo } from 'next-seo/pages'
 import { Layout, Card, SEO, Pagination } from '@/src/index'
-import { tagsGetAllContents, blogsGetHeader, blogsGetTotalCount } from '@/src/index'
+import { tagsGetAllContents, blogsGetHeader, blogsGetTotalCount } from '@/src/libs/getContents'
 import type { tag, blog } from '@/src/index'
 
 const perPage = 10

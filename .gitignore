@@ -37,3 +37,6 @@ yarn-error.log*
 
 # ogp
 *.tsbuildinfo
+
+# blog images (copied from submodule)
+public/blog/
