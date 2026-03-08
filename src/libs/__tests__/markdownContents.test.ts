@@ -78,10 +78,16 @@ function setupMocks(files: Record<string, string>) {
 
 describe('markdownContents.ts', () => {
   beforeEach(() => {
+    process.env.GITHUB_USERNAME = 'ei-show'
+    process.env.GITHUB_REPO = 'managed-life'
+    process.env.GITHUB_BRANCH = 'main'
     global.fetch = jest.fn()
   })
 
   afterEach(() => {
+    delete process.env.GITHUB_USERNAME
+    delete process.env.GITHUB_REPO
+    delete process.env.GITHUB_BRANCH
     jest.clearAllMocks()
   })
 
@@ -288,6 +294,23 @@ describe('markdownContents.ts', () => {
       expect(blog.body).toContain('![alt text](/blog/20260101-c/image.png)')
       expect(blog.body).toContain('![external](https://example.com/image.png)')
       expect(blog.body).toContain('![absolute](/public/image.png)')
+    })
+  })
+
+  describe('environment variable validation', () => {
+    it.each(['GITHUB_USERNAME', 'GITHUB_REPO', 'GITHUB_BRANCH'])(
+      'throws a clear error when %s is missing',
+      async (varName) => {
+        delete process.env[varName]
+        await expect(getAllBlogs()).rejects.toThrow(varName)
+      },
+    )
+
+    it('throws listing all missing variables at once', async () => {
+      delete process.env.GITHUB_USERNAME
+      delete process.env.GITHUB_REPO
+      delete process.env.GITHUB_BRANCH
+      await expect(getAllBlogs()).rejects.toThrow('GITHUB_USERNAME, GITHUB_REPO, GITHUB_BRANCH')
     })
   })
 })
