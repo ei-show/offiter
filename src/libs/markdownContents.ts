@@ -1,9 +1,28 @@
 import matter from 'gray-matter'
 import type { tag, blog, blogData } from '@/src/libs/types'
 
-const GITHUB_RAW_BASE = `https://raw.githubusercontent.com/${process.env.GITHUB_USERNAME}/${process.env.GITHUB_REPO}/refs/heads/${process.env.GITHUB_BRANCH}`
-const GITHUB_API_BASE = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/${process.env.GITHUB_REPO}/contents`
 const DEFAULT_IMAGE = '/twitter_cards/large_image_1200x630.png'
+
+function getConfig(): { rawBase: string; apiBase: string } {
+  const required: [string, string | undefined][] = [
+    ['GITHUB_USERNAME', process.env.GITHUB_USERNAME],
+    ['GITHUB_REPO', process.env.GITHUB_REPO],
+    ['GITHUB_BRANCH', process.env.GITHUB_BRANCH],
+  ]
+  const missing = required.filter(([, value]) => !value).map(([name]) => name)
+  if (missing.length > 0) {
+    throw new Error(`Missing required environment variables: ${missing.join(', ')}`)
+  }
+
+  const username = process.env.GITHUB_USERNAME as string
+  const repo = process.env.GITHUB_REPO as string
+  const branch = process.env.GITHUB_BRANCH as string
+
+  return {
+    rawBase: `https://raw.githubusercontent.com/${username}/${repo}/refs/heads/${branch}`,
+    apiBase: `https://api.github.com/repos/${username}/${repo}/contents`,
+  }
+}
 
 type Frontmatter = {
   title: string
@@ -33,7 +52,8 @@ async function rawFetch(url: string): Promise<string> {
 }
 
 async function getBlogIds(): Promise<string[]> {
-  const items = (await githubFetch(`${GITHUB_API_BASE}/blog`)) as Array<{ name: string; type: string }>
+  const { apiBase } = getConfig()
+  const items = (await githubFetch(`${apiBase}/blog`)) as Array<{ name: string; type: string }>
   return items
     .filter((i) => i.type === 'dir')
     .map((i) => i.name)
@@ -42,7 +62,8 @@ async function getBlogIds(): Promise<string[]> {
 }
 
 async function parseBlogFile(id: string): Promise<{ frontmatter: Frontmatter; body: string; id: string }> {
-  const raw = await rawFetch(`${GITHUB_RAW_BASE}/blog/${id}/blog.md`)
+  const { rawBase } = getConfig()
+  const raw = await rawFetch(`${rawBase}/blog/${id}/blog.md`)
   const { data, content } = matter(raw)
   const body = convertRelativeImagePaths(content.trim(), id)
   return { frontmatter: data as Frontmatter, body, id }
@@ -124,7 +145,8 @@ export async function getBlogsCount(filter?: string): Promise<number> {
 }
 
 export async function getBlogById(id: string): Promise<blogData> {
-  const raw = await rawFetch(`${GITHUB_RAW_BASE}/blog/${id}/blog.md`).catch(() => {
+  const { rawBase } = getConfig()
+  const raw = await rawFetch(`${rawBase}/blog/${id}/blog.md`).catch(() => {
     throw new Error(`Blog not found: ${id}`)
   })
   const { data, content } = matter(raw)
