@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  GITHUB_USERNAME: ${{ GITHUB_REPOSITORY_OWNER }}
+  GITHUB_USERNAME: ${{ github.repository_owner }}
   GITHUB_REPO: ${{ vars.TARGET_REPO }}
   GITHUB_BRANCH: ${{ vars.TARGET_BRANCH }}
   GITHUB_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
