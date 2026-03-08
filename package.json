@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "predev": "tsx --env-file=.env.development.local scripts/download-blog-images.ts",
     "build": "next build",
+    "prebuild": "tsx scripts/download-blog-images.ts",
     "start": "next start",
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",
@@ -69,6 +71,7 @@
     "postcss": "8.5.6",
     "prettier": "3.8.1",
     "tailwindcss": "^4.2.1",
+    "tsx": "^4.21.0",
     "typescript": "5.9.3",
     "whatwg-fetch": "3.6.20"
   },

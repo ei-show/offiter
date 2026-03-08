@@ -26,7 +26,7 @@ title: Image Post
 description: Post with image.
 created_at: 2026/02/01
 updated_at: 2026/02/15
-image: /custom/image.png
+thumbnail: ./custom.png
 tag:
   - docker
 ---
@@ -154,7 +154,7 @@ describe('markdownContents.ts', () => {
 
       const blogs = await getAllBlogs()
 
-      expect(blogs[0].image.url).toBe('/custom/image.png')
+      expect(blogs[0].image.url).toBe('/blog/20260201-image/custom.png')
     })
 
     it('falls back to created_at when updated_at is empty', async () => {
@@ -285,7 +285,7 @@ describe('markdownContents.ts', () => {
 
       const blog = await getBlogById('20260101-c')
 
-      expect(blog.body).toContain(`![alt text](${GITHUB_RAW_BASE}/blog/20260101-c/image.png)`)
+      expect(blog.body).toContain('![alt text](/blog/20260101-c/image.png)')
       expect(blog.body).toContain('![external](https://example.com/image.png)')
       expect(blog.body).toContain('![absolute](/public/image.png)')
     })

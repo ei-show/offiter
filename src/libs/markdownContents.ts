@@ -10,7 +10,7 @@ type Frontmatter = {
   description: string
   created_at: string
   updated_at?: string
-  image?: string
+  thumbnail?: string
   tag?: string[]
 }
 
@@ -49,7 +49,7 @@ async function parseBlogFile(id: string): Promise<{ frontmatter: Frontmatter; bo
 }
 
 function convertRelativeImagePaths(body: string, id: string): string {
-  return body.replace(/!\[([^\]]*)\]\((?!https?:\/\/)(?!\/)(.*?)\)/g, `![$1](${GITHUB_RAW_BASE}/blog/${id}/$2)`)
+  return body.replace(/!\[([^\]]*)\]\((?!https?:\/\/)(?!\/)(.*?)\)/g, `![$1](/blog/${id}/$2)`)
 }
 
 function normalizeDate(dateStr: string): string {
@@ -68,6 +68,13 @@ function extractTagIdFromFilter(filter: string): string | null {
   return null
 }
 
+function resolveImageUrl(thumbnail: string | undefined, id: string): string {
+  if (!thumbnail) return DEFAULT_IMAGE
+  if (thumbnail.startsWith('http')) return thumbnail
+  const filename = thumbnail.replace(/^\.\//, '').replace(/^\//, '')
+  return `/blog/${id}/${filename}`
+}
+
 function frontmatterToBlog(id: string, frontmatter: Frontmatter): blog {
   const rawUpdatedAt = frontmatter.updated_at?.trim() ? frontmatter.updated_at : frontmatter.created_at
   const updatedAt = normalizeDate(rawUpdatedAt)
@@ -75,7 +82,7 @@ function frontmatterToBlog(id: string, frontmatter: Frontmatter): blog {
     id,
     title: frontmatter.title,
     description: frontmatter.description,
-    image: { url: frontmatter.image ?? DEFAULT_IMAGE },
+    image: { url: resolveImageUrl(frontmatter.thumbnail, id) },
     updatedAt,
     tags: tagsFromStrings(frontmatter.tag ?? []),
   }
