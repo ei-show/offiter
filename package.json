@@ -6,7 +6,7 @@
     "dev": "next dev",
     "predev": "tsx --env-file=.env.development.local scripts/download-blog-images.ts",
     "build": "next build",
-    "prebuild": "tsx --env-file=.env.development.local scripts/download-blog-images.ts",
+    "prebuild": "tsx --env-file-if-exists=.env.development.local scripts/download-blog-images.ts",
     "start": "next start",
     "type-check": "tsc --pretty --noEmit",
     "format": "prettier --write .",

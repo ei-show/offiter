@@ -10,8 +10,8 @@ import path from 'path'
 const { GITHUB_USERNAME, GITHUB_REPO, GITHUB_BRANCH = 'main', GITHUB_TOKEN } = process.env
 
 if (!GITHUB_USERNAME || !GITHUB_REPO) {
-  console.error('Error: GITHUB_USERNAME and GITHUB_REPO must be set')
-  process.exit(1)
+  console.warn('Warning: GITHUB_USERNAME and GITHUB_REPO are not set. Skipping image download.')
+  process.exit(0)
 }
 
 const GITHUB_API_BASE = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents`
