@@ -5,18 +5,18 @@ const DEFAULT_IMAGE = '/twitter_cards/large_image_1200x630.png'
 
 function getConfig(): { rawBase: string; apiBase: string } {
   const required: [string, string | undefined][] = [
-    ['GITHUB_USERNAME', process.env.GITHUB_USERNAME],
-    ['GITHUB_REPO', process.env.GITHUB_REPO],
-    ['GITHUB_BRANCH', process.env.GITHUB_BRANCH],
+    ['TARGET_OWNER', process.env.TARGET_OWNER],
+    ['TARGET_REPO', process.env.TARGET_REPO],
+    ['TARGET_BRANCH', process.env.TARGET_BRANCH],
   ]
   const missing = required.filter(([, value]) => !value).map(([name]) => name)
   if (missing.length > 0) {
     throw new Error(`Missing required environment variables: ${missing.join(', ')}`)
   }
 
-  const username = process.env.GITHUB_USERNAME as string
-  const repo = process.env.GITHUB_REPO as string
-  const branch = process.env.GITHUB_BRANCH as string
+  const username = process.env.TARGET_OWNER as string
+  const repo = process.env.TARGET_REPO as string
+  const branch = process.env.TARGET_BRANCH as string
 
   return {
     rawBase: `https://raw.githubusercontent.com/${username}/${repo}/refs/heads/${branch}`,
@@ -34,7 +34,7 @@ type Frontmatter = {
 }
 
 function authHeaders(): Record<string, string> {
-  if (process.env.GITHUB_TOKEN) return { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
+  if (process.env.TARGET_TOKEN) return { Authorization: `Bearer ${process.env.TARGET_TOKEN}` }
   return {}
 }
 

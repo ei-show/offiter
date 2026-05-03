@@ -78,16 +78,16 @@ function setupMocks(files: Record<string, string>) {
 
 describe('markdownContents.ts', () => {
   beforeEach(() => {
-    process.env.GITHUB_USERNAME = 'ei-show'
-    process.env.GITHUB_REPO = 'managed-life'
-    process.env.GITHUB_BRANCH = 'main'
+    process.env.TARGET_OWNER = 'ei-show'
+    process.env.TARGET_REPO = 'managed-life'
+    process.env.TARGET_BRANCH = 'main'
     global.fetch = jest.fn()
   })
 
   afterEach(() => {
-    delete process.env.GITHUB_USERNAME
-    delete process.env.GITHUB_REPO
-    delete process.env.GITHUB_BRANCH
+    delete process.env.TARGET_OWNER
+    delete process.env.TARGET_REPO
+    delete process.env.TARGET_BRANCH
     jest.clearAllMocks()
   })
 
@@ -298,7 +298,7 @@ describe('markdownContents.ts', () => {
   })
 
   describe('environment variable validation', () => {
-    it.each(['GITHUB_USERNAME', 'GITHUB_REPO', 'GITHUB_BRANCH'])(
+    it.each(['TARGET_OWNER', 'TARGET_REPO', 'TARGET_BRANCH'])(
       'throws a clear error when %s is missing',
       async (varName) => {
         delete process.env[varName]
@@ -307,10 +307,10 @@ describe('markdownContents.ts', () => {
     )
 
     it('throws listing all missing variables at once', async () => {
-      delete process.env.GITHUB_USERNAME
-      delete process.env.GITHUB_REPO
-      delete process.env.GITHUB_BRANCH
-      await expect(getAllBlogs()).rejects.toThrow('GITHUB_USERNAME, GITHUB_REPO, GITHUB_BRANCH')
+      delete process.env.TARGET_OWNER
+      delete process.env.TARGET_REPO
+      delete process.env.TARGET_BRANCH
+      await expect(getAllBlogs()).rejects.toThrow('TARGET_OWNER, TARGET_REPO, TARGET_BRANCH')
     })
   })
 })
