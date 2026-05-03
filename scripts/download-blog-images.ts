@@ -7,20 +7,20 @@
 import fs from 'fs'
 import path from 'path'
 
-const { GITHUB_USERNAME, GITHUB_REPO, GITHUB_BRANCH = 'main', GITHUB_TOKEN } = process.env
+const { TARGET_OWNER, TARGET_REPO, TARGET_BRANCH = 'main', TARGET_TOKEN } = process.env
 
-if (!GITHUB_USERNAME || !GITHUB_REPO) {
-  console.error('Error: GITHUB_USERNAME and GITHUB_REPO must be set')
+if (!TARGET_OWNER || !TARGET_REPO) {
+  console.error('Error: TARGET_OWNER and TARGET_REPO must be set')
   process.exit(1)
 }
 
-const GITHUB_API_BASE = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents`
-const GITHUB_RAW_BASE = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/refs/heads/${GITHUB_BRANCH}`
+const GITHUB_API_BASE = `https://api.github.com/repos/${TARGET_OWNER}/${TARGET_REPO}/contents`
+const GITHUB_RAW_BASE = `https://raw.githubusercontent.com/${TARGET_OWNER}/${TARGET_REPO}/refs/heads/${TARGET_BRANCH}`
 const OUTPUT_DIR = path.join(process.cwd(), 'public/blog')
 
 function authHeaders(): Record<string, string> {
   const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' }
-  if (GITHUB_TOKEN) headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`
+  if (TARGET_TOKEN) headers['Authorization'] = `Bearer ${TARGET_TOKEN}`
   return headers
 }
 

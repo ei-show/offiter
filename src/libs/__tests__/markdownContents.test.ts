@@ -78,10 +78,16 @@ function setupMocks(files: Record<string, string>) {
 
 describe('markdownContents.ts', () => {
   beforeEach(() => {
+    process.env.TARGET_OWNER = 'ei-show'
+    process.env.TARGET_REPO = 'managed-life'
+    process.env.TARGET_BRANCH = 'main'
     global.fetch = jest.fn()
   })
 
   afterEach(() => {
+    delete process.env.TARGET_OWNER
+    delete process.env.TARGET_REPO
+    delete process.env.TARGET_BRANCH
     jest.clearAllMocks()
   })
 
@@ -288,6 +294,23 @@ describe('markdownContents.ts', () => {
       expect(blog.body).toContain('![alt text](/blog/20260101-c/image.png)')
       expect(blog.body).toContain('![external](https://example.com/image.png)')
       expect(blog.body).toContain('![absolute](/public/image.png)')
+    })
+  })
+
+  describe('environment variable validation', () => {
+    it.each(['TARGET_OWNER', 'TARGET_REPO', 'TARGET_BRANCH'])(
+      'throws a clear error when %s is missing',
+      async (varName) => {
+        delete process.env[varName]
+        await expect(getAllBlogs()).rejects.toThrow(varName)
+      },
+    )
+
+    it('throws listing all missing variables at once', async () => {
+      delete process.env.TARGET_OWNER
+      delete process.env.TARGET_REPO
+      delete process.env.TARGET_BRANCH
+      await expect(getAllBlogs()).rejects.toThrow('TARGET_OWNER, TARGET_REPO, TARGET_BRANCH')
     })
   })
 })
