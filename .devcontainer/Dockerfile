@@ -1,13 +1,20 @@
-FROM debian:bookworm-slim
+FROM ubuntu:24.04
 
-RUN apt-get update && apt-get install -y \
-  git \
-  curl \
-  && rm -rf /var/lib/apt/lists/*
-
+ENV HOME=/root
 ENV NVM_DIR=/root/.nvm
 
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash \
-  && echo '. "$NVM_DIR/nvm.sh"' >> /root/.bashrc
+# Use bash for the shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git curl ca-certificates
+
+# Create a script file sourced by both interactive and non-interactive bash shells
+ENV BASH_ENV "${HOME}/.bash_env"
+RUN touch "${BASH_ENV}"
+RUN echo '. "${BASH_ENV}"' >> ~/.bashrc
+
+# Download and install nvm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | PROFILE="${BASH_ENV}" bash
 
 WORKDIR /workspace
