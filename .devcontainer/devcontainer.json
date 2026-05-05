@@ -6,19 +6,18 @@
   "workspaceFolder": "/workspace",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
   "forwardPorts": [3000],
-  "postCreateCommand": ". $NVM_DIR/nvm.sh && nvm install && npm install -g @anthropic-ai/claude-code @openai/codex && npm install",
+  "postCreateCommand": "bash -lc 'source \"$NVM_DIR/nvm.sh\" --no-use && nvm install && npm ci && nvm use && npm install -g @anthropic-ai/claude-code @openai/codex'",
   "customizations": {
     "vscode": {
-      "extensions": [
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "ms-vscode.vscode-typescript-next"
-      ],
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "ms-vscode.vscode-typescript-next"],
       "settings": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "typescript.tsdk": "node_modules/typescript/lib"
+        "js/ts.tsdk.path": "node_modules/typescript/lib"
       }
     }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   }
 }
