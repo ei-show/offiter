@@ -6,7 +6,7 @@
   "workspaceFolder": "/workspace",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
   "forwardPorts": [3000],
-  "postCreateCommand": "npm install",
+  "postCreateCommand": ". $NVM_DIR/nvm.sh && nvm install && npm install -g @anthropic-ai/claude-code @openai/codex && npm install",
   "customizations": {
     "vscode": {
       "extensions": [
