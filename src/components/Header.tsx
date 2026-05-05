@@ -8,7 +8,7 @@ type props = {
 
 export default function Header({ siteName }: props) {
   return (
-    <nav className="navbar border-b border-base-300 bg-base-100 px-4 text-base-content">
+    <nav className="navbar border-b border-base-300 bg-base-200 px-4 text-base-content">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex-1">
           <Link href="/" className="flex items-center gap-2 font-title text-2xl font-bold">

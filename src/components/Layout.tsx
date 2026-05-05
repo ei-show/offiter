@@ -13,7 +13,7 @@ type props = {
 export default function Layout({ blogDetails, latestBlogs, tags, tableOfContents, children }: props) {
   const siteName = 'Offiter'
   return (
-    <div className="min-h-screen bg-base-100 font-body text-base-content">
+    <div className="min-h-screen bg-base-200 font-body text-base-content">
       <Header siteName={siteName} />
       {blogDetails?.title && (
         <div className="container mx-auto px-4 pt-8">
