@@ -12,9 +12,11 @@ export { default as SNSlink } from './components/SNSlink'
 export { default as BlogDetail } from './components/BlogDetail'
 export { default as TagsLists } from './components/TagsLists'
 export { default as LatestBlogsCardLists } from './components/LatestBlogsCardLists'
+export { default as FontAwesomeSetup } from './components/FontAwesomeSetup'
+export { default as GoogleAnalytics } from './components/GoogleAnalytics'
+export { default as ZennEmbedLoader } from './components/ZennEmbedLoader'
 
 // libs
 export * as gtag from './libs/gtag'
 export { GA_TRACKING_ID } from './libs/gtag'
-export { default as SEO } from './libs/next-seo.config'
 export * from './libs/types'
