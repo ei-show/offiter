@@ -11,7 +11,7 @@ type props = {
 
 export default function Aside({ blogDetails, latestBlogs, tags, tableOfContents }: props) {
   return (
-    <aside className="-mx-8 hidden w-4/12 lg:block">
+    <aside className="hidden space-y-8 lg:block">
       <BlogDetail
         createdAt={blogDetails?.createdAt}
         updatedAt={blogDetails?.updatedAt}
