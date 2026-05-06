@@ -20,7 +20,7 @@ const DateTags = ({ tags, updatedAt, small }: dateTags) => {
       <div className="flex flex-wrap gap-1">
         {tags.map((tag) => (
           <React.Fragment key={tag.id}>
-            <span className="badge badge-outline badge-sm">{tag.name}</span>
+            <span className="badge badge-sm">{tag.name}</span>
           </React.Fragment>
         ))}
       </div>
