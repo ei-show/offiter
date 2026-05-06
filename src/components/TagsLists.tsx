@@ -16,7 +16,7 @@ const TagsLists = ({ tags }: TagsLists) => {
       <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (
           <React.Fragment key={tag.id}>
-            <Link href="/pages/tags/[id]" as={`/pages/tags/${tag.id}`} className="badge badge-outline">
+            <Link href="/pages/tags/[id]" as={`/pages/tags/${tag.id}`} className="badge badge-primary badge-sm">
               {tag.name}
             </Link>
           </React.Fragment>
