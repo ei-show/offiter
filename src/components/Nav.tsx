@@ -24,10 +24,9 @@ export default function Nav() {
 
   return (
     <nav
-      className={`fixed bottom-0 left-0 z-50 w-screen border-t border-base-300 text-base-content transition-transform duration-300 md:hidden ${
+      className={`fixed bottom-0 left-0 z-50 w-screen border-t border-base-300 bg-base-200 text-base-content transition-transform duration-300 md:hidden ${
         visible ? 'translate-y-0' : 'translate-y-full'
       }`}
-      style={{ backgroundColor: 'oklch(var(--b2, 0.93 0 0))' }}
     >
       <ul className="flex">
         <li className="flex-1 text-center">

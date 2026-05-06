@@ -7,7 +7,6 @@ import { JSDOM } from 'jsdom'
 import { Layout, Date } from '@/src/index'
 import { blogsGetAllHeader, blogGetContent } from '@/src/libs/getContents'
 import type { tableOfContents } from '@/src/index'
-import Style from '@/styles/blog.module.scss'
 import base64url from 'base64url'
 import markdownToHtml from 'zenn-markdown-html'
 
@@ -110,10 +109,7 @@ export default async function BlogPage({ params }: Props) {
           <Image alt="" src={blog.image.url} width={blog.image.width ?? 1200} height={blog.image.height ?? 630} />
         </div>
 
-        <div
-          className={`${Style.blog} znc mt-4 md:text-lg`}
-          dangerouslySetInnerHTML={{ __html: `${highlightedBody}` }}
-        />
+        <div className="znc mt-4 md:text-lg" dangerouslySetInnerHTML={{ __html: `${highlightedBody}` }} />
       </div>
     </Layout>
   )
