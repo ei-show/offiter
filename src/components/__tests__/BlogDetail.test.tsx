@@ -82,6 +82,12 @@ describe('BlogDetail', () => {
       expect(kubeLink).toHaveAttribute('href', `/pages/tags/${mockTags[0].id}`)
     })
 
+    it('renders tags with the same badge style as cards', () => {
+      render(<BlogDetail {...defaultProps} />)
+      const kubeLink = screen.getByRole('link', { name: 'Kubernetes' })
+      expect(kubeLink).toHaveClass('badge', 'badge-primary', 'badge-sm')
+    })
+
     it('renders table of contents entries', () => {
       render(<BlogDetail {...defaultProps} />)
       expect(screen.getByText('H2 Section')).toBeInTheDocument()

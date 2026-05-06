@@ -4,7 +4,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import 'zenn-content-css'
 import '../styles/globals.css'
 import { GA_TRACKING_ID } from '@/src/libs/gtag'
-import { FontAwesomeSetup, GoogleAnalytics, ZennEmbedLoader } from '@/src/index'
+import { GoogleAnalytics, ZennEmbedLoader } from '@/src/index'
 
 config.autoAddCss = false
 
@@ -71,7 +71,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script src="https://embed.zenn.studio/js/listen-embed-event.js" />
       </head>
       <body>
-        <FontAwesomeSetup />
         <GoogleAnalytics />
         <ZennEmbedLoader />
         {children}

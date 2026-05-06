@@ -7,12 +7,12 @@ jest.mock('next/link', () => {
 })
 
 jest.mock('@fortawesome/react-fontawesome', () => ({
-  FontAwesomeIcon: ({ icon }: any) => <span data-testid="sns-icon">{Array.isArray(icon) ? icon[1] : icon}</span>,
+  FontAwesomeIcon: ({ icon }: any) => <span data-testid="sns-icon">{icon?.iconName}</span>,
 }))
 
 describe('SNSlink', () => {
   it('renders a link with the correct href', () => {
-    render(<SNSlink link="https://twitter.com" iconName="twitter-square" />)
+    render(<SNSlink link="https://twitter.com" iconName="square-twitter" />)
     const link = screen.getByRole('link')
     expect(link).toHaveAttribute('href', 'https://twitter.com')
   })
@@ -23,8 +23,8 @@ describe('SNSlink', () => {
   })
 
   it('renders icon with correct name', () => {
-    render(<SNSlink link="/" iconName="twitter-square" />)
-    expect(screen.getByText('twitter-square')).toBeInTheDocument()
+    render(<SNSlink link="/" iconName="square-twitter" />)
+    expect(screen.getByText('square-twitter')).toBeInTheDocument()
   })
 
   it('renders with different links', () => {
