@@ -13,15 +13,17 @@ type props = {
 export default function Layout({ blogDetails, latestBlogs, tags, tableOfContents, children }: props) {
   const siteName = 'Offiter'
   return (
-    <div className="bg-base-200 font-body">
+    <div className="min-h-screen bg-base-200 font-body text-base-content">
       <Header siteName={siteName} />
-      <div className="flex items-center justify-center">
-        <h2 className="m-8 font-head text-xl text-base-content md:text-2xl">{blogDetails?.title}</h2>
-      </div>
-      <div className="px-6 py-8">
-        <div className="container mx-auto flex justify-around">
+      {blogDetails?.title && (
+        <div className="container mx-auto px-4 pt-8">
+          <h2 className="font-head text-2xl text-base-content">{blogDetails.title}</h2>
+        </div>
+      )}
+      <div className="px-4 py-8">
+        <div className="container mx-auto grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
           {/* Main Start */}
-          <div className="min-h-screen w-full lg:w-8/12">{children}</div>
+          <div className="min-h-screen w-full">{children}</div>
           {/* Main End */}
           <Aside blogDetails={blogDetails} latestBlogs={latestBlogs} tags={tags} tableOfContents={tableOfContents} />
         </div>

@@ -8,15 +8,15 @@ type props = {
 
 export default function Header({ siteName }: props) {
   return (
-    <nav className="bg-base-100 px-6 py-4 text-base-content shadow-sm">
-      <div className="container mx-auto flex flex-col md:flex-row md:items-center md:justify-between">
-        <div className="flex items-center justify-center md:justify-between">
-          <Link href="/" className="ml-4 flex items-center font-title text-2xl font-bold md:text-2xl">
-            <Image src="/logo.svg" alt="logo" width="40" height="40" />
-            <h1 className="ml-1 mb-3 text-5xl">{siteName}</h1>
+    <nav className="navbar border-b border-base-300 bg-base-200 px-4 text-base-content">
+      <div className="container mx-auto flex items-center justify-between">
+        <div className="flex-1">
+          <Link href="/" className="flex items-center gap-2 font-title text-2xl font-bold">
+            <Image src="/logo.svg" alt="logo" width="32" height="32" />
+            <h1>{siteName}</h1>
           </Link>
         </div>
-        <div className="hidden flex-col md:-mx-4 md:flex md:flex-row">
+        <div className="hidden gap-2 md:flex">
           <NavItem NavItemName="Offiterとは" blogId="whatisoffiter" />
           <NavItem NavItemName="運営者について" />
           <NavItem NavItemName="お問い合わせ" />

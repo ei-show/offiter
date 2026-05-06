@@ -14,10 +14,10 @@ export default function Header({ siteName }: props) {
         </Link>
         <p className="mt-2 md:mt-0">All rights reserved 2021.</p>
         <div className="-mx-2 mt-4 mb-2 flex md:mt-0 md:mb-0">
-          <SNSlink link="/" iconName="twitter-square" />
+          <SNSlink link="/" iconName="square-twitter" />
           <SNSlink link="/" iconName="youtube" />
-          <SNSlink link="/" iconName="instagram-square" />
-          <SNSlink link="/" iconName="facebook-square" />
+          <SNSlink link="/" iconName="square-instagram" />
+          <SNSlink link="/" iconName="square-facebook" />
           <SNSlink link="/" iconName="tiktok" />
         </div>
       </div>

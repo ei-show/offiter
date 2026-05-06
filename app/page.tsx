@@ -12,13 +12,13 @@ export default async function Home() {
 
   return (
     <Layout latestBlogs={blogs} tags={tags}>
-      <div className="mb-2 flex items-center justify-between">
-        <h2 className="font-head text-xl text-base-content md:text-2xl">新着記事</h2>
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="font-head text-2xl text-base-content">新着記事</h2>
       </div>
 
       {blogs.map((blog) => (
         <React.Fragment key={blog.id}>
-          <div className="mb-2">
+          <div className="mb-4">
             <Card data={blog} />
           </div>
         </React.Fragment>

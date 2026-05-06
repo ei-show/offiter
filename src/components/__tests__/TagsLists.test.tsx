@@ -4,7 +4,11 @@ import TagsLists from '../TagsLists'
 import { mockTags } from '../../../__mocks__/testData'
 
 jest.mock('next/link', () => {
-  return ({ children, href, as }: any) => <a href={as || href}>{children}</a>
+  return ({ children, href, as, className }: any) => (
+    <a href={as || href} className={className}>
+      {children}
+    </a>
+  )
 })
 
 jest.mock('@fortawesome/react-fontawesome', () => ({
@@ -43,6 +47,12 @@ describe('TagsLists', () => {
       const links = screen.getAllByRole('link')
       expect(links[0]).toHaveAttribute('href', `/pages/tags/${mockTags[0].id}`)
       expect(links[1]).toHaveAttribute('href', `/pages/tags/${mockTags[1].id}`)
+    })
+
+    it('renders tags with the same badge style as cards', () => {
+      render(<TagsLists tags={mockTags} />)
+      const links = screen.getAllByRole('link')
+      expect(links[0]).toHaveClass('badge', 'badge-primary', 'badge-sm')
     })
 
     it('renders nothing for empty tags array', () => {

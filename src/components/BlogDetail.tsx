@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faCalendarPlus } from '@fortawesome/free-solid-svg-icons'
 import { Date } from '@/src/index'
 import type { tag, tableOfContents } from '@/src/index'
 
@@ -45,22 +46,20 @@ const BlogDetail = ({ createdAt, updatedAt, tags, tableOfContents }: BlogDetail)
     <div className="sticky top-6 mb-10 px-8">
       <div className="card bg-base-100 shadow-md">
         <div className="card-body p-4 text-sm">
-          <div className="flex">
-            <span className="flex-1 font-head font-light text-base-content/70">
-              <FontAwesomeIcon icon="calendar-plus" fixedWidth className="mr-1" />
-              {Date(createdAt)}
-            </span>
-            <span className="flex-1 font-head font-light text-base-content/70">
-              <FontAwesomeIcon icon="edit" fixedWidth className="mr-1" />
-              {Date(updatedAt)}
-            </span>
-          </div>
+          <span className="flex-1 font-head font-light text-base-content/70">
+            <FontAwesomeIcon icon={faCalendarPlus} fixedWidth className="mr-1" />
+            {Date(createdAt)}
+          </span>
+          <span className="flex-1 font-head font-light text-base-content/70">
+            <FontAwesomeIcon icon={faEdit} fixedWidth className="mr-1" />
+            {Date(updatedAt)}
+          </span>
           <div className="divider my-0"></div>
           <ul className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <React.Fragment key={tag.id}>
                 <li>
-                  <Link href="/pages/tags/[tag]" as={`/pages/tags/${tag.id}`} className="badge badge-soft font-head">
+                  <Link href="/pages/tags/[tag]" as={`/pages/tags/${tag.id}`} className="badge badge-primary badge-sm">
                     {tag.name}
                   </Link>
                 </li>

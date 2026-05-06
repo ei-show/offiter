@@ -1,0 +1,46 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx jest:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx playwright:*)",
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(node -e:*)",
+      "Bash(npx -y playwright evaluate:*)",
+      "Bash(kill:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)",
+      "Bash(grep:*)",
+      "Bash(npm install:*)",
+      "Bash(npx depcheck:*)",
+      "Bash(npm test:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm run:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh run:*)",
+      "Bash(npm info:*)",
+      "Bash(git:*)",
+      "Bash(gh issue:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(cat:*)",
+      "Bash(node:*)",
+      "Bash(npx knip:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm ls:*)",
+      "WebSearch",
+      "Bash(gh api:*)",
+      "Bash(tsx:*)",
+      "Bash(npx tsx:*)",
+      "Bash(npx next:*)",
+      "Bash(gh label *)"
+    ],
+    "deny": ["Read(./.env*)"]
+  },
+  "enabledPlugins": {
+    "everything-claude-code@everything-claude-code": true
+  }
+}
