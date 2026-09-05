@@ -1,21 +1,26 @@
 {
   "name": "hono",
   "type": "module",
-  "scripts": {
-    "dev": "concurrently -k \"vc dev\" \"pnpm dev:css\"",
-    "dev:css": "tailwindcss -i ./src/style.css -o ./public/style.css --watch"
-  },
-  "dependencies": {
+"scripts": {
+  "dev": "vc dev",
+  "build": "vite build && pnpm build:css",
+  "build:css": "tailwindcss -i ./src/style.css -o ./dist/style.css --minify",
+  "preview": "vite preview"
+},  "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",
     "hono": "^4.13.7",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@hono/vite-dev-server": "^0.26.1",
+    "@hono/vite-ssg": "^0.3.3",
     "@tailwindcss/cli": "^4.3.3",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.1.1",
     "concurrently": "^10.0.5",
     "daisyui": "^5.7.28",
     "tsx": "^4.23.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
   }
 }

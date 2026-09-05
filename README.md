@@ -11,7 +11,7 @@
 
 ```sh
 pnpm install
-vc dev
+pnpm dev
 ```
 
 ```sh
@@ -30,3 +30,10 @@ open http://localhost:3000
 ブログを書くために使用するMarkdownエディタ。
 HonoからInkdropにアクセスしてブログ記事を取得する。
 
+## Deploy
+
+```sh
+pnpm build
+pnpm preview
+vc deploy
+```
