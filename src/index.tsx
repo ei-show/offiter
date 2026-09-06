@@ -1,31 +1,10 @@
 import { Hono } from 'hono'
 import { jsxRenderer } from 'hono/jsx-renderer'
 import { isSSGContext } from 'hono/ssg'
+import { renderer } from './renderer.tsx'
 
 const app = new Hono()
-
-app.use(
-  '*',
-  jsxRenderer(({ children }, c) => (
-    <html lang="ja" data-theme="light">
-      <head>
-        <meta charset="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1"
-        />
-        <title>Offiter</title>
-        <link
-          rel="stylesheet"
-          href={isSSGContext(c) ? '/style.css' : '/src/style.css'}
-        />
-      </head>
-      <body class="min-h-screen bg-base-200">
-        <main class="mx-auto max-w-3xl p-8">{children}</main>
-      </body>
-    </html>
-  )),
-)
+app.use('*',renderer)
 
 app.get('/', (c) =>
   c.render(
