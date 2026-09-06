@@ -46,7 +46,7 @@ export const Layout: FC<LayoutProps> = ({ siteName,title, stylesheet, children }
           </div>
         </header>
         <main>{children}</main>
-        <footer>{children}</footer>
+        <footer>footer</footer>
       </body>
     </html>
   );

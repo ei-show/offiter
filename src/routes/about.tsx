@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 
 export const about = new Hono()
     
-about.get('', (c) =>
+about.get('/', (c) =>
   c.render(
     <div class="card bg-base-100 shadow-sm">
       <div class="card-body">
