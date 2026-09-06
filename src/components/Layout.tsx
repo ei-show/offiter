@@ -27,7 +27,7 @@ export const Layout: FC<LayoutProps> = ({ siteName,title, stylesheet, children }
         <header>
           <div class="navbar">
             <div class="flex-1">
-              <a class="btn btn-ghost text-xl">{siteName}</a>
+              <a link="/" class="btn btn-ghost text-xl">{siteName}</a>
             </div>
             <div class="flex-none">
               <ul class="menu menu-horizontal px-1">

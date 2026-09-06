@@ -7,10 +7,10 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     devServer({
-      entry: 'src/index.tsx',
+      entry: 'src/index.ts',
     }),
     ssg({
-      entry: 'src/index.tsx',
+      entry: 'src/index.ts',
     }),
   ],
 })
